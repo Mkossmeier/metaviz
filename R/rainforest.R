@@ -87,6 +87,10 @@
 #'  74-86.
 #'@return A Rainforest plot is created using ggplot2. The resulting plot is a
 #'  ggplot2 object and is printed by default.
+#'@author Michael Kossmeier* <michael.kossmeier@univie.ac.at>
+#'@author Ulrich S. Tran* <ulrich.tran@univie.ac.at>
+#'@author Martin Voracek* <martin.voracek@univie.ac.at>
+#'@author *Department of Basic Psychological Research and Research Methods, School of Psychology, University of Vienna
 #'@examples
 #' library(metaviz)
 #' # Plotting a rainforest plot using the mozart data (for details, see help(mozart)):

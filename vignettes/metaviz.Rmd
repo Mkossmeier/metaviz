@@ -28,11 +28,7 @@ In the following, we use the `mozart` data distributed with the package **metavi
 head(mozart)
 ```
 
-More details and further references can be found in the respective help files.
-```{r, message=FALSE}
-# help(mozart)
-# help(rainforest)
-```
+More details and further references can be found in the respective help files ('help(mozart)', 'help(rainforest)').
 
 # Capabilites of rainforest
 
@@ -146,7 +142,7 @@ res
 ```
 
 In a second step, we use the output from `rma.uni` as input for the `rainforest` function.
-```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5}
+```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5, eval = FALSE}
 rainforest(x = res, names = mozart[, "study_name"], xlab = "Cohen d")
 ```
 
@@ -157,12 +153,12 @@ res
 ```
 
 In a second step, we can use this output object as input for the `rainforest` function to plot a subgroup rainforest plot.
-```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5}
+```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5, eval = FALSE}
 rainforest(x = res, names = mozart[, "study_name"], xlab = "Cohen d")
 ```
 
 ## The rainforest output as ggplot2 object
-The function `rainforest` uses the package [**ggplot2**](https://cran.r-project.org/web/packages/ggplot2/index.html) to create the plots. Therefore, the output of `rainforest` is a [**ggplot2**](https://cran.r-project.org/web/packages/ggplot2/index.html) object and can be modified using the [**ggplot2**](https://cran.r-project.org/web/packages/ggplot2/index.html) syntax. We illustrate this with three examples below.
+The function `rainforest` uses the package [**ggplot2**](https://cran.r-project.org/web/packages/ggplot2/index.html) to create the rainforest plots. Therefore, the output of `rainforest` is a [**ggplot2**](https://cran.r-project.org/web/packages/ggplot2/index.html) object and can be modified using the [**ggplot2**](https://cran.r-project.org/web/packages/ggplot2/index.html) syntax. We illustrate this with three examples below.
 
 ### Adding a cumulative meta-analysis
 It is possible to plot additional data to the plot. We will add the results of a cumulative meta-analysis to the rainforest plot. First, we attach the [**ggplot2**](https://cran.r-project.org/web/packages/ggplot2/index.html) package and then store a rainforest plot within a variable.
@@ -171,7 +167,7 @@ library(ggplot2)
 p <- rainforest(mozart[, c("d", "se")], names = mozart[, "study_name"])
 ```
 
-Next, we compute all cumulative summary effects, i.e., for k studies, the fixed-effect summary effect estimates for the first j studies (for all j in {1,...,k}) are computed. We then create a data.frame to add these results to the rainforest plot. Note that the coordiantes of the studies on the y axis in the rainforest plot are from 1 to k (the number of studies).
+Next, we compute all cumulative summary effects, i.e., for *k* studies, the fixed-effect summary effect estimates for the first *j* studies (for all *j* in {1,...,*k*}) are computed. We then create a data.frame to add these results to the rainforest plot. Note that the coordiantes of the studies on the y axis in the rainforest plot are from 1 to *k* (the number of studies).
 ```{r}
 cum_summary <- cumsum((1/mozart[, "se"]^2)*mozart[, "d"])/(cumsum(1/mozart[, "se"]^2))
 y <- nrow(mozart):1

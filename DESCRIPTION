@@ -7,10 +7,10 @@ Authors@R: c(
     person("Ulrich S.", "Tran", email = "ulrich.tran@univie.ac.at", role = c("aut")),
     person("Martin", "Voracek", email = "martin.voracek@univie.ac.at", role = c("aut"))
     )
-Description: Creates rainforest plots, a variant and enhancement of classical forest plots,
-    which were proposed by Schild & Voracek (2015). In the near future, the package metaviz 
-    will be extended by a number of further classic and novel plotting options for visualizing 
-    meta-analytic data.
+Description: Creates rainforest plots (proposed by Schild & Voracek, 2015), a variant and 
+    enhancement of the classic forest plot for meta-analysis. In the near future, the metaviz 
+    package will be extended by further, established as well as novel, plotting options for 
+    visualizing meta-analytic data.
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
@@ -20,7 +20,7 @@ Imports:
     RColorBrewer (>= 1.1-2)
 Suggests:
     metafor (>= 1.9-9),
-    Cairo,
+    Cairo (>= 1.5-9),
     knitr,
     rmarkdown
 Depends:

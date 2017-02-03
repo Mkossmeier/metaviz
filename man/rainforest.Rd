@@ -115,6 +115,15 @@ rainforest(x = mozart[, c("d", "se")], names = mozart[, "study_name"],
 summary_name = c("Summary (published)", "Summary (unpublished)"),
 group = mozart[, "unpublished"], xlab = "Cohen's d")
 }
+\author{
+Michael Kossmeier* <michael.kossmeier@univie.ac.at>
+
+Ulrich S. Tran* <ulrich.tran@univie.ac.at>
+
+Martin Voracek* <martin.voracek@univie.ac.at>
+
+*Department of Basic Psychological Research and Research Methods, School of Psychology, University of Vienna
+}
 \references{
 Barrowman, N. J., & Myers, R. A. (2003). Raindrop plots: A new way
  to display collections of likelihoods and distributions. \emph{American
