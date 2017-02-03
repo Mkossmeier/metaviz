@@ -1,0 +1,220 @@
+---
+title: "Creating rainforest plots with the *R* package **metaviz**"
+author: "Michael Kossmeier, Ulrich S. Tran and Martin Voracek (Department of Basic Psychological Research and Research Methods, School of Psychology, University of Vienna, Austria)"
+date: "`r Sys.Date()`" 
+output: 
+    rmarkdown::html_vignette:
+      toc: true
+      depth: 3
+      number_sections: false
+vignette: >
+  %\VignetteIndexEntry{rainforest (package metaviz)}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r, echo = FALSE}
+knitr::opts_chunk$set(collapse =TRUE, comment ="#>")
+```
+
+The function `rainforest` from the *R* package **metaviz** allows to create rainforest plots for meta-analytic data. Rainforest plots were proposed by Schild and Voracek (2015) as an alternative to classic forest plots. See the documentation of the function for more details and relevant references. This vignette is a tutorial for the use of the `rainforest` function and illustrates its capabilites.
+
+In order to use the function `rainforest`, the *R* package **metaviz** needs to be installed and attached within the *R* environment.
+```{r}
+library(metaviz)
+```
+
+In the following, we use the `mozart` data distributed with the package **metaviz** to illustrate the capabilites of the `rainforest` function. The `mozart` dataset consists of 38 studies on the Mozart effect from the meta-analysis of Pietschnig, Voracek, and Formann (2010).
+```{r}
+head(mozart)
+```
+
+More details and further references can be found in the respective help files.
+```{r, message=FALSE}
+# help(mozart)
+# help(rainforest)
+```
+
+# Capabilites of rainforest
+
+The `rainforst` function takes a data frame or matrix with two columns as input: The effect sizes of each study in the first column and their respective standard errors in the second column. We use the corresponding columns of the `mozart` data to create a rainforest plot. The ordering of studies in the plot corresponds to the order of studies in the supplied matrix or data.frame.
+
+```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6, fig.width = 6}
+rainforest(x = mozart[, c("d", "se")])
+```
+
+## General options
+
+You can add study labels, a custom label for the summary effect, and a label for the x axis as well.
+```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5}
+rainforest(x = mozart[, c("d", "se")], names = mozart[, "study_name"], 
+           summary_name = "Summary (Fixed effect)", xlab = "Cohen d")
+```
+
+The `rainforest` function computes the meta-analytic summary effect and its confidence interval using the fixed-effect model per default. It is also possible to use the random-effects model (using the DerSimonian-Laird method to estimate the between-study variance tau^2^) with the `method = "REM"` option.
+```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5}
+rainforest(x = mozart[, c("d", "se")], names = mozart[, "study_name"], 
+           summary_name = "Summary (Random Effects)", xlab = "Cohen d", method = "REM")
+```
+
+The confidence level for the confidence intervals and the likelihood raindrops (default: 0.95) can be specified with the `confidence_level` argument.
+```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5}
+rainforest(x = mozart[, c("d", "se")], names = mozart[, "study_name"], 
+           summary_name = "Summary (Fixed effect)", xlab = "Cohen d", confidence_level = 0.99)
+```
+
+There currently are three options to depict the summary effect of the meta-analysis within the rainforest plot: 1) likelihood raindrop (default), 2) classic summary diamond, 3) no summary effect. Examples for all three options are given below using the first 5 studies in the meta-analysis to illustrate the differences between these options more clearly.
+
+Summary likelihood raindrop (default):
+```{r, dev='CairoPNG', fig.align = 'center', fig.height = 5.5, fig.width = 5.5}
+rainforest(x = mozart[1:5, c("d", "se")], names = mozart[1:10, "study_name"], 
+           summary_symbol = "rain")
+```
+
+Summary diamond:
+```{r, dev='CairoPNG', fig.align = 'center', fig.height = 5.5, fig.width = 5.5}
+rainforest(x = mozart[1:5, c("d", "se")], names = mozart[1:10, "study_name"], 
+           summary_symbol = "diamond")
+```
+
+No summary effect:
+```{r, dev='CairoPNG', fig.align = 'center', fig.height = 5.5, fig.width = 5.5}
+rainforest(x = mozart[1:5, c("d", "se")], names = mozart[1:10, "study_name"], 
+           summary_symbol = "none")
+```
+
+The default color can be changed with the `col` argument. Supported options are `"Blues"` (default), `"Greys"`, `"Oranges"`, `"Greens"`, `"Reds"`, and
+`"Purples"`. Color palettes are used from the package [**RColorBrewer**](https://cran.r-project.org/web/packages/RColorBrewer/index.html). A grey rainforest plot is depcited below.
+```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5}
+rainforest(x = mozart[, c("d", "se")], names = mozart[, "study_name"], 
+           summary_name = "Summary (Fixed effect)", xlab = "Cohen d", col = "Greys")
+```
+
+Color shading can also be suppressed by the user with the `shading` argument.
+```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5}
+rainforest(x = mozart[, c("d", "se")], names = mozart[, "study_name"], 
+           summary_name = "Summary (Fixed effect)", xlab = "Cohen d", col = "Greys", shading = FALSE)
+```
+
+The detail level of the raindrops can be configured with the `detail_level` argument. This argument increases (for values greater 1) or decreases (for values smaller than 1) the number of points used to create the raindrop polygons and also the number of segments used for shading the raindrops. It can be useful to change the defaults for especially large or small plots.
+
+Decreased detail level:
+```{r, dev='CairoPNG', fig.align = 'center', fig.height = 5.5, fig.width = 5.5}
+rainforest(x = mozart[1:5, c("d", "se")], detail_level = 0.3)
+```
+
+Increased detail level:
+```{r, dev='CairoPNG', fig.align = 'center', fig.height = 5.5, fig.width = 5.5}
+rainforest(x = mozart[1:5, c("d", "se")], detail_level = 2)
+```
+
+Also, the text size can be configured with the argument `text_size`. Similar to the detail level, it can be useful to change the default text size for especially large or small plots.
+```{r, dev='CairoPNG', fig.align = 'center', fig.height = 5.5, fig.width = 5.5}
+rainforest(x = mozart[1:5, c("d", "se")], text_size = 1.5)
+```
+
+## Subgroup Analysis
+The `rainforest` function is able to use a categorical moderator variable to visualize a subgroup analysis. This is done via the `group` argument and a factor which corresponds to the subgroup membership of every study. We use the dichotomous moderator "unpublished" to compute and visualize separate meta-analyses for the set of published and unpublished studies. In the case of subgroup analysis, the `summary_name` argument should be a vector containing names for all subgroups.
+```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5}
+rainforest(x = mozart[, c("d", "se")], names = mozart[, "study_name"], 
+           summary_name = c("Summary (published)", "Summary (unpublished)"), xlab = "Cohen d", 
+           group = mozart[, "unpublished"])
+```
+
+To add more than one moderator, the (base) *R* function `interaction` may be used to create all possible combinations of factor levels. We do so in combining the moderator "unpublished" with the dichotomous moderator "rr_lab", which indicates whether the study was conducted in the labs of two specific authors.
+```{r}
+group <- interaction(mozart[, "unpublished"], mozart[, "rr_lab"])
+```
+
+We can then use this variable to conduct and display the subgroup analysis using both moderators simultaneously.
+```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5}
+rainforest(x = mozart[, c("d","se")], names = mozart[, "study_name"], 
+           summary_name = c("published/all other", "unpublished/all other", "published/RR lab", "unpublished/RR lab" ), 
+           xlab = "Cohen d", group = group)
+```
+
+
+## Using metafor output as input for rainforest
+The `rainforest` function can use the output of the function `rma.uni` from *R* package [**metafor**](https://cran.r-project.org/web/packages/metafor/index.html), a widely used package for meta-analytic modelling. The package [**metafor**](https://cran.r-project.org/web/packages/metafor/index.html) needs to be installed and then attached within the *R* environment.
+```{r}
+library(metafor)
+```
+
+We use the output of the `rma.uni` function as input for `rainforest`. First we compute a meta-analysis using `rma.uni` from package [**metafor**](https://cran.r-project.org/web/packages/metafor/index.html).
+```{r}
+res <- rma.uni(yi = mozart[, "d"], sei = mozart[, "se"])
+res
+```
+
+In a second step, we use the output from `rma.uni` as input for the `rainforest` function.
+```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5}
+rainforest(x = res, names = mozart[, "study_name"], xlab = "Cohen d")
+```
+
+It is also possible to visualize a subgroup analysis using one categorical moderator which was conducted with [**metafor**](https://cran.r-project.org/web/packages/metafor/index.html). First, we compute the subgroup analysis. 
+```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5}
+res <- rma.uni(yi = mozart[, "d"], sei = mozart[, "se"], mods = ~mozart[, "unpublished"])
+res
+```
+
+In a second step, we can use this output object as input for the `rainforest` function to plot a subgroup rainforest plot.
+```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5}
+rainforest(x = res, names = mozart[, "study_name"], xlab = "Cohen d")
+```
+
+## The rainforest output as ggplot2 object
+The function `rainforest` uses the package [**ggplot2**](https://cran.r-project.org/web/packages/ggplot2/index.html) to create the plots. Therefore, the output of `rainforest` is a [**ggplot2**](https://cran.r-project.org/web/packages/ggplot2/index.html) object and can be modified using the [**ggplot2**](https://cran.r-project.org/web/packages/ggplot2/index.html) syntax. We illustrate this with three examples below.
+
+### Adding a cumulative meta-analysis
+It is possible to plot additional data to the plot. We will add the results of a cumulative meta-analysis to the rainforest plot. First, we attach the [**ggplot2**](https://cran.r-project.org/web/packages/ggplot2/index.html) package and then store a rainforest plot within a variable.
+```{r}
+library(ggplot2)
+p <- rainforest(mozart[, c("d", "se")], names = mozart[, "study_name"])
+```
+
+Next, we compute all cumulative summary effects, i.e., for k studies, the fixed-effect summary effect estimates for the first j studies (for all j in {1,...,k}) are computed. We then create a data.frame to add these results to the rainforest plot. Note that the coordiantes of the studies on the y axis in the rainforest plot are from 1 to k (the number of studies).
+```{r}
+cum_summary <- cumsum((1/mozart[, "se"]^2)*mozart[, "d"])/(cumsum(1/mozart[, "se"]^2))
+y <- nrow(mozart):1
+cum_data <- data.frame(x = cum_summary, y = y)
+```
+
+We can now add the cumulative meta-analysis results to the rainforest plot using points and a connecting line.
+```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5}
+p + 
+geom_path(data = cum_data, aes(y = y, x = x), col=" black ", size = 0.5) +
+geom_point(data = cum_data, aes(y = y, x = x), col="black", size = 2, shape = 18)
+```
+
+### Manually changing the appearence using ggplot2 syntax
+Another possibility is to manually change the appearance of the plot (by overwriting the defaults). For example, we can increase the label size at the x axis, remove all grid lines, and add a line at the summary effect.
+```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5}
+p + 
+geom_vline(xintercept =  sum((1/mozart[, "se"]^2)*mozart[, "d"])/(sum(1/mozart[, "se"]^2)), linetype = 3) +
+theme(axis.title.x = element_text(size = rel(2), colour = "black"),
+      panel.grid.major.x = element_blank(),
+      panel.grid.minor.x = element_blank())
+```
+
+### Transforming the x axis for log odds ratios
+If the natural logarithm of odds ratios (log odds ratios) is used as effect size, the x axis conveniently is transformed to display the effect sizes on the original scale (odds ratios). This can be done by transforming the labels of the x axis. To illustrate, we first convert the effects sizes (and their standard errors) in the `mozart` data from cohen _d_ to log odds ratios.
+
+```{r}
+mozart_OR <- mozart
+mozart_OR[, c("d", "se")] <- mozart_OR[, c("d", "se")]  * pi/sqrt(3)
+```
+
+We then create the plot and overwrite the defaults for the x axis to show the log odds ratios on their original scale.
+```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5}
+p_OR <- rainforest(mozart_OR[, c("d", "se")], names = mozart_OR[, "study_name"])
+p_OR + scale_x_continuous(name = "Odds Ratio", limits = c(-3, 4), breaks = -3:4, 
+                          labels = function(x) {round(exp(x), 2)})
+```
+
+# References
+Pietschnig, J., Voracek, M., & Formann, A. K. (2010). Mozart effect-Shmozart effect: A meta-analysis. _Intelligence_, _38_, 314-323.
+
+Schild, A. H., & Voracek, M. (2015). Finding your way out of the forest without a trail of bread crumbs: Development and evaluation of two novel displays of forest plots. _Research Synthesis Methods_, _6_, 74-86.
+
+# Contact
+Questions, ideas, criticism: michael.kossmeier@univie.ac.at.
+
