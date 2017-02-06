@@ -434,7 +434,7 @@ rainforest <- function(x,  names = NULL , summary_name = "Summary", group = NULL
       ggplot(data = res, aes(y = .id, x = support)) +
         geom_polygon(data = res, aes(x = support, y = as.numeric(.id)+log_density,
                                      color = min_log_density, fill = min_log_density,
-                                     group = paste(.id, segment)), size = 0.3) +
+                                     group = paste(.id, segment)), size = 0.5) +
         geom_point(data = plotdata, shape = "I", aes(x = x, y = ID), col = "snow2", size = 2) +
         geom_line(data = plotdata, col = "snow2", aes(x = ci_value, y = ID, group = ID), size = 0.1)
         if(summary_symbol == "diamond") {
