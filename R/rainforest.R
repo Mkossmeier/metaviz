@@ -10,7 +10,7 @@
 #'for a hypothetical true value is proportional to the likelihood of that true
 #'value given the observed estimate, while the width is identical to the
 #'confidence interval when normality of effect sizes is assumed (which, for
-#'example, also is the (default) case in \link[metafor]{metafor}, Revman, and CMA). Additionaly,
+#'example, also is the (default) case in \pkg{metafor}, Revman, and CMA). Additionaly,
 #'color shading is utilized to further visualize statistical uncertainty, as
 #'suggested by Jackson (2008). Finally, study and summary level point estimates
 #'are depicted clearly by a specific symbol. Rainforest plots have the
@@ -35,7 +35,7 @@
 #'  correlations, log odds ratios, or Cohen \emph{d}) in the first column and their
 #'  respective standard errors in the second column. Alternatively, x can be the
 #'  output object of function \code{\link[metafor]{rma.uni}} from package
-#'  \link[metafor]{metafor}.
+#'  \pkg{metafor}.
 #'@param names a vector with names/identifiers to annotate each study in the
 #'  rainforest plot.
 #'@param summary_name a name to annotate the summary effect. If a subgroup
@@ -43,13 +43,13 @@
 #'  summary effect of each subgroup.
 #'@param group a factor indicating the subgroup of each study. The group
 #'  argument is not necessary and ignored if \code{x} is an output object of package
-#'  \link[metafor]{metafor}; in this case, subgroup results are used directly from the \link[metafor]{metafor}
+#'  \pkg{metafor}; in this case, subgroup results are used directly from the \pkg{metafor}
 #'  output object (if one categorical moderator was used).
 #'@param method Which method should be used to compute the summary effect?
 #'  Supported methods are "FEM" for the fixed-effect model and "REM" for the
 #'  random-effects model (using the DerSimonian-Laird method to estimate the
 #'  between-study variance \eqn{\tau^2}{tau squared}). This argument is ignored if \code{x} is the output
-#'  of the function \code{\link[metafor]{rma.uni}} of package \link[metafor]{metafor}; in this
+#'  of the function \code{\link[metafor]{rma.uni}} of package \pkg{metafor}; in this
 #'  case, meta-analytic results are used directly from the metafor output
 #'  object.
 #'@param confidence_level the confidence level for the plotted confidence
@@ -64,7 +64,7 @@
 #'  \item none: No summary effect is displayed.
 #'  }
 #'@param col character specifying the color palette (from package
-#'  \code{\link[RColorBrewer]{RColorBrewer}}) used for shading. Default value is
+#'  \pkg{RColorBrewer}) used for shading. Default value is
 #'  "Blues". Other options are "Greys", "Oranges", "Greens", "Reds", and
 #'  "Purples".
 #'@param shading logical scalar indicating if the likelihood drops should be
@@ -132,22 +132,24 @@ rainforest <- function(x,  names = NULL , summary_name = "Summary", group = NULL
   } else {
     if((is.data.frame(x) || is.matrix(x)) && ncol(x) == 2) { # check if a data.frame or matrix with (exactly) two columns is supplied
       if(sum(is.na(x[, 1])) != 0 || sum(is.na(x[, 2])) != 0) { # check if there are missing values
-        warning("The effect sizes or standard errors contain missing
-                values, only complete cases are used")
-        x <- x[complete.cases(x), ]
-        names = names[complete.cases(x)]
+        warning(paste("The effect sizes or standard errors contain missing
+                values, only complete cases are used. Did not use the follwing row(s):",
+                      paste(which(!complete.cases(x)), collapse = ", "), sep = " "))
+        names <- names[complete.cases(x)]
         if(!is.null(group)) {
-          group <- group[complete.cases(group), ]
+          group <- group[complete.cases(x)]
         }
+        x <- x[complete.cases(x), ]
       }
 
       if(!is.numeric(x[, 1]) || !is.numeric(x[,2])) { # check if effect size and standard error columns are numeric
+        warning("Supplied effect sizes and/or standard errors are not numeric. Used them as as.numeric")
         x[, 1] <- as.numeric(x[, 1])
         x[, 2] <- as.numeric(x[, 2])
       }
 
       # check if there are any negative standard errors
-      if(!all(x[, 2]>=0)) {
+      if(!all(x[, 2] >= 0)) {
         stop("Negative standard errors supplied")
       }
 
@@ -186,13 +188,13 @@ rainforest <- function(x,  names = NULL , summary_name = "Summary", group = NULL
           summary_es <- plyr::ddply(x, plyr::.(group), plyr::summarize, rem_es = metaviz::rem_effect(es ,se))[, 2]
           summary_se <- plyr::ddply(x, plyr::.(group), plyr::summarize, rem_se = metaviz::rem_err(es, se))[, 2]
         } else {
-          stop("rainforest only supports FEM or REM as method argument")
+          stop("rainforest only supports FEM or REM as method arguments")
         }
       }
     } else {
       stop("Unknown input argument. Must be a matrix or data.frame with
            effect sizes and standard errors in two numeric columns or an
-           output object of function rma.uni() from the package metafor")
+           output object of function rma.uni from the package metafor")
     }
   }
 
@@ -206,7 +208,7 @@ rainforest <- function(x,  names = NULL , summary_name = "Summary", group = NULL
     summary_name <- paste("Summary.", 1:k, sep = "")
   }
 
-  # Determine IDs for studies and summary effects (corresponds to plotting coordinates in the rainforest plot)
+  # Determine IDs for studies and summary effects (correspond to plotting coordinates in the rainforest plot)
   ids <- function(group) {
     k <- length(levels(group))
     ki_start <- cumsum(c(1, as.numeric(table(group))[-k] + 3))
@@ -225,7 +227,7 @@ rainforest <- function(x,  names = NULL , summary_name = "Summary", group = NULL
   plotdata <- data.frame("x" = c(es, summary_es), "se" = c(se, summary_se),
                          "ID" = ids(group)$ID, "names" = c(names, summary_name))
 
-  # if no summary_symbol should be plotted, only use study information
+  # if no summary_symbol should be plotted, only study information is used
   if(summary_symbol == "none") {
     plotdata <- data.frame("x" = es, "se" = se,
                            "ID" = ids(group)$ID[ids(group)$type == "study"],
@@ -238,7 +240,7 @@ rainforest <- function(x,  names = NULL , summary_name = "Summary", group = NULL
                                         plotdata$x + qnorm(1-(1-confidence_level)/2, 0, 1)*plotdata$se))
 
   # function ll constructs a likelihood raindrop of a study. If shading is true, the raindrop is built out of
-  # several distinct segments (to adequately color shade the raindrop)
+  # several distinct segments (to color shade the raindrop)
   ll <- function(x, max.range) {
     # width of the region over which the raindop is built
     se.factor <- ceiling(qnorm(1-(1-confidence_level)/2, 0, 1))
@@ -358,15 +360,14 @@ rainforest <- function(x,  names = NULL , summary_name = "Summary", group = NULL
       summary.drop <- prep.data(summary.drop)
     }
 
-    # scale every summary raindrop such that they have maximum size 1
-    summary.drop <- lapply(summary.drop, FUN = function (x) {x$log_density <- x$log_density/(2*abs(max(x$log_density))); x})
+    # alternative scaling of summary drops. every summary drop has maximum size 1 (currently not used)
+    # summary.drop <- lapply(summary.drop, FUN = function (x) {x$log_density <- x$log_density/(2*abs(max(x$log_density))); x})
 
     # merge the list of raindops in one dataframe for plotting
     summary.drop <- plyr::ldply(summary.drop)
 
-    # alternative scaling of summary drops such that they are scaled relative to all other summary drops (for subgroup analysis),
-    # instead of being set to max size (Note: currently not used).
-    # summary.drop$log_density <- summary.drop$log_density/(2*abs(max(summary.drop$log_density)))
+    # Summary raindrops are scaled relative to all other summary drops (relevant for subgroup analysis).
+    summary.drop$log_density <- summary.drop$log_density/(2*abs(max(summary.drop$log_density)))
 
     # Combine study raindrops and summary raindrop(s) into one data.frame
     res <- rbind(res, summary.drop)
@@ -382,17 +383,17 @@ rainforest <- function(x,  names = NULL , summary_name = "Summary", group = NULL
                                       summary_es,
                                       summary_es + qnorm(1 - (1 - confidence_level) / 2, 0, 1) * summary_se,
                                       summary_es),
-                                "y.diamond" = c(ids(group)$ID[ids(group)$type=="summary"],
-                                                ids(group)$ID[ids(group)$type=="summary"] + 0.3,
-                                                ids(group)$ID[ids(group)$type=="summary"],
-                                                ids(group)$ID[ids(group)$type=="summary"] - 0.3),
+                                "y.diamond" = c(ids(group)$ID[ids(group)$type == "summary"],
+                                                ids(group)$ID[ids(group)$type == "summary"] + 0.3,
+                                                ids(group)$ID[ids(group)$type == "summary"],
+                                                ids(group)$ID[ids(group)$type == "summary"] - 0.3),
                                 "diamond_group" = rep(1:k, times = 4)
                                 )
     } else {
       if(summary_symbol == "none") {
         y_limit <- c(0, n + 3 * k - 2)
-        y_tick_names <- c(as.vector(names))[order(ids(group)$ID[ids(group)$type=="study"], decreasing =T)]
-        y_breaks <- sort(ids(group)$ID[ids(group)$type=="study"], decreasing =T)
+        y_tick_names <- c(as.vector(names))[order(ids(group)$ID[ids(group)$type == "study"], decreasing = T)]
+        y_breaks <- sort(ids(group)$ID[ids(group)$type == "study"], decreasing = T)
       } else {
         warning("Unknown summary_symbol specified. Using default value (rain)")
       }
@@ -415,7 +416,7 @@ rainforest <- function(x,  names = NULL , summary_name = "Summary", group = NULL
   }
   col <- RColorBrewer::brewer.pal(n=9, name=col)
 
-  # Workaround for "Undefined global functions or variables" Note in R CMD check while using ggplot2.
+  # workaround for "Undefined global functions or variables" Note in R CMD check while using ggplot2.
   support <- NULL
   segment <- NULL
   min_log_density <- NULL

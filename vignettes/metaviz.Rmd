@@ -1,6 +1,6 @@
 ---
 title: "Creating rainforest plots with the *R* package **metaviz**"
-author: "Michael Kossmeier, Ulrich S. Tran and Martin Voracek (Department of Basic Psychological Research and Research Methods, School of Psychology, University of Vienna, Austria)"
+author: "Michael Kossmeier, Ulrich S. Tran, and Martin Voracek (Department of Basic Psychological Research and Research Methods, School of Psychology, University of Vienna, Austria)"
 date: "`r Sys.Date()`" 
 output: 
     rmarkdown::html_vignette:
@@ -79,7 +79,7 @@ rainforest(x = mozart[1:5, c("d", "se")], names = mozart[1:10, "study_name"],
 ```
 
 The default color can be changed with the `col` argument. Supported options are `"Blues"` (default), `"Greys"`, `"Oranges"`, `"Greens"`, `"Reds"`, and
-`"Purples"`. Color palettes are used from the package [**RColorBrewer**](https://cran.r-project.org/web/packages/RColorBrewer/index.html). A grey rainforest plot is depcited below.
+`"Purples"`. Color palettes are used from the package [**RColorBrewer**](https://CRAN.R-project.org/package=RColorBrewer). A grey rainforest plot is depcited below.
 ```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5}
 rainforest(x = mozart[, c("d", "se")], names = mozart[, "study_name"], 
            summary_name = "Summary (Fixed effect)", xlab = "Cohen d", col = "Greys")
@@ -88,7 +88,8 @@ rainforest(x = mozart[, c("d", "se")], names = mozart[, "study_name"],
 Color shading can also be suppressed by the user with the `shading` argument.
 ```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5}
 rainforest(x = mozart[, c("d", "se")], names = mozart[, "study_name"], 
-           summary_name = "Summary (Fixed effect)", xlab = "Cohen d", col = "Greys", shading = FALSE)
+           summary_name = "Summary (Fixed effect)", xlab = "Cohen d", col = "Greys",
+           shading = FALSE)
 ```
 
 The detail level of the raindrops can be configured with the `detail_level` argument. This argument increases (for values greater 1) or decreases (for values smaller than 1) the number of points used to create the raindrop polygons and also the number of segments used for shading the raindrops. It can be useful to change the defaults for especially large or small plots.
@@ -124,21 +125,21 @@ group <- interaction(mozart[, "unpublished"], mozart[, "rr_lab"])
 We can then use this variable to conduct and display the subgroup analysis using both moderators simultaneously.
 ```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5}
 rainforest(x = mozart[, c("d","se")], names = mozart[, "study_name"], 
-           summary_name = c("published/all other", "unpublished/all other", "published/RR lab", "unpublished/RR lab" ), 
+           summary_name = c("Summary published/all other", "Summary unpublished/all other", 
+                            "Summary published/RR lab", " Summary unpublished/RR lab" ),
            xlab = "Cohen d", group = group)
 ```
 
 
 ## Using metafor output as input for rainforest
-The `rainforest` function can use the output of the function `rma.uni` from *R* package [**metafor**](https://cran.r-project.org/web/packages/metafor/index.html), a widely used package for meta-analytic modelling. The package [**metafor**](https://cran.r-project.org/web/packages/metafor/index.html) needs to be installed and then attached within the *R* environment.
+The `rainforest` function can use the output of the function `rma.uni` from *R* package [**metafor**](https://CRAN.R-project.org/package=metafor), a widely used package for meta-analytic modelling. The package [**metafor**](https://CRAN.R-project.org/package=metafor) needs to be installed and then attached within the *R* environment.
 ```{r}
 library(metafor)
 ```
 
-We use the output of the `rma.uni` function as input for `rainforest`. First we compute a meta-analysis using `rma.uni` from package [**metafor**](https://cran.r-project.org/web/packages/metafor/index.html).
+We use the output of the `rma.uni` function as input for `rainforest`. First we compute a meta-analysis using `rma.uni` from package [**metafor**](https://CRAN.R-project.org/package=metafor).
 ```{r}
 res <- rma.uni(yi = mozart[, "d"], sei = mozart[, "se"])
-res
 ```
 
 In a second step, we use the output from `rma.uni` as input for the `rainforest` function.
@@ -146,10 +147,9 @@ In a second step, we use the output from `rma.uni` as input for the `rainforest`
 rainforest(x = res, names = mozart[, "study_name"], xlab = "Cohen d")
 ```
 
-It is also possible to visualize a subgroup analysis using one categorical moderator which was conducted with [**metafor**](https://cran.r-project.org/web/packages/metafor/index.html). First, we compute the subgroup analysis. 
+It is also possible to visualize a subgroup analysis using one categorical moderator which was conducted with [**metafor**](https://CRAN.R-project.org/package=metafor). First, we compute the subgroup analysis. 
 ```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5}
 res <- rma.uni(yi = mozart[, "d"], sei = mozart[, "se"], mods = ~mozart[, "unpublished"])
-res
 ```
 
 In a second step, we can use this output object as input for the `rainforest` function to plot a subgroup rainforest plot.
@@ -158,10 +158,10 @@ rainforest(x = res, names = mozart[, "study_name"], xlab = "Cohen d")
 ```
 
 ## The rainforest output as ggplot2 object
-The function `rainforest` uses the package [**ggplot2**](https://cran.r-project.org/web/packages/ggplot2/index.html) to create the rainforest plots. Therefore, the output of `rainforest` is a [**ggplot2**](https://cran.r-project.org/web/packages/ggplot2/index.html) object and can be modified using the [**ggplot2**](https://cran.r-project.org/web/packages/ggplot2/index.html) syntax. We illustrate this with three examples below.
+The function `rainforest` uses the package [**ggplot2**](https://CRAN.R-project.org/package=ggplot2) to create the rainforest plots. Therefore, the output of `rainforest` is a [**ggplot2**](https://CRAN.R-project.org/package=ggplot2) object and can be modified using the [**ggplot2**](https://CRAN.R-project.org/package=ggplot2) syntax. We illustrate this with three examples below.
 
 ### Adding a cumulative meta-analysis
-It is possible to plot additional data to the plot. We will add the results of a cumulative meta-analysis to the rainforest plot. First, we attach the [**ggplot2**](https://cran.r-project.org/web/packages/ggplot2/index.html) package and then store a rainforest plot within a variable.
+It is possible to plot additional data to the plot. We will add the results of a cumulative meta-analysis to the rainforest plot. First, we attach the [**ggplot2**](https://CRAN.R-project.org/package=ggplot2) package and then store a rainforest plot within a variable.
 ```{r}
 library(ggplot2)
 p <- rainforest(mozart[, c("d", "se")], names = mozart[, "study_name"])
@@ -185,7 +185,8 @@ geom_point(data = cum_data, aes(y = y, x = x), col="black", size = 2, shape = 18
 Another possibility is to manually change the appearance of the plot (by overwriting the defaults). For example, we can increase the label size at the x axis, remove all grid lines, and add a line at the summary effect.
 ```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5}
 p + 
-geom_vline(xintercept =  sum((1/mozart[, "se"]^2)*mozart[, "d"])/(sum(1/mozart[, "se"]^2)), linetype = 3) +
+geom_vline(xintercept =  sum((1/mozart[, "se"]^2)*mozart[, "d"])/(sum(1/mozart[, "se"]^2)), 
+           linetype = 3) +
 theme(axis.title.x = element_text(size = rel(2), colour = "black"),
       panel.grid.major.x = element_blank(),
       panel.grid.minor.x = element_blank())

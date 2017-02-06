@@ -14,7 +14,7 @@ rainforest(x, names = NULL, summary_name = "Summary", group = NULL,
 correlations, log odds ratios, or Cohen \emph{d}) in the first column and their
 respective standard errors in the second column. Alternatively, x can be the
 output object of function \code{\link[metafor]{rma.uni}} from package
-\link[metafor]{metafor}.}
+\pkg{metafor}.}
 
 \item{names}{a vector with names/identifiers to annotate each study in the
 rainforest plot.}
@@ -25,14 +25,14 @@ summary effect of each subgroup.}
 
 \item{group}{a factor indicating the subgroup of each study. The group
 argument is not necessary and ignored if \code{x} is an output object of package
-\link[metafor]{metafor}; in this case, subgroup results are used directly from the \link[metafor]{metafor}
+\pkg{metafor}; in this case, subgroup results are used directly from the \pkg{metafor}
 output object (if one categorical moderator was used).}
 
 \item{method}{Which method should be used to compute the summary effect?
 Supported methods are "FEM" for the fixed-effect model and "REM" for the
 random-effects model (using the DerSimonian-Laird method to estimate the
 between-study variance \eqn{\tau^2}{tau squared}). This argument is ignored if \code{x} is the output
-of the function \code{\link[metafor]{rma.uni}} of package \link[metafor]{metafor}; in this
+of the function \code{\link[metafor]{rma.uni}} of package \pkg{metafor}; in this
 case, meta-analytic results are used directly from the metafor output
 object.}
 
@@ -50,7 +50,7 @@ A classic summary diamond is used.
 }}
 
 \item{col}{character specifying the color palette (from package
-\code{\link[RColorBrewer]{RColorBrewer}}) used for shading. Default value is
+\pkg{RColorBrewer}) used for shading. Default value is
 "Blues". Other options are "Greys", "Oranges", "Greens", "Reds", and
 "Purples".}
 
@@ -83,7 +83,7 @@ construct these likelihood drops. Therefore, the height of a likelihood drop
 for a hypothetical true value is proportional to the likelihood of that true
 value given the observed estimate, while the width is identical to the
 confidence interval when normality of effect sizes is assumed (which, for
-example, also is the (default) case in \link[metafor]{metafor}, Revman, and CMA). Additionaly,
+example, also is the (default) case in \pkg{metafor}, Revman, and CMA). Additionaly,
 color shading is utilized to further visualize statistical uncertainty, as
 suggested by Jackson (2008). Finally, study and summary level point estimates
 are depicted clearly by a specific symbol. Rainforest plots have the
