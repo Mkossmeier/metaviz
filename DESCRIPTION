@@ -11,6 +11,8 @@ Description: Creates rainforest plots (proposed by Schild & Voracek, 2015), a va
     enhancement of the classic forest plot for meta-analysis. In the near future, the metaviz 
     package will be extended by further, established as well as novel, plotting options for 
     visualizing meta-analytic data.
+URL: https://github.com/Mkossmeier/metaviz
+BugReports: https://github.com/Mkossmeier/metaviz/issues
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
