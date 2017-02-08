@@ -7,8 +7,8 @@ Authors@R: c(
     person("Ulrich S.", "Tran", email = "ulrich.tran@univie.ac.at", role = c("aut")),
     person("Martin", "Voracek", email = "martin.voracek@univie.ac.at", role = c("aut"))
     )
-Description: Creates rainforest plots (proposed by Schild & Voracek, 2015), a variant and 
-    enhancement of the classic forest plot for meta-analysis. In the near future, the metaviz 
+Description: Creates rainforest plots (proposed by Schild & Voracek, 2015 <doi:10.1002/jrsm.1125>), a variant and 
+    enhancement of the classic forest plot for meta-analysis. In the near future, the 'metaviz' 
     package will be extended by further, established as well as novel, plotting options for 
     visualizing meta-analytic data.
 License: GPL-2
