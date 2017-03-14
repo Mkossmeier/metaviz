@@ -7,24 +7,25 @@ Authors@R: c(
     person("Ulrich S.", "Tran", email = "ulrich.tran@univie.ac.at", role = c("aut")),
     person("Martin", "Voracek", email = "martin.voracek@univie.ac.at", role = c("aut"))
     )
-Description: Creates rainforest plots (proposed by Schild & Voracek, 2015 <doi:10.1002/jrsm.1125>), a variant and 
-    enhancement of the classic forest plot for meta-analysis. In the near future, the 'metaviz' 
-    package will be extended by further, established as well as novel, plotting options for 
-    visualizing meta-analytic data.
+Description: Creates rainforest plots (proposed by Schild & Voracek, 2015 
+    <doi:10.1002/jrsm.1125>), a variant and enhancement of the classic forest plot 
+    for meta-analysis. In the near future, the 'metaviz' package will be extended by further,
+    established as well as novel, plotting options for visualizing meta-analytic data.
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
-Imports:     
-    ggplot2 (>= 2.2.1),
+Imports:
     plyr (>= 1.8.4),
-    RColorBrewer (>= 1.1-2)
+    RColorBrewer (>= 1.1-2),
+    metafor (>= 1.9-9)
 Suggests:
-    metafor (>= 1.9-9),
     Cairo (>= 1.5-9),
     knitr,
     rmarkdown
 Depends:
-    R (>= 2.10)
+    R (>= 2.10),
+    ggplot2 (>= 2.2.1),
+    nullabor (>= 0.3.1)
 RoxygenNote: 5.0.1
 VignetteBuilder: knitr
 URL: https://github.com/Mkossmeier/metaviz

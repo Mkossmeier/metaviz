@@ -28,7 +28,7 @@ In the following, we use the `mozart` data distributed with the package **metavi
 head(mozart)
 ```
 
-More details and further references can be found in the respective help files ('help(mozart)', 'help(rainforest)').
+More details and further references can be found in the respective help files (`help(mozart)`, `help(rainforest)`).
 
 # Capabilites of rainforest
 
@@ -177,8 +177,8 @@ cum_data <- data.frame(x = cum_summary, y = y)
 We can now add the cumulative meta-analysis results to the rainforest plot using points and a connecting line.
 ```{r, dev='CairoPNG', fig.align = 'center', fig.height = 6.5, fig.width = 6.5}
 p + 
-geom_path(data = cum_data, aes(y = y, x = x), col=" black ", size = 0.5) +
-geom_point(data = cum_data, aes(y = y, x = x), col="black", size = 2, shape = 18)
+geom_path(data = cum_data, aes(y = y, x = x), col = "black", size = 0.5) +
+geom_point(data = cum_data, aes(y = y, x = x), col = "black", size = 2, shape = 18)
 ```
 
 ### Manually changing the appearence using ggplot2 syntax
