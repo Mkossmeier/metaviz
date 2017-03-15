@@ -1,7 +1,7 @@
 Package: metaviz
 Type: Package
 Title: Rainforest Plots for Meta-Analysis
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: c(
     person("Michael", "Kossmeier", email = "michael.kossmeier@univie.ac.at", role = c("cre", "aut")),
     person("Ulrich S.", "Tran", email = "ulrich.tran@univie.ac.at", role = c("aut")),
