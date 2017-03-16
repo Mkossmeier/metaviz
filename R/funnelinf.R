@@ -363,7 +363,9 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, y_axis = "s
           p <- p + geom_point(data = tnfdata, aes(x = es, y = se, shape = group),
                               size = 2 , fill = "black", col = "black", alpha = 1)
         }
-        p <- p + geom_vline(data = tnfdata, aes(xintercept = tnf_summary), lty = "dashed")
+        if(contours) {
+          p <- p + geom_vline(data = tnfdata, aes(xintercept = tnf_summary), lty = "dashed")
+        }
       }
     }
 
