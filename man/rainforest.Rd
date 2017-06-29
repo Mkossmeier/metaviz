@@ -89,7 +89,7 @@ suggested by Jackson (2008). Finally, study and summary level point estimates
 are depicted clearly by a specific symbol. Rainforest plots have the
 following advantages, as compared to classic forest plots:
 
-\enumerate{ \item The width of the likelihood raindops corresponds to the
+\enumerate{ \item The width of the likelihood raindrops corresponds to the
 confidence intervals, as also shown in the classic forest plot. In addition,
 the height of the likelihood drops and color shading adequately visualizes the
 plausibility of true values given the observed estimate.
