@@ -10,7 +10,7 @@
 #'for a hypothetical true value is proportional to the likelihood of that true
 #'value given the observed estimate, while the width is identical to the
 #'confidence interval when normality of effect sizes is assumed (which, for
-#'example, also is the (default) case in \pkg{metafor}, Revman, and CMA). Additionaly,
+#'example, also is the (default) case in \pkg{metafor}, Revman, and CMA). Additionally,
 #'color shading is utilized to further visualize statistical uncertainty, as
 #'suggested by Jackson (2008). Finally, study and summary level point estimates
 #'are depicted clearly by a specific symbol. Rainforest plots have the
@@ -18,7 +18,7 @@
 #'
 #'\enumerate{ \item The width of the likelihood raindops corresponds to the
 #'confidence intervals, as also shown in the classic forest plot. In addition,
-#'the height of the likelihood drops and color shading adequateley visualizes the
+#'the height of the likelihood drops and color shading adequately visualizes the
 #'plausibility of true values given the observed estimate.
 #'
 #'\item Low likelihood drops and light color shading causes small studies (with
@@ -315,7 +315,7 @@ rainforest <- function(x,  names = NULL , summary_name = "Summary", group = NULL
   # The prep.data function prepares the list of raindrops in three ways for plotting (shading of segments):
   # 1) the values are sorted by segments, such that the same segments of each raindrop are joined together
   # 2) segments are renamed with integer values from 1 to the number of segments per raindrop
-  # 3) to draw smooth raindops the values at the right hand boundary of each segment have to be the first
+  # 3) to draw smooth raindrops the values at the right hand boundary of each segment have to be the first
   # values at the left hand boundary of the next segment on the right.
   prep.data <- function(res) {
     res <- lapply(res, FUN = function(x) {x <- x[order(x$segment), ]})

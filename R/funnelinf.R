@@ -1,12 +1,12 @@
 #' Visual funnel plot inference for meta-analysis
 #'
 #' Creates a lineup of funnel plots to conduct visual funnel plot inference. The funnel plot showing the real, supplied data is
-#' presented alongside nullplots showing simulated data under the null hypothesis.
+#' presented alongside null plots showing simulated data under the null hypothesis.
 #'
 #' Funnel plots are widely used in meta-analysis to detect small study effects and in particular publication bias.
 #' However, interpretations of funnel plots often lead to false conclusions (e.g., Terrin, Schmid, and Lau, 2005). Visual inference
 #' (Buja et al. 2009; Majumder, Hofmann, and Cook 2013) can help to improve the validity of such funnel plot based conclusions.
-#' If the alternative hypothesis is true (e.g., small study effects led to an assymtetric funnel plot), the funnel plot showing the real data
+#' If the alternative hypothesis is true (e.g., small study effects led to an asymtetric funnel plot), the funnel plot showing the real data
 #' should be identifiable when presented alongside funnel plots of simulated data under the null hypothesis. Only if this is possible,
 #' conclusion based on the funnel plot might be warranted.
 #'

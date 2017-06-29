@@ -27,7 +27,7 @@ Pietschnig, Voracek, and Formann (2010) on the Mozart effect. Each study compare
 task performance of participants after hearing the first movement "allegro
 con spirito" of the Mozart sonata for two pianos in D major (KV 448) with
 the spatial task performance of participants who were exposed to a non-musical
-stimulus or no simulus at all.
+stimulus or no stimulus at all.
 }
 \references{
 Pietschnig, J., Voracek, M., & Formann, A. K. (2010). Mozart

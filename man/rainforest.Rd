@@ -83,7 +83,7 @@ construct these likelihood drops. Therefore, the height of a likelihood drop
 for a hypothetical true value is proportional to the likelihood of that true
 value given the observed estimate, while the width is identical to the
 confidence interval when normality of effect sizes is assumed (which, for
-example, also is the (default) case in \pkg{metafor}, Revman, and CMA). Additionaly,
+example, also is the (default) case in \pkg{metafor}, Revman, and CMA). Additionally,
 color shading is utilized to further visualize statistical uncertainty, as
 suggested by Jackson (2008). Finally, study and summary level point estimates
 are depicted clearly by a specific symbol. Rainforest plots have the
@@ -91,7 +91,7 @@ following advantages, as compared to classic forest plots:
 
 \enumerate{ \item The width of the likelihood raindops corresponds to the
 confidence intervals, as also shown in the classic forest plot. In addition,
-the height of the likelihood drops and color shading adequateley visualizes the
+the height of the likelihood drops and color shading adequately visualizes the
 plausibility of true values given the observed estimate.
 
 \item Low likelihood drops and light color shading causes small studies (with

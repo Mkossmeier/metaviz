@@ -5,7 +5,7 @@
 #' task performance of participants after hearing the first movement "allegro
 #' con spirito" of the Mozart sonata for two pianos in D major (KV 448) with
 #' the spatial task performance of participants who were exposed to a non-musical
-#' stimulus or no simulus at all.
+#' stimulus or no stimulus at all.
 #'
 #' @format A data frame with 38 rows and 6 variables:
 #' \describe{
