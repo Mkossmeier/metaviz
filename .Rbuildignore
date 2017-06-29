@@ -9,4 +9,3 @@
 ^NEWS-.*\.png$
 ^\.travis\.yml$
 ^cran-comments\.Rmd$
-^cran-comments\.md$

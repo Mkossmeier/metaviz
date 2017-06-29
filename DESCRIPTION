@@ -1,6 +1,6 @@
 Package: metaviz
 Type: Package
-Title: Rainforest Plots for Meta-Analysis
+Title: Rainforest Plots and Visual Funnel Plot Inference for Meta-Analysis
 Version: 0.1.1
 Authors@R: c(
     person("Michael", "Kossmeier", email = "michael.kossmeier@univie.ac.at", role = c("cre", "aut")),
@@ -9,7 +9,8 @@ Authors@R: c(
     )
 Description: Creates rainforest plots (proposed by Schild & Voracek, 2015 
     <doi:10.1002/jrsm.1125>), a variant and enhancement of the classic forest plot 
-    for meta-analysis. In the near future, the 'metaviz' package will be extended by further,
+    for meta-analysis. In addition, functionalities for visual funnel plot inference are provided. 
+    In the near future, the 'metaviz' package will be extended by further,
     established as well as novel, plotting options for visualizing meta-analytic data.
 License: GPL-2
 Encoding: UTF-8

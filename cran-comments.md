@@ -1,8 +1,5 @@
-Resubmisson
------------
-
--   package 'metaviz' is now single quoted in the DESCRIPTION
--   the doi of the reference in the DESCRIPTION was added
+Update to version 0.1.1 (package metaviz)
+-----------------------------------------
 
 Test environments
 -----------------

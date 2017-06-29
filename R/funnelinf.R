@@ -3,12 +3,12 @@
 #' Creates a funnel plot showing the real data alongside funnel plots showing simulated data
 #' under the null hypothesis to conduct visual funnel plot inference.
 #'
-#' Funnel plots are widely used in meta-analysis to detect small study effects and specifically publication bias.
+#' Funnel plots are widely used in meta-analysis to detect small study effects and in particular publication bias.
 #' However, interpretations of funnel plots often lead to false conclusions (e.g., Terrin, Schmid, and Lau, 2005). Visual inference
-#' (Buja et al. 2009; Majumder, Hofmann, and Cook 2013) can help to improve the validity of such conclusions based on funnel plots assessment.
+#' (Buja et al. 2009; Majumder, Hofmann, and Cook 2013) can help to improve the validity of such funnel plot based conclusions.
 #' If the alternative hypothesis is true (e.g., small study effects led to an assymtetric funnel plot), the funnel plot showing the real data
 #' should be identifiable when presented alongside funnel plots of simulated data under the null hypothesis. Only if this is possible,
-#' conclusion based on the funnel plot should be drawn.
+#' conclusion based on the funnel plot might be warranted.
 #'
 #'@param x data.frame or matrix with the effect sizes of all studies (e.g.,
 #'  correlations, log odds ratios, or Cohen \emph{d}) in the first column and their
@@ -24,7 +24,8 @@
 #'  DerSimonian-Laird method to estimate the between-study variance \eqn{\tau^2}{tau squared})
 #'@param contours logical scalar indicating if classic funnel plot contours should be displayed (i.e., summary effect +/-
 #'  rnorm(0.975) * SE).
-#'@param sig_contours logical scalar. Should significance contours should be drawn?
+#'@param sig_contours logical scalar. Should significance contours should be drawn? Significance contours show which combination of
+#' effect size and standard error lead to p-values smaller than 0.05 or 0.01 (using a Wald test).
 #'@param trim_and_fill logical scalar Should imputed studies by the trim and fill method be displayed?
 #'@param trim_and_fill_side On which side should studies be imputed by the trim and fill method? Available options are
 #'right or left.
@@ -40,6 +41,19 @@
 #'  visually identify publication bias. \emph{Journal of clinical epidemiology}, \emph{58}, 894-901.
 #'@return A lineup of n (20 by default) funnel plots; one showing the real data and n-1 showing
 #'  simulated data under the null hypothesis
+#'@author Michael Kossmeier* <michael.kossmeier@univie.ac.at>
+#'@author Ulrich S. Tran* <ulrich.tran@univie.ac.at>
+#'@author Martin Voracek* <martin.voracek@univie.ac.at>
+#'@author *Department of Basic Psychological Research and Research Methods, School of Psychology, University of Vienna
+#'@examples
+#' library(metaviz)
+#' # Plotting a funnel plot lineup with the mozart data to conduct visual funnel plot inference considering subgroups (for details, see help(mozart)):
+#' funnelinf(x = mozart[, c("d", "se")],
+#' group = mozart[, "rr_lab"],
+#' group_permut = TRUE, null_model = "REM")
+#'
+#' # Plotting a funnel plot lineup with the brain volume data to conduct visual funnel plot inference considering heterogeneity (for details, see help(brainvol)):
+#' funnelinf(x = brainvol[, c("z", "z_se")], null_model = "FEM")
 #' @export
 funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, y_axis = "se", null_model = "FEM",
                       contours = TRUE, sig_contours = TRUE,
@@ -281,7 +295,7 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, y_axis = "s
         max_x <- max(c(max_x, max(x_right)))
 
         # update y axis limit
-        max_y <- min(c(max(sig_funneldata$y0.1), max(sig_funneldata$y0.05), max(sig_funneldata$y0.01)))
+        # max_y <- min(c(max(sig_funneldata$y0.1), max(sig_funneldata$y0.05), max(sig_funneldata$y0.01)))
 
       }
       # determine classic funnel contour
@@ -306,7 +320,7 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, y_axis = "s
         min_x <- min(c(min_x, min(funneldata$x)))
         max_x <- max(c(max_x, max(funneldata$x)))
         # update y axis limit
-        max_y <- min(c(max(funneldata$y), max_y))
+        #max_y <- min(c(max(funneldata$y), max_y))
       }
 
       if(egger) {
@@ -442,7 +456,7 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, y_axis = "s
       p +
       scale_y_continuous(name = "Precision (1/SE)")  +
       coord_cartesian(xlim = c(min_x - 0.2, max_x + 0.2),
-                      ylim= c(1/max_se, max_y), expand = F) +
+                      ylim= c(1/max_se - 0.05, max_y + 0.5), expand = F) +
       scale_shape_manual(values = 21:25) +
       scale_x_continuous(name = "Effect") +
       scale_color_brewer(palette = "Set1", type = "qual") +

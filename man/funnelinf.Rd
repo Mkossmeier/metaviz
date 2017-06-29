@@ -31,7 +31,8 @@ DerSimonian-Laird method to estimate the between-study variance \eqn{\tau^2}{tau
 \item{contours}{logical scalar indicating if classic funnel plot contours should be displayed (i.e., summary effect +/-
 rnorm(0.975) * SE).}
 
-\item{sig_contours}{logical scalar. Should significance contours should be drawn?}
+\item{sig_contours}{logical scalar. Should significance contours should be drawn? Significance contours show which combination of
+effect size and standard error lead to p-values smaller than 0.05 or 0.01 (using a Wald test).}
 
 \item{trim_and_fill}{logical scalar Should imputed studies by the trim and fill method be displayed?}
 
@@ -51,12 +52,31 @@ Creates a funnel plot showing the real data alongside funnel plots showing simul
 under the null hypothesis to conduct visual funnel plot inference.
 }
 \details{
-Funnel plots are widely used in meta-analysis to detect small study effects and specifically publication bias.
+Funnel plots are widely used in meta-analysis to detect small study effects and in particular publication bias.
 However, interpretations of funnel plots often lead to false conclusions (e.g., Terrin, Schmid, and Lau, 2005). Visual inference
-(Buja et al. 2009; Majumder, Hofmann, and Cook 2013) can help to improve the validity of such conclusions based on funnel plots assessment.
+(Buja et al. 2009; Majumder, Hofmann, and Cook 2013) can help to improve the validity of such funnel plot based conclusions.
 If the alternative hypothesis is true (e.g., small study effects led to an assymtetric funnel plot), the funnel plot showing the real data
 should be identifiable when presented alongside funnel plots of simulated data under the null hypothesis. Only if this is possible,
-conclusion based on the funnel plot should be drawn.
+conclusion based on the funnel plot might be warranted.
+}
+\examples{
+library(metaviz)
+# Plotting a funnel plot lineup with the mozart data to conduct visual funnel plot inference considering subgroups (for details, see help(mozart)):
+funnelinf(x = mozart[, c("d", "se")],
+group = mozart[, "rr_lab"],
+group_permut = TRUE, null_model = "REM")
+
+# Plotting a funnel plot lineup with the brain volume data to conduct visual funnel plot inference considering heterogeneity (for details, see help(brainvol)):
+funnelinf(x = brainvol[, c("z", "z_se")], null_model = "FEM")
+}
+\author{
+Michael Kossmeier* <michael.kossmeier@univie.ac.at>
+
+Ulrich S. Tran* <ulrich.tran@univie.ac.at>
+
+Martin Voracek* <martin.voracek@univie.ac.at>
+
+*Department of Basic Psychological Research and Research Methods, School of Psychology, University of Vienna
 }
 \references{
 Buja, A., Cook, D., Hofmann, H., Lawrence, M., Lee, E. K., Swayne, D. F., & Wickham, H. (2009).

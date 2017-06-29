@@ -1,5 +1,4 @@
 
-<!-- NEWS.md is generated from NEWS.Rmd. Please edit that file -->
 Package **metaviz** version 0.1.0
 =================================
 
@@ -9,3 +8,8 @@ Package **metaviz** version 0.1.1 (not yet on CRAN)
 ---------------------------------------------------
 
 -   March 14, 2017: Added a new function for visual funnel plot inference: `funnelinf`. Also available as shiny app: <https://metaviz.shinyapps.io/funnelinf_app/>
+
+Package **metaviz** version 0.1.1
+---------------------------------
+
+-   June 29, 2017: Version 0.1.1 submtited to CRAN
