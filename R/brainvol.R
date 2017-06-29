@@ -2,7 +2,7 @@
 #'
 #' A dataset consisting of 83 empirical studies used in the meta-analysis of
 #' Pietschnig, Penke, Wicherts, Zeiler, and Voracek (2015) on the associations between human brain volume and
-#' intelligence (measured full-scale IQ) in healhty participant samples.
+#' intelligence (measured full-scale IQ) in healthy participant samples.
 #'
 #' @format A data frame with 38 rows and 6 variables:
 #' \describe{
