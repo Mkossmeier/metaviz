@@ -34,4 +34,3 @@ Pietschnig, J., Voracek, M., & Formann, A. K. (2010). Mozart
   effect-Shmozart effect: A meta-analysis. \emph{Intelligence}, \emph{38}, 314-323.
 }
 \keyword{datasets}
-

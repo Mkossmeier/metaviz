@@ -34,7 +34,7 @@ rnorm(0.975) * SE).}
 \item{sig_contours}{logical scalar. Should significance contours should be drawn? Significance contours show which combination of
 effect size and standard error lead to p-values smaller than 0.05 or 0.01 (using a Wald test).}
 
-\item{trim_and_fill}{logical scalar Should imputed studies by the trim and fill method be displayed?}
+\item{trim_and_fill}{logical scalar. Should studies imputed by the trim and fill method be displayed?}
 
 \item{trim_and_fill_side}{On which side should studies be imputed by the trim and fill method? Available options are
 right or left.}
@@ -48,8 +48,8 @@ A lineup of n (20 by default) funnel plots; one showing the real data and n-1 sh
  simulated data under the null hypothesis
 }
 \description{
-Creates a funnel plot showing the real data alongside funnel plots showing simulated data
-under the null hypothesis to conduct visual funnel plot inference.
+Creates a lineup of funnel plots to conduct visual funnel plot inference. The funnel plot showing the real, supplied data is
+presented alongside nullplots showing simulated data under the null hypothesis.
 }
 \details{
 Funnel plots are widely used in meta-analysis to detect small study effects and in particular publication bias.
@@ -60,23 +60,17 @@ should be identifiable when presented alongside funnel plots of simulated data u
 conclusion based on the funnel plot might be warranted.
 }
 \examples{
-library(metaviz)
-# Plotting a funnel plot lineup with the mozart data to conduct visual funnel plot inference considering subgroups (for details, see help(mozart)):
+\dontrun{
+# Plotting a funnel plot lineup with the mozart data to conduct visual funnel plot inference
+# considering subgroups (for details, see help(mozart)):
 funnelinf(x = mozart[, c("d", "se")],
 group = mozart[, "rr_lab"],
 group_permut = TRUE, null_model = "REM")
-
-# Plotting a funnel plot lineup with the brain volume data to conduct visual funnel plot inference considering heterogeneity (for details, see help(brainvol)):
-funnelinf(x = brainvol[, c("z", "z_se")], null_model = "FEM")
+# Plotting a funnel plot lineup with the brainvolume data to conduct visual funnel plot inference
+# considering heterogeneity (for details, see help(brainvol)):
+funnelinf(x = brainvol[, c("z", "z_se")],
+null_model = "FEM")
 }
-\author{
-Michael Kossmeier* <michael.kossmeier@univie.ac.at>
-
-Ulrich S. Tran* <ulrich.tran@univie.ac.at>
-
-Martin Voracek* <martin.voracek@univie.ac.at>
-
-*Department of Basic Psychological Research and Research Methods, School of Psychology, University of Vienna
 }
 \references{
 Buja, A., Cook, D., Hofmann, H., Lawrence, M., Lee, E. K., Swayne, D. F., & Wickham, H. (2009).
@@ -90,4 +84,12 @@ Majumder, M., Hofmann, H., & Cook, D. (2013). Validation of visual statistical i
 Terrin, N., Schmid, C. H., & Lau, J. (2005). In an empirical evaluation of the funnel plot, researchers could not
  visually identify publication bias. \emph{Journal of clinical epidemiology}, \emph{58}, 894-901.
 }
+\author{
+Michael Kossmeier* <michael.kossmeier@univie.ac.at>
 
+Ulrich S. Tran* <ulrich.tran@univie.ac.at>
+
+Martin Voracek* <martin.voracek@univie.ac.at>
+
+*Department of Basic Psychological Research and Research Methods, School of Psychology, University of Vienna
+}

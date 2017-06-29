@@ -10,4 +10,3 @@ rem_effect(es, se)
 Computes the meta-analytic summary effect(s) for the random effects model (for method = "REM")
 }
 \keyword{internal}
-

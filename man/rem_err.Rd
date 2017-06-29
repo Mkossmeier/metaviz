@@ -10,4 +10,3 @@ rem_err(es, se)
 Computes the standard error of the meta-analytic summary effect(s) for the random effects model (for method = "REM")
 }
 \keyword{internal}
-

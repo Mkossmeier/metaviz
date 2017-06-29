@@ -1,7 +1,7 @@
 #' Visual funnel plot inference for meta-analysis
 #'
-#' Creates a funnel plot showing the real data alongside funnel plots showing simulated data
-#' under the null hypothesis to conduct visual funnel plot inference.
+#' Creates a lineup of funnel plots to conduct visual funnel plot inference. The funnel plot showing the real, supplied data is
+#' presented alongside nullplots showing simulated data under the null hypothesis.
 #'
 #' Funnel plots are widely used in meta-analysis to detect small study effects and in particular publication bias.
 #' However, interpretations of funnel plots often lead to false conclusions (e.g., Terrin, Schmid, and Lau, 2005). Visual inference
@@ -26,7 +26,7 @@
 #'  rnorm(0.975) * SE).
 #'@param sig_contours logical scalar. Should significance contours should be drawn? Significance contours show which combination of
 #' effect size and standard error lead to p-values smaller than 0.05 or 0.01 (using a Wald test).
-#'@param trim_and_fill logical scalar Should imputed studies by the trim and fill method be displayed?
+#'@param trim_and_fill logical scalar. Should studies imputed by the trim and fill method be displayed?
 #'@param trim_and_fill_side On which side should studies be imputed by the trim and fill method? Available options are
 #'right or left.
 #'@param egger logical scalar. Should Egger's regression line be drawn?
@@ -46,14 +46,17 @@
 #'@author Martin Voracek* <martin.voracek@univie.ac.at>
 #'@author *Department of Basic Psychological Research and Research Methods, School of Psychology, University of Vienna
 #'@examples
-#' library(metaviz)
-#' # Plotting a funnel plot lineup with the mozart data to conduct visual funnel plot inference considering subgroups (for details, see help(mozart)):
+#' \dontrun{
+#' # Plotting a funnel plot lineup with the mozart data to conduct visual funnel plot inference
+#' # considering subgroups (for details, see help(mozart)):
 #' funnelinf(x = mozart[, c("d", "se")],
 #' group = mozart[, "rr_lab"],
 #' group_permut = TRUE, null_model = "REM")
-#'
-#' # Plotting a funnel plot lineup with the brain volume data to conduct visual funnel plot inference considering heterogeneity (for details, see help(brainvol)):
-#' funnelinf(x = brainvol[, c("z", "z_se")], null_model = "FEM")
+#' # Plotting a funnel plot lineup with the brainvolume data to conduct visual funnel plot inference
+#' # considering heterogeneity (for details, see help(brainvol)):
+#' funnelinf(x = brainvol[, c("z", "z_se")],
+#' null_model = "FEM")
+#' }
 #' @export
 funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, y_axis = "se", null_model = "FEM",
                       contours = TRUE, sig_contours = TRUE,
