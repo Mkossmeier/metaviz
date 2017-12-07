@@ -420,6 +420,13 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, y_axis = "s
   if(y_axis == "precision") {
     p <- ggplot(data = plotdata, aes(x = es, y = 1/se))
 
+    if(show_solution) {
+      p <-
+        p + geom_rect(data = subset(plotdata, real_data == T), xmin = -Inf, xmax = Inf,
+                      ymin = -Inf, ymax = Inf, fill = "lightgreen")
+      # print(paste("True data in position", solution, sep = " "))
+    }
+
     if(sig_contours) {
       p <-
         p +
