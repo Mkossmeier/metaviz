@@ -4,7 +4,7 @@
 #' Pietschnig, Penke, Wicherts, Zeiler, and Voracek (2015) on the associations between human brain volume and
 #' intelligence (measured full-scale IQ) in healthy participant samples.
 #'
-#' @format A data frame with 38 rows and 6 variables:
+#' @format A data frame with 83 rows and 6 variables:
 #' \describe{
 #'   \item{study_name}{short name of each study}
 #'   \item{year}{publication year of each study}
