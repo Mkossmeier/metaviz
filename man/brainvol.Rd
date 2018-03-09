@@ -3,8 +3,8 @@
 \docType{data}
 \name{brainvol}
 \alias{brainvol}
-\title{Data for meta-analysis of associations between human brain volume and intelligence}
-\format{A data frame with 38 rows and 6 variables:
+\title{Meta-analytic data with correlations: Human brain volume and intelligence}
+\format{A data frame with 83 rows and 6 variables:
 \describe{
   \item{study_name}{short name of each study}
   \item{year}{publication year of each study}

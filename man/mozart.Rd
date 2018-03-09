@@ -3,7 +3,7 @@
 \docType{data}
 \name{mozart}
 \alias{mozart}
-\title{Data of studies on the Mozart effect for meta-analysis}
+\title{Meta-analytic data with standardized mean differences: Mozart effect}
 \format{A data frame with 38 rows and 6 variables:
 \describe{
   \item{study_name}{short name of each study}

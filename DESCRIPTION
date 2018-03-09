@@ -1,32 +1,34 @@
 Package: metaviz
 Type: Package
-Title: Rainforest Plots and Visual Funnel Plot Inference for Meta-Analysis
-Version: 0.1.1
+Title: Forest Plots, Funnel Plots, and Visual Funnel Plot Inference for Meta-Analysis
+Version: 0.2
 Authors@R: c(
     person("Michael", "Kossmeier", email = "michael.kossmeier@univie.ac.at", role = c("cre", "aut")),
     person("Ulrich S.", "Tran", email = "ulrich.tran@univie.ac.at", role = c("aut")),
     person("Martin", "Voracek", email = "martin.voracek@univie.ac.at", role = c("aut"))
     )
-Description: Creates rainforest plots (proposed by Schild & Voracek, 2015 
-    <doi:10.1002/jrsm.1125>), a variant and enhancement of the classic forest plot 
-    for meta-analysis. In addition, functionalities for visual funnel plot inference are provided. 
-    In the near future, the 'metaviz' package will be extended by further,
+Description: A compilation of functions to plot meta-analytic data using ggplot2. Currently allows to 
+    create forest plots, funnel plots, and many of their variants (e.g., rainforest plots; addtional evidence 
+    contour enhanced funnel plots). In addition, functionalities for visual funnel plot inference are 
+    provided. In the near future, the metaviz package will be extended by further,
     established as well as novel, plotting options for visualizing meta-analytic data.
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
 Imports:
     ggplot2 (>= 2.2.1),
-    plyr (>= 1.8.4),
+    nullabor (>= 0.3.1),
+    dplyr (>= 0.7.1),
     RColorBrewer (>= 1.1-2),
-    metafor (>= 1.9-9)
+    metafor (>= 1.9-9),
+    gridExtra (>= 2.2.1),
+    ggpubr (>= 0.1.6)
 Suggests:
     Cairo (>= 1.5-9),
     knitr,
     rmarkdown
 Depends:
-    R (>= 2.10),
-    nullabor (>= 0.3.1)
+    R (>= 2.10)
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr
 URL: https://github.com/Mkossmeier/metaviz

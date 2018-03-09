@@ -1,4 +1,4 @@
-#' Data for meta-analysis of associations between human brain volume and intelligence
+#' Meta-analytic data with correlations: Human brain volume and intelligence
 #'
 #' A dataset consisting of 83 empirical studies used in the meta-analysis of
 #' Pietschnig, Penke, Wicherts, Zeiler, and Voracek (2015) on the associations between human brain volume and

@@ -1,4 +1,4 @@
-#' Data of studies on the Mozart effect for meta-analysis
+#' Meta-analytic data with standardized mean differences: Mozart effect
 #'
 #' A dataset consisting of 38 empirical studies used in the meta-analysis of
 #' Pietschnig, Voracek, and Formann (2010) on the Mozart effect. Each study compared the spatial

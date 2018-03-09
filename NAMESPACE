@@ -2,8 +2,9 @@
 
 export(funnelinf)
 export(rainforest)
-export(rem_effect)
-export(rem_err)
+export(viz_forest)
+export(viz_funnel)
+export(viz_rainforest)
+export(viz_thickforest)
+import(dplyr)
 import(ggplot2)
-import(nullabor)
-import(stats)
