@@ -4,7 +4,7 @@
 \alias{viz_thickforest_internal}
 \title{Internal helper function of viz_thickforst and viz_forest to create a thick forest plot}
 \usage{
-viz_thickforest_internal(plotdata, madata, ID, summary_symbol = TRUE,
+viz_thickforest_internal(plotdata, madata, type = "standard",
   study_labels = NULL, summary_label = NULL, study_table = NULL,
   summary_table = NULL, annotate_CI = FALSE, confidence_level = 0.95,
   col = "Blues", tick_col = "firebrick", text_size = 3, xlab = "Effect",

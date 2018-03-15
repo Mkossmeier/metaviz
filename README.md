@@ -3,14 +3,11 @@
 Package **metaviz**
 ===================
 
-Creates rainforest plots (proposed by Schild & Voracek, 2015), a variant and enhancement of the classic forest plot for meta-analysis. In addition, functionalities for visual funnel plot inference are provided. In the near future, the metaviz package will be extended by further, established as well as novel, plotting options for visualizing meta-analytic data.
+A compilation of functions to plot meta-analytic data using ggplot2. Currently allows to create forest plots, funnel plots, and many of their variants (e.g., rainforest plots; addtional evidence contour enhanced funnel plots). In addition, functionalities for visual funnel plot inference are provided. In the near future, the metaviz package will be extended by further, established as well as novel, plotting options for visualizing meta-analytic data.
 
 ### Contact
 
 Questions, ideas, criticism: <michael.kossmeier@univie.ac.at>.
-
-History
--------
 
 ### Package **metaviz** version 0.1.0
 
@@ -22,4 +19,8 @@ History
 
 ### Package **metaviz** version 0.1.1
 
--   June 29, 2017: Version 0.1.1 submtited to CRAN
+-   June 29, 2017: Version 0.1.1 submitted to CRAN
+
+### Package **metaviz** version 0.2
+
+-   March 12, 2018: Version 0.2 submitted to CRAN

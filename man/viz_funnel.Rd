@@ -5,12 +5,11 @@
 \title{Funnel plot variants for meta-analysis}
 \usage{
 viz_funnel(x, group = NULL, y_axis = "se", method = "FE",
-  contours = TRUE, sig_contours = TRUE, addev_contours_sig = FALSE,
-  addev_contours_b = NULL, contours_col = "Blues", detail_level = 1,
-  egger = FALSE, trim_and_fill = FALSE, trim_and_fill_side = "left",
-  text_size = 3, point_size = 2, xlab = "Effect", ylab = NULL,
-  group_legend = FALSE, group_legend_title = "", x_trans_function = NULL,
-  x_breaks = NULL)
+  contours = TRUE, sig_contours = TRUE, addev_contours = FALSE,
+  contours_col = "Blues", detail_level = 1, egger = FALSE,
+  trim_and_fill = FALSE, trim_and_fill_side = "left", text_size = 3,
+  point_size = 2, xlab = "Effect", ylab = NULL, group_legend = FALSE,
+  group_legend_title = "", x_trans_function = NULL, x_breaks = NULL)
 }
 \arguments{
 \item{x}{data.frame or matrix with the effect sizes of all studies (e.g.,
@@ -19,55 +18,52 @@ respective standard errors in the second column. Alternatively, x can be the
 output object of function \code{\link[metafor]{rma.uni}} from package
 \pkg{metafor}; then effect sizes and standard errors are extracted from \code{x}.}
 
-\item{group}{factor indicating the subgroup of each study.}
+\item{group}{factor indicating the subgroup of each study to show in the funnel plot. Has to be in the same order than \code{x}.}
 
-\item{y_axis}{Which y axis should be used in the funnel plot? Available options are "se" for
+\item{y_axis}{character string indicating which y axis should be used in the funnel plot. Available options are "se" (default) for
 standard error and "precision" for the reciprocal of the standard error.}
 
-\item{method}{method used to compute the meta-analytic summary effect and, for a random effects model,
+\item{method}{character string indicating the method used to compute the meta-analytic summary effect and, for a random effects model,
 the between-study variance \eqn{\tau^2}{tau squared}. Can be any method argument from \code{\link[metafor]{rma.uni}}
 (e.g., "FE" for the fixed effect model, or "DL" for the random effects model using the DerSimonian-Laird method to estimate \eqn{\tau^2}{tau squared}).
-Used for \code{contours}, \code{addev_contours_sig}, and \code{addev_contours_b}.}
+Used for \code{contours}, and \code{addev_contours}.}
 
 \item{contours}{logical scalar indicating if classic funnel plot confidence contours and the summary effect
 should be displayed.}
 
 \item{sig_contours}{logical scalar. Should significance contours be drawn (at the 0.05 or 0.01 level using a Wald test)?}
 
-\item{addev_contours_sig}{logical scalar. Should approximate additional evidence contours be drawn, showing the significance of the summary effect? See Details.
-Note: Runtime might increase significantly for \code{method} other than "FE" or "DL".}
+\item{addev_contours}{logical scalar. Should approximate additional evidence contours be drawn, showing the significance of the updated summary effect? See Details.
+Note: For \code{method} other than "FE" or "DL" runtime is increased significantly. Consider reducing \code{detail_level}.}
 
-\item{addev_contours_b}{numeric vector. Should approximate additional evidence contours be drawn for updated summary effect values? See Details.
-Note: Runtime might increase significantly for \code{method} other than "FE" or "DL".}
+\item{contours_col}{character string indicating the color palette used from package \pkg{RColorBrewer} for
+\code{sig_contours}, and \code{addev_contours}. Can be any of "Blues", "Greys", "Oranges", "Greens", "Reds", and "Purples".}
 
-\item{contours_col}{character specifying the color palette from package \pkg{RColorBrewer} used for
-\code{sig_contours}, and \code{addev_contours_sig}. Can be any of "Blues", "Greys", "Oranges", "Greens", "Reds", and "Purples".}
-
-\item{detail_level}{numeric scalar. Allows to increase or decrease the plotting detail of contours. Values can be chosen between 0.5 and 10. Default is 1.}
+\item{detail_level}{numeric scalar. Allows to increase or decrease the plotting detail of contours. Values can be chosen between 0.1 and 10. Default is 1.}
 
 \item{egger}{logical scalar. Should Egger's regression line be drawn? Only available if \code{y_axis} is \code{"se"}.}
 
 \item{trim_and_fill}{logical scalar. Should studies imputed by the trim and fill method be displayed? Also shows the adjusted summary
 effect if \code{contours} is \code{TRUE} as well.}
 
-\item{trim_and_fill_side}{On which side should studies be imputed by the trim and fill method (i.e. on which side are studies presumably missing due to publication bias)?
-Must be either "right" or "left".}
+\item{trim_and_fill_side}{character string indicating on which side of the funnel plot studies should be imputed by the trim and fill method (i.e., on which side are studies presumably missing due to publication bias).
+Must be either "right" or "left" (default).}
 
 \item{text_size}{numeric value. Size of text in the funnel plot. Default is 3.}
 
 \item{point_size}{numeric value. Size of the study points in the funnel plot. Default is 2.}
 
-\item{xlab}{label of the x axis.}
+\item{xlab}{character string specifying the label of the x axis.}
 
-\item{ylab}{label of the y axis.}
+\item{ylab}{character string specifying the label of the y axis.}
 
-\item{group_legend}{logical scalar. Should there be a legend shown at the bottom of the graph if \code{group} was supplied? Default is \code{TRUE}.}
+\item{group_legend}{logical scalar. Should there be a legend shown at the bottom of the graph if \code{group} was supplied?}
 
-\item{group_legend_title}{character. Title of the legend if \code{group} was supplied and \code{group_legend} is \code{TRUE}.}
+\item{group_legend_title}{a character string specifying the title of the legend if \code{group} was supplied and \code{group_legend} is \code{TRUE}.}
 
 \item{x_trans_function}{function to transform the labels of the x axis. Common uses are to transform
 log-odds-ratios or log-risk-ratios with \code{exp} to their original scale (odds ratios and risk ratios), or Fisher's z values
-back to correlation coefficents using \code{tanh}.}
+back to correlation coefficients using \code{tanh}.}
 
 \item{x_breaks}{numeric vector of values for the breaks on the x-axis. When used in tandem with \code{x_trans_function}
 the supplied values should be not yet transformed.}
@@ -76,34 +72,31 @@ the supplied values should be not yet transformed.}
 A funnel plot is created using ggplot2.
 }
 \description{
-Creates a funnel plot using \pkg{ggplot2}. Many options regarding the appearence and
+Creates a funnel plot. Many options regarding the appearance and
 statistical information displayed are provided (e.g., significance contours, additional evidence contours, and
 trim-and-fill analysis).
 }
 \details{
-The funnel plot is a widely used diagnostic plot in meta-analysis to detect small study effects
+The funnel plot is a widely used diagnostic plot in meta-analysis to assess small study effects
 and in particular publication bias. The function \code{viz_funnel} is capable to create a large set of different funnel plot variants.
-Options for several graphical augmentations (e.g., confidence, significance, and addtional evidence contours; choice of the ordinate; study subgroups), and
+Options for several graphical augmentations (e.g., confidence, significance, and additional evidence contours; choice of the ordinate; study subgroups), and
 different statistical information displayed are provided (Egger's regression line, and imputed studies by, as well as the adjusted summary effect from,
 the trim-and-fill method).
 
 \bold{Contours}
 
-Four different contours are available in \code{viz_funnel}:
+Three different contours are available in \code{viz_funnel}:
 \enumerate{
-\item \bold{confidence contours} (argument \code{contours}) show the region where one expects 95\% of all studies to fall (assuming the meta-analyic model
+\item \bold{confidence contours} (argument \code{contours}) show the region where one expects 95\% of all studies to fall (assuming the meta-analytic model
  applied is true and all estimates are identical to the parameters of interest).
- Confidence contours can help to asess the plausibility of observations given the meta-analytic model specified (fixed effect or random effects model).
+ Confidence contours can help to assess the plausibility of observations given the meta-analytic model specified (fixed effect or random effects model).
 \item \bold{significance contours} (argument \code{sig_contours}) show shaded regions of individual study significance at the 5\% and 1\% level
- (using the standard errors supplied and a Wald test). Significance contours were proposed to help to distinguish publication bias from other sources of
+ (using the standard errors supplied and a Wald test). Significance contours were proposed to help distinguish publication bias from other sources of
  funnel plot asymmetry (Peters, Sutton, Jones, Abrams, & Rushton, 2008).
-\item \bold{additional evidence contours: significance of the summary effect} (argument \code{addev_contours_sig}). These contours show areas
+\item \bold{additional evidence contours: Significance of the summary effect} (argument \code{addev_contours}). These contours define regions
  where a new study has to fall such that the updated meta-analytic summary effect is significantly different from zero or not
- (using a two-sided test and an alpha level of 5\%). These additional evidence contours allow to assess the robustness of the meta-analysis with respect to
+ (using a two-sided test and an alpha level of 5\%). Additional evidence contours allow to assess the robustness of the meta-analysis with respect to
  the effect of potentially new published evidence on the significance of the meta-analytic summary effect (Langan, Higgins, Gregory, & Sutton, 2012).
-\item \bold{additional evidence contours: magnitute of the summary effect} (argument \code{addev_contours_b}). These contours show
- where a new study has to fall such that the updated meta-analytic summary effect has a certain magnitute. These additional evidence contours allow to
- assess the effect of potentially new published evidence on the magnitude of the meta-analytic summary effect (Chevance, Schuster, Steele, Ternes, & Platt, 2015).
 }
 
 \bold{Measure on the y-axis}
@@ -117,7 +110,7 @@ Two different options for the y-axis choice are available. First, to plot the st
 
 Egger's regression line (Egger, Smith, Schneider & Minder, 1997) can be displayed if the standard error is used on the y axis.
  Classic Egger's regression can be computed as the OLS estimator of regressing the standardized effect size (effect size divided by its standard error)
- on precision (1 divided by the standard error). Showing this line in the funnel plot can furhter help to visually assess funnel plot asymmetry.
+ on precision (1 divided by the standard error). Showing this line in the funnel plot can further help to visually assess funnel plot asymmetry.
 
 \bold{Trim and fill analysis}
 
@@ -131,27 +124,23 @@ Imputed studies by the trim-and fill method, as well as the adjusted summary eff
 }
 \examples{
 library(metaviz)
-# Plot a funnel plot using confidence and signifance contours
+# Create a funnel plot using confidence and significance contours
 viz_funnel(x = mozart[, c("d", "se")])
 
-# Plot Fisher's z values on the original r scale, and a show trim-and-fill analysis:
-viz_funnel(x = brainvol[, c("z", "z_se")], contours = TRUE, trim_and_fill = TRUE,
-xlab = "r", x_trans_function = tanh,
-x_breaks = atanh(c(-0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75)))
+# Show a trim-and-fill analysis and Egger's regression line:
+viz_funnel(x = mozart[, c("d", "se")], contours = TRUE,
+trim_and_fill = TRUE, trim_and_fill_side = "left", egger = TRUE)
 
-# Plot log-odds-ratios on the orignal OR scale and show additional evidence contours:
+# Plot log-odds-ratios on the original OR scale and show additional evidence contours:
 viz_funnel(x = exrehab[, c("logor", "logor_se")], sig_contours = FALSE,
-addev_contours_sig = TRUE, contours_col = "Greys", xlab = "Odds Ratio",
+addev_contours = TRUE, contours_col = "Greys", xlab = "Odds Ratio",
 x_trans_function = exp, x_breaks = log(c(0.125, 0.25, 0.5, 1, 2, 4, 8)))
 
-# Plot study subgroups
+# Show study subgroups
 viz_funnel(x = mozart[, c("d", "se")], group = mozart[, "unpublished"],
 group_legend_title = "unpublished?")
 }
 \references{
-Chevance, A., Schuster, T., Steele, R., Ternès, N., & Platt, R. W. (2015). Contour plot assessment of existing meta-analyses
- confirms robust association of statin use and acute kidney injury risk. \emph{Journal of clinical epidemiology}, \emph{68}, 1138-1143.
-
 Duval, S., & Tweedie, R. (2000). Trim and fill: a simple funnel-plot-based method of testing and adjusting for publication bias
  in meta-analysis. \emph{Biometrics}, \emph{56}, 455-463.
 

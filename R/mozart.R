@@ -1,4 +1,4 @@
-#' Meta-analytic data with standardized mean differences: Mozart effect
+#' Example data for a meta-analysis of standardized mean differences: Mozart effect
 #'
 #' A dataset consisting of 38 empirical studies used in the meta-analysis of
 #' Pietschnig, Voracek, and Formann (2010) on the Mozart effect. Each study compared the spatial
@@ -11,15 +11,11 @@
 #' \describe{
 #'   \item{study_name}{short name of each study}
 #'   \item{n}{sample size of each study}
-#'   \item{d}{observed
-#'   effect size (Cohen \emph{d}). Positive values correspond to higher mean
-#'   performance in the group hearing the Mozart sonata}
-#'   \item{se}{standard
-#'   error of observed effect size}
+#'   \item{d}{observed effect size (Cohen \emph{d}). Positive values correspond to higher mean performance in the group hearing the Mozart sonata}
+#'   \item{se}{standard error of observed effect size}
 #'   \item{unpublished}{dichotomous moderator variable: Was the
 #'   study unpublished?}
-#'   \item{rr_lab}{dichotomous moderator variable: Was the study
-#'   conducted in the lab of authors Rauscher or Rideout?}
+#'   \item{rr_lab}{dichotomous moderator variable: Was the study conducted in the lab of authors Rauscher or Rideout?}
 #'   }
 #' @references Pietschnig, J., Voracek, M., & Formann, A. K. (2010). Mozart
 #'   effect-Shmozart effect: A meta-analysis. \emph{Intelligence}, \emph{38}, 314-323.

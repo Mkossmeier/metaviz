@@ -3,7 +3,7 @@
 \docType{data}
 \name{exrehab}
 \alias{exrehab}
-\title{Meta-analytic data with dichotomous outcomes: Exercise-based cardiac rehabilitation}
+\title{Example data for a meta-analysis of dichotomous outcomes: Exercise-based cardiac rehabilitation}
 \format{A data frame with 14 rows and 15 variables:
 \describe{
   \item{study_name}{short name of each study}
@@ -12,15 +12,15 @@
   \item{bi}{number of patients in the treatment group with no event for each study.}
   \item{ci}{number of patients in the control group with an event (hospital admission) for each study.}
   \item{di}{number of patients in the control group with no event for each study.}
-  \item{n1i}{number of patients in the treatment group for each study (ai + bi).}
-  \item{n2i}{number of patients in the control group for each study (ci + di)}
-  \item{rr}{relative risk of an event for treatment vs. control (ai/n1i)/(ci/n2i).}
-  \item{or}{odds ratio of an event for treatment vs. control (ai*di)/(bi*ci).}
-  \item{logrr}{natural logarithm of the relative risk (rr) for meta-analysis.}
-  \item{logrr_se}{standard error of the natural logarithm of the relative risk for meta-analysis sqrt(1/ai + 1/ci - 1/(ai + bi) - 1/(ci + di)).}
-  \item{logor}{natural logarithm of the odds ratio (or) for meta-analysis.}
-  \item{logor_se}{standard error of the natural logarithm of the odds ratio for meta-analysis sqrt(1/ai + 1/bi +1/ci + 1/di).}
-  \item{followup}{dichotomous moderator: time of follow up duration.}
+  \item{n1i}{number of patients in the treatment group for each study, (ai + bi).}
+  \item{n2i}{number of patients in the control group for each study, (ci + di).}
+  \item{rr}{relative risk of an event for treatment vs. control, (ai/n1i)/(ci/n2i).}
+  \item{or}{odds ratio of an event for treatment vs. control, (ai*di)/(bi*ci).}
+  \item{logrr}{natural logarithm of the relative risk (\code{rr}) for meta-analysis.}
+  \item{logrr_se}{standard error of the natural logarithm of the relative risk for meta-analysis, sqrt(1/ai + 1/ci - 1/(ai + bi) - 1/(ci + di)).}
+  \item{logor}{natural logarithm of the odds ratio (\code{or}) for meta-analysis.}
+  \item{logor_se}{standard error of the natural logarithm of the odds ratio for meta-analysis, sqrt(1/ai + 1/bi +1/ci + 1/di).}
+  \item{followup}{dichotomous moderator: follow up duration.}
   }}
 \usage{
 exrehab
@@ -29,7 +29,7 @@ exrehab
 A dataset consisting of 14 empirical studies used for a meta-analysis in
 Anderson et al. (2016). The outcome of interest was risk of hospital admission of patients
 with coronary heart disease within follow up duration. Compared was
-exercise-based cardiac rehabilitationon (treatment) with usual care (control).
+exercise-based cardiac rehabilitation (treatment) with usual care (control).
 }
 \references{
 Anderson, L., Oldridge, N., Thompson, D. R., Zwisler, A. D., Rees, K.,

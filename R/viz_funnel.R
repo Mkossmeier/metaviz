@@ -1,32 +1,29 @@
 #'Funnel plot variants for meta-analysis
 #'
-#'Creates a funnel plot using \pkg{ggplot2}. Many options regarding the appearence and
+#'Creates a funnel plot. Many options regarding the appearance and
 #'statistical information displayed are provided (e.g., significance contours, additional evidence contours, and
 #'trim-and-fill analysis).
 #'
-#'The funnel plot is a widely used diagnostic plot in meta-analysis to detect small study effects
+#'The funnel plot is a widely used diagnostic plot in meta-analysis to assess small study effects
 #'and in particular publication bias. The function \code{viz_funnel} is capable to create a large set of different funnel plot variants.
-#'Options for several graphical augmentations (e.g., confidence, significance, and addtional evidence contours; choice of the ordinate; study subgroups), and
+#'Options for several graphical augmentations (e.g., confidence, significance, and additional evidence contours; choice of the ordinate; study subgroups), and
 #'different statistical information displayed are provided (Egger's regression line, and imputed studies by, as well as the adjusted summary effect from,
 #'the trim-and-fill method).
 #'
 #'\bold{Contours}
 #'
-#'Four different contours are available in \code{viz_funnel}:
+#'Three different contours are available in \code{viz_funnel}:
 #'\enumerate{
-#'\item \bold{confidence contours} (argument \code{contours}) show the region where one expects 95\% of all studies to fall (assuming the meta-analyic model
+#'\item \bold{confidence contours} (argument \code{contours}) show the region where one expects 95\% of all studies to fall (assuming the meta-analytic model
 #'  applied is true and all estimates are identical to the parameters of interest).
-#'  Confidence contours can help to asess the plausibility of observations given the meta-analytic model specified (fixed effect or random effects model).
+#'  Confidence contours can help to assess the plausibility of observations given the meta-analytic model specified (fixed effect or random effects model).
 #'\item \bold{significance contours} (argument \code{sig_contours}) show shaded regions of individual study significance at the 5\% and 1\% level
-#'  (using the standard errors supplied and a Wald test). Significance contours were proposed to help to distinguish publication bias from other sources of
+#'  (using the standard errors supplied and a Wald test). Significance contours were proposed to help distinguish publication bias from other sources of
 #'  funnel plot asymmetry (Peters, Sutton, Jones, Abrams, & Rushton, 2008).
-#'\item \bold{additional evidence contours: significance of the summary effect} (argument \code{addev_contours_sig}). These contours show areas
+#'\item \bold{additional evidence contours: Significance of the summary effect} (argument \code{addev_contours}). These contours define regions
 #'  where a new study has to fall such that the updated meta-analytic summary effect is significantly different from zero or not
-#'  (using a two-sided test and an alpha level of 5\%). These additional evidence contours allow to assess the robustness of the meta-analysis with respect to
+#'  (using a two-sided test and an alpha level of 5\%). Additional evidence contours allow to assess the robustness of the meta-analysis with respect to
 #'  the effect of potentially new published evidence on the significance of the meta-analytic summary effect (Langan, Higgins, Gregory, & Sutton, 2012).
-#'\item \bold{additional evidence contours: magnitute of the summary effect} (argument \code{addev_contours_b}). These contours show
-#'  where a new study has to fall such that the updated meta-analytic summary effect has a certain magnitute. These additional evidence contours allow to
-#'  assess the effect of potentially new published evidence on the magnitude of the meta-analytic summary effect (Chevance, Schuster, Steele, Ternes, & Platt, 2015).
 #'}
 #'
 #'\bold{Measure on the y-axis}
@@ -40,7 +37,7 @@
 #'
 #'  Egger's regression line (Egger, Smith, Schneider & Minder, 1997) can be displayed if the standard error is used on the y axis.
 #'  Classic Egger's regression can be computed as the OLS estimator of regressing the standardized effect size (effect size divided by its standard error)
-#'  on precision (1 divided by the standard error). Showing this line in the funnel plot can furhter help to visually assess funnel plot asymmetry.
+#'  on precision (1 divided by the standard error). Showing this line in the funnel plot can further help to visually assess funnel plot asymmetry.
 #'
 #'\bold{Trim and fill analysis}
 #'
@@ -57,41 +54,37 @@
 #'  respective standard errors in the second column. Alternatively, x can be the
 #'  output object of function \code{\link[metafor]{rma.uni}} from package
 #'  \pkg{metafor}; then effect sizes and standard errors are extracted from \code{x}.
-#'@param group factor indicating the subgroup of each study.
-#'@param method method used to compute the meta-analytic summary effect and, for a random effects model,
+#'@param group factor indicating the subgroup of each study to show in the funnel plot. Has to be in the same order than \code{x}.
+#'@param method character string indicating the method used to compute the meta-analytic summary effect and, for a random effects model,
 #'  the between-study variance \eqn{\tau^2}{tau squared}. Can be any method argument from \code{\link[metafor]{rma.uni}}
 #'  (e.g., "FE" for the fixed effect model, or "DL" for the random effects model using the DerSimonian-Laird method to estimate \eqn{\tau^2}{tau squared}).
-#'  Used for \code{contours}, \code{addev_contours_sig}, and \code{addev_contours_b}.
-#'@param y_axis Which y axis should be used in the funnel plot? Available options are "se" for
+#'  Used for \code{contours}, and \code{addev_contours}.
+#'@param y_axis character string indicating which y axis should be used in the funnel plot. Available options are "se" (default) for
 #'  standard error and "precision" for the reciprocal of the standard error.
 #'@param contours logical scalar indicating if classic funnel plot confidence contours and the summary effect
 #'  should be displayed.
 #'@param sig_contours logical scalar. Should significance contours be drawn (at the 0.05 or 0.01 level using a Wald test)?
-#'@param addev_contours_sig logical scalar. Should approximate additional evidence contours be drawn, showing the significance of the summary effect? See Details.
-#'  Note: Runtime might increase significantly for \code{method} other than "FE" or "DL".
-#'@param addev_contours_b numeric vector. Should approximate additional evidence contours be drawn for updated summary effect values? See Details.
-#'  Note: Runtime might increase significantly for \code{method} other than "FE" or "DL".
-#'@param contours_col character specifying the color palette from package \pkg{RColorBrewer} used for
-#'  \code{sig_contours}, and \code{addev_contours_sig}. Can be any of "Blues", "Greys", "Oranges", "Greens", "Reds", and "Purples".
-#'@param detail_level numeric scalar. Allows to increase or decrease the plotting detail of contours. Values can be chosen between 0.5 and 10. Default is 1.
+#'@param addev_contours logical scalar. Should approximate additional evidence contours be drawn, showing the significance of the updated summary effect? See Details.
+#'  Note: For \code{method} other than "FE" or "DL" runtime is increased significantly. Consider reducing \code{detail_level}.
+#'@param contours_col character string indicating the color palette used from package \pkg{RColorBrewer} for
+#'  \code{sig_contours}, and \code{addev_contours}. Can be any of "Blues", "Greys", "Oranges", "Greens", "Reds", and "Purples".
+#'@param detail_level numeric scalar. Allows to increase or decrease the plotting detail of contours. Values can be chosen between 0.1 and 10. Default is 1.
 #'@param trim_and_fill logical scalar. Should studies imputed by the trim and fill method be displayed? Also shows the adjusted summary
 #'  effect if \code{contours} is \code{TRUE} as well.
-#'@param trim_and_fill_side On which side should studies be imputed by the trim and fill method (i.e. on which side are studies presumably missing due to publication bias)?
-#'  Must be either "right" or "left".
+#'@param trim_and_fill_side character string indicating on which side of the funnel plot studies should be imputed by the trim and fill method (i.e., on which side are studies presumably missing due to publication bias).
+#'  Must be either "right" or "left" (default).
 #'@param egger logical scalar. Should Egger's regression line be drawn? Only available if \code{y_axis} is \code{"se"}.
 #'@param text_size numeric value. Size of text in the funnel plot. Default is 3.
 #'@param point_size numeric value. Size of the study points in the funnel plot. Default is 2.
-#'@param xlab label of the x axis.
-#'@param ylab label of the y axis.
-#'@param group_legend logical scalar. Should there be a legend shown at the bottom of the graph if \code{group} was supplied? Default is \code{TRUE}.
-#'@param group_legend_title character. Title of the legend if \code{group} was supplied and \code{group_legend} is \code{TRUE}.
+#'@param xlab character string specifying the label of the x axis.
+#'@param ylab character string specifying the label of the y axis.
+#'@param group_legend logical scalar. Should there be a legend shown at the bottom of the graph if \code{group} was supplied?
+#'@param group_legend_title a character string specifying the title of the legend if \code{group} was supplied and \code{group_legend} is \code{TRUE}.
 #'@param x_trans_function function to transform the labels of the x axis. Common uses are to transform
 #'  log-odds-ratios or log-risk-ratios with \code{exp} to their original scale (odds ratios and risk ratios), or Fisher's z values
-#'  back to correlation coefficents using \code{tanh}.
+#'  back to correlation coefficients using \code{tanh}.
 #'@param x_breaks numeric vector of values for the breaks on the x-axis. When used in tandem with \code{x_trans_function}
 #'  the supplied values should be not yet transformed.
-#'@references Chevance, A., Schuster, T., Steele, R., Ternès, N., & Platt, R. W. (2015). Contour plot assessment of existing meta-analyses
-#'  confirms robust association of statin use and acute kidney injury risk. \emph{Journal of clinical epidemiology}, \emph{68}, 1138-1143.
 #'@references Duval, S., & Tweedie, R. (2000). Trim and fill: a simple funnel-plot-based method of testing and adjusting for publication bias
 #'  in meta-analysis. \emph{Biometrics}, \emph{56}, 455-463.
 #'@references Egger, M., Smith, G. D., Schneider, M., & Minder, C. (1997). Bias in meta-analysis detected by a simple, graphical test. \emph{Bmj}, \emph{315}, 629-634.
@@ -109,26 +102,25 @@
 #'@author *Department of Basic Psychological Research and Research Methods, School of Psychology, University of Vienna
 #'@examples
 #' library(metaviz)
-#' # Plot a funnel plot using confidence and signifance contours
+#' # Create a funnel plot using confidence and significance contours
 #' viz_funnel(x = mozart[, c("d", "se")])
 #'
-#' # Plot Fisher's z values on the original r scale, and a show trim-and-fill analysis:
-#' viz_funnel(x = brainvol[, c("z", "z_se")], contours = TRUE, trim_and_fill = TRUE,
-#' xlab = "r", x_trans_function = tanh,
-#' x_breaks = atanh(c(-0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75)))
+#' # Show a trim-and-fill analysis and Egger's regression line:
+#' viz_funnel(x = mozart[, c("d", "se")], contours = TRUE,
+#' trim_and_fill = TRUE, trim_and_fill_side = "left", egger = TRUE)
 #'
-#' # Plot log-odds-ratios on the orignal OR scale and show additional evidence contours:
+#' # Plot log-odds-ratios on the original OR scale and show additional evidence contours:
 #' viz_funnel(x = exrehab[, c("logor", "logor_se")], sig_contours = FALSE,
-#' addev_contours_sig = TRUE, contours_col = "Greys", xlab = "Odds Ratio",
+#' addev_contours = TRUE, contours_col = "Greys", xlab = "Odds Ratio",
 #' x_trans_function = exp, x_breaks = log(c(0.125, 0.25, 0.5, 1, 2, 4, 8)))
 #'
-#' # Plot study subgroups
+#' # Show study subgroups
 #' viz_funnel(x = mozart[, c("d", "se")], group = mozart[, "unpublished"],
 #' group_legend_title = "unpublished?")
 #'@export
 viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
-                      contours = TRUE, sig_contours = TRUE, addev_contours_sig = FALSE,
-                      addev_contours_b = NULL, contours_col = "Blues", detail_level = 1,
+                      contours = TRUE, sig_contours = TRUE, addev_contours = FALSE,
+                      contours_col = "Blues", detail_level = 1,
                       egger = FALSE, trim_and_fill = FALSE, trim_and_fill_side = "left",
                       text_size = 3, point_size = 2,
                       xlab = "Effect", ylab = NULL,
@@ -144,12 +136,12 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
     se <- as.numeric(sqrt(x$vi))
     # method <- x$method
     if(method != x$method) {
-      warning("Note: method argument used differs from input object of class rma.uni (metafor)")
+      message("Note: method argument used differs from input object of class rma.uni (metafor)")
     }
     # If No group is supplied try to extract group from input object of class rma.uni (metafor)
     if(is.null(group) & ncol(x$X) > 1) {
       #check if only categorical moderators were used
-      if(!all(x$X == 1 | x$X == 0) | any(apply(as.matrix(x$X[, -1]), 1, sum) > 1))  {
+      if(!all(x$X == 1 || x$X == 0) || any(apply(as.matrix(x$X[, -1]), 1, sum) > 1))  {
         stop("Can not deal with metafor output object with continuous and/or more than one categorical moderator variable(s).")
       }
       # extract group vector from the design matrix of the metafor object
@@ -158,18 +150,22 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
     }
   } else {
     # input is matrix or data.frame with effect sizes and standard errors in the first two columns
-    if((is.data.frame(x) | is.matrix(x)) & ncol(x) >= 2) { # check if a data.frame or matrix with at least two columns is supplied
+    if((is.data.frame(x) || is.matrix(x)) && ncol(x) >= 2) { # check if a data.frame or matrix with at least two columns is supplied
       # check if there are missing values
-      if(sum(is.na(x[, 1])) != 0 | sum(is.na(x[, 2])) != 0) {
-        warning("The effect sizes or standard errors contain missing values")
+      if(sum(is.na(x[, 1])) != 0 || sum(is.na(x[, 2])) != 0) {
+        warning("The effect sizes or standard errors contain missing values, only complete cases are used.")
         if(!is.null(group)) {
           group <- group[stats::complete.cases(x)]
         }
         x <- x[stats::complete.cases(x), ]
       }
+      # check if input is numeric
+      if(!is.numeric(x[, 1]) || !is.numeric(x[, 2])) {
+        stop("Input argument has to be numeric; see help(viz_funnel) for details.")
+      }
       # check if there are any negative standard errors
-      if(!all(x[, 2] >= 0)) {
-        stop("Negative standard errors supplied")
+      if(!all(x[, 2] > 0)) {
+        stop("Non-positive standard errors supplied")
       }
       # extract effect sizes and standard errors
       es <- x[, 1]
@@ -181,11 +177,11 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
   }
 
   # check if group is a factor
-  if(!is.null(group) & !is.factor(group)) {
+  if(!is.null(group) && !is.factor(group)) {
     group <- as.factor(group)
   }
   # check if group vector has the right length
-  if(!is.null(group) & (length(group) != length(es)))
+  if(!is.null(group) && (length(group) != length(es)))
   {
     warning("length of supplied group vector does not correspond to the number of studies; group argument is ignored")
     group <- NULL
@@ -204,13 +200,18 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
     plotdata <- data.frame(es, se, group)
   }
 
+  # Set Color palette for contours
+  if(!(contours_col %in% c("Blues", "Greys", "Oranges", "Greens", "Reds", "Purples"))) {
+    warning("Supported arguments for contours_col are Blues, Greys, Oranges, Greens, Reds, and Purples. Blues is used.")
+    contours_col <- "Blues"
+  }
   # color palette for significance contours
   col <- RColorBrewer::brewer.pal(n = 9, name = contours_col)
 
-  # detail_level must be between 0.5 and 10
-  if(detail_level < 0.5) {
-    detail_level <- 0.5
-    warning("Argument detail_level too low. Set to minimum value (0.5)")
+  # detail_level must be between 0.1 and 10
+  if(detail_level < 0.1) {
+    detail_level <- 0.1
+    warning("Argument detail_level too low. Set to minimum value (0.1)")
   }
   if(detail_level > 10) {
     detail_level <- 10
@@ -227,7 +228,7 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
       if(side == "right") {
         es <- -es
       }
-      if(side != "right" & side != "left") {
+      if(side != "right" && side != "left") {
         stop("trim_and_fill_side argument must be either left or right")
       }
       mean_func <- function(es, se) {
@@ -243,7 +244,7 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
       k0 <- k0_func(es = es, se = se, summary_es = summary_es_init)
       eps <- 1
       iter <- 0
-      while(eps > 0.01 | iter < 20) {
+      while(eps > 0.01 || iter < 20) {
         iter <- iter + 1
         es_ord <- es[order(es, decreasing = T)]
         se_ord <- se[order(es, decreasing = T)]
@@ -315,8 +316,9 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
     }
   }
 
+
   # helper function to manually estimate DL estimator for additional evidence contours
-  if(method == "DL" & (addev_contours_sig == TRUE | !is.null(addev_contours_b))) {
+  if(method == "DL" && addev_contours == TRUE) {
     rem_dl <- function(es, se) {
       summary_es_FEM <- sum((1/se^2)*es)/sum(1/se^2)
       n <- length(es)
@@ -335,7 +337,7 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
   # standard error on the y axis
   if(y_axis =="se") {
     plotdata$y <- se
-    max_se <- max(se) + diff(range(se))*0.1
+    max_se <- max(se) + ifelse(length(se) > 1, diff(range(se))*0.1, max(se)*0.1)
     y_limit <- c(0, max_se)
 
     if(is.null(ylab)) {
@@ -348,12 +350,14 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
 
     # determine significance contours
     if(sig_contours == TRUE) {
-      sig_funneldata <- data.frame(x.05 = c(-stats::qnorm(0.975) * max_se, 0, stats::qnorm(0.975) * max_se),
-                                   x.01 = c(-stats::qnorm(0.995) * max_se, 0, stats::qnorm(0.995) * max_se),
-                                   y = c(max_se, 0, max_se))
-      # update limit values for x axis
-      min_x <- min(c(min_x, sig_funneldata$x.01[1]))
-      max_x <- max(c(max_x, sig_funneldata$x.01[3]))
+      sig_funneldata <- data.frame(x = c(-stats::qnorm(0.975) * max_se, 0,
+                                         stats::qnorm(0.975) * max_se,
+                                         stats::qnorm(0.995) * max_se, 0,
+                                         -stats::qnorm(0.995) * max_se),
+                                   y = c(max_se, 0, max_se, max_se, 0, max_se))
+
+      min_x <- min(c(min_x, min(sig_funneldata$x)))
+      max_x <- max(c(max_x, max(sig_funneldata$x)))
     }
     # determine classic funnel contours
     if(contours == TRUE) {
@@ -383,8 +387,8 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
       plotdata$y <- 1/se
 
       # inital value for upper y axis limit
-      max_y <- max(1/se) + diff(range(1/se))*0.05
-      min_y <- min(1/se) - diff(range(1/se))*0.05
+      max_y <- max(1/se) + ifelse(length(se) > 1, diff(range(1/se))*0.05, 1/se*0.05)
+      min_y <- min(1/se) - ifelse(length(se) > 1, diff(range(1/se))*0.05, 1/se*0.05)
 
       if(is.null(ylab)) {
         ylab <- "Precision (1/SE)"
@@ -396,18 +400,21 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
 
       # determine significance contours
       if(sig_contours == TRUE) {
-        n_support <- 200*detail_level
+        n_support <- 200 * detail_level
 
         prec <- seq(from = min_y, to = max_y, length.out = n_support)
         x_prec_0.05 <- stats::qnorm(0.975)*(1/prec)
         x_prec_0.01 <- stats::qnorm(0.995)*(1/prec)
 
-        sig_funneldata <- data.frame(x.05 =  c(-x_prec_0.05, rev(x_prec_0.05)),
-                                     x.01 =  c(-x_prec_0.01, rev(x_prec_0.01)),
-                                     y = c(prec, rev(prec)))
-        # update x axis limit
-        min_x <- min(c(min_x, min(sig_funneldata$x.01)))
-        max_x <- max(c(max_x, max(sig_funneldata$x.01)))
+        sig_funneldata <- data.frame(x = c(-x_prec_0.01, rev(x_prec_0.01),
+                                           x_prec_0.05, rev(-x_prec_0.05)),
+                                     y = c(prec, rev(prec), prec, rev(prec)))
+
+
+        min_x <- min(c(min_x, min(sig_funneldata$x)))
+        max_x <- max(c(max_x, max(sig_funneldata$x)))
+
+
       }
       # determine classic funnel contours
       if(contours == TRUE) {
@@ -434,7 +441,7 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
   x_limit <- c(min_x - diff(c(min_x, max_x))*0.05, max_x + diff(c(min_x, max_x))*0.05)
 
   # Compute additional evidence contours
-  if(addev_contours_sig == TRUE | !is.null(addev_contours_b)) {
+  if(addev_contours == TRUE) {
     if(y_axis == "se") {
       # set search grid für y_axis == "se"
       y_range <- c(0.001, max_se + diff(range(y_limit))*0.2)
@@ -457,8 +464,6 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
     study_grid <- expand.grid(x_add, y_add)
     names(study_grid) <- c("x_add", "y_add")
 
-    # set tolerance level for finding summary contours
-    tol <- 0.001/detail_level
 
     # Determine the summary effect and significance for the search grid of new studies
     addev_data <- apply(study_grid, 1,
@@ -467,94 +472,37 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
                             M_new <- sum((1/c(se, x[2])^2)*c(es, x[1]))/sum(1/c(se, x[2])^2)
                             Mse_new <- sqrt(1/sum(1/c(se, x[2])^2))
                             p.val <- stats::pnorm(M_new/Mse_new)
-                            if(is.null(addev_contours_b)) {
-                              c(M_new, p.val)
-                            } else {
-                              c(M_new, p.val, which.min(abs(M_new - addev_contours_b)), any(abs(M_new - addev_contours_b) < tol))
-                            }
+                            c(M_new, p.val)
                           } else {
                             if(method == "DL") {
                               res_dl <- rem_dl(es = c(es, x[1]), se = c(se, x[2]))
                               M_new <- res_dl[1]
                               p.val <- stats::pnorm(res_dl[1]/res_dl[2])
-                              if(is.null(addev_contours_b)) {
-                                c(M_new, p.val)
-                              } else {
-                                c(M_new, p.val, which.min(abs(M_new - addev_contours_b)), any(abs(M_new - addev_contours_b) < tol))
-                              }
+                              c(M_new, p.val)
                             } else {
-                              mod <- metafor::rma.uni(yi = c(es, x[1]), sei = c(se, x[2]), method = method)
+                              mod <- metafor::rma.uni(yi = c(es, x[1]), sei = c(se, x[2]), method = method, control = list(stepadj = 0.5, maxiter = 1000))
                               p.val <- stats::pnorm(mod$z)
                               M_new <- mod$b[[1]]
-                              if(is.null(addev_contours_b)) {
-                                c(M_new, p.val)
-                              } else {
-                                c(M_new, p.val, which.min(abs(M_new - addev_contours_b)), any(abs(M_new - addev_contours_b) < tol))
-                              }
+                              c(M_new, p.val)
                             }
                           }
                         }
     )
     addev_data <- t(addev_data)
-    if(is.null(addev_contours_b)) {
-      addev_data <- data.frame(study_grid,
+    addev_data <- data.frame(study_grid,
                                M = addev_data[, 1],
-                               sig_group = factor(ifelse(addev_data[, 2] < 0.025, "sig.neg.", ifelse(addev_data[, 2] > 0.975, "sig.pos.", "not sig.")),
-                                                  levels = c("sig.neg.", "not sig.", "sig.pos.")))
-    } else {
-      addev_data <- data.frame(study_grid,
-                               M = addev_data[, 1],
-                               sig_group = factor(ifelse(addev_data[, 2] < 0.025, "sig.neg.", ifelse(addev_data[, 2] > 0.975, "sig.pos.", "not sig.")),
-                                                  levels = c("sig.neg.", "not sig.", "sig.pos.")),
-                               b_group = factor(addev_data[, 3], labels = as.character(addev_contours_b)),
-                               hit = factor(addev_data[, 4]))
-    }
+                               sig_group = factor(ifelse(addev_data[, 2] < 0.025, "sig.neg. ", ifelse(addev_data[, 2] > 0.975, "sig.pos. ", "not sig. ")),
+                                                  levels = c("sig.neg. ", "not sig. ", "sig.pos. ")))
+
     addev_data <- addev_data[order(addev_data$x_add, decreasing = F), ]
     if(y_axis == "precision") {
       addev_data$y_add <- 1/addev_data$y_add
     }
-    if(!is.null(addev_contours_b)) {
-      # find summary contours
-      hit <- NULL
-      b_group <- NULL
-      . <- NULL
-      b_cont_raw <-
-        addev_data %>%
-        filter(hit == 1) %>%
-        group_by(b_group, y_add) %>%
-        summarise(x_add = mean(x_add))
+  }
 
-      # smooth summary contours (loess predictions)
-      pred_n <- 500
-      y_new <- seq(from = y_limit[1], to = y_limit[2], length.out = pred_n)
-      b_cont <- tryCatch({
-        b_cont <- b_cont_raw %>%
-        group_by(b_group) %>%
-        do(pred = cbind(x_add = stats::predict(stats::loess(x_add ~ y_add, data = . , span = 1, control = stats::loess.control(surface = "direct")), newdata = y_new), y_add = y_new))
-        data.frame(do.call(rbind, b_cont$pred), b_group = rep(b_cont$b_group, each = pred_n))
-      },
-      warning = function(w) "w",
-      error = function(e) "e"
-      )
-      # if loess throws an error or warning use unsmoothed contours
-      if(any(b_cont %in% c("w", "e"))) {
-        warning("detail_level to low for smoothed summary contours")
-        b_cont <- b_cont_raw
-      }
-
-      # find summary contour label position
-      addev_b_label <-
-        b_cont %>%
-        filter(between(x_add, x_limit[1], x_limit[2])) %>%
-        filter(between(y_add, y_limit[1], y_limit[2])) %>%
-        group_by(b_group) %>%
-        summarise(x_add = x_add[which(y_add == stats::quantile(y_add, ifelse(y_axis == "se", 0.9, 0.2), type = 1))],
-                  y_add = stats::quantile(y_add, ifelse(y_axis == "se", 0.9, 0.2), type = 1))
-
-      if(nrow(b_cont) == 0) {
-        addev_contours_b <- NULL
-      }
-    }
+  if(!is.null(x_trans_function) && !is.function(x_trans_function)) {
+    warning("Argument x_trans_function must be a function; input ignored.")
+    x_trans_function <- NULL
   }
 
   # Construct plot
@@ -567,24 +515,20 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
   slope <- NULL
 
   p <- ggplot(data = plotdata, aes(x = es, y = y))
-    if(addev_contours_sig == TRUE) {
+    if(addev_contours == TRUE) {
       p <- p +
-        geom_raster(data = addev_data, aes(x = x_add, y = y_add, fill = sig_group), alpha = 0.3) +
+        geom_raster(data = addev_data, aes(x = x_add, y = y_add, fill = sig_group), alpha = 0.4) +
         scale_fill_manual(name = "", values = c(col[9], col[1], col[4]), drop = FALSE)
     }
-    if(sig_contours == TRUE & y_axis == "se") {
+    if(sig_contours == TRUE && y_axis == "se") {
       p <- p +
-        geom_polygon(data = sig_funneldata, aes(x = x.01, y = y), fill = col[9], alpha = 0.6) +
-        geom_polygon(data = sig_funneldata, aes(x = x.05, y = y), fill = "white", alpha = 0.8) +
-        geom_path(data = sig_funneldata, aes(x = x.05, y = y)) +
-        geom_path(data = sig_funneldata, aes(x = x.01, y = y))
+        geom_polygon(data = sig_funneldata, aes(x = x, y = y), fill = col[9], alpha = 0.6) +
+        geom_path(data = sig_funneldata, aes(x = x, y = y))
     } else {
-      if(sig_contours == TRUE & y_axis == "precision") {
+      if(sig_contours == TRUE && y_axis == "precision") {
         p <- p +
-          geom_polygon(data = sig_funneldata, aes(x = x.01, y = y), fill = col[9], alpha = 0.6) +
-          geom_polygon(data = sig_funneldata, aes(x = x.05, y = y), fill = "white", alpha = 0.8) +
-          geom_path(data = sig_funneldata, aes(x = x.01, y = y)) +
-          geom_path(data = sig_funneldata, aes(x = x.05, y = y))
+          geom_polygon(data = sig_funneldata, aes(x = x, y = y), fill = col[9], alpha = 0.6) +
+          geom_path(data = sig_funneldata, aes(x = x, y = y))
       }
     }
     if(contours == TRUE) {
@@ -594,11 +538,11 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
     }
     if(y_axis == "se") {
     p <-
-      p + scale_y_reverse(name = ylab, labels = function(x) sprintf("%.1f", x))
+      p + scale_y_reverse(name = ylab)
     } else {
       if(y_axis == "precision") {
       p <-
-        p + scale_y_continuous(name = ylab, labels = function(x) sprintf("%.1f", x))
+        p + scale_y_continuous(name = ylab)
       }
     }
     if(trim_and_fill == TRUE) {
@@ -619,13 +563,8 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
     } else {
       p <- p + geom_point(aes(col = group, shape = group), size = point_size, alpha = 1)
     }
-    if(egger == TRUE & y_axis == "se") {
+    if(egger == TRUE && y_axis == "se") {
       p <- p + geom_abline(data = eggerdata, aes(intercept = intercept, slope = slope), lty = "dashed", lwd = 1, color = "firebrick")
-    }
-    if(!is.null(addev_contours_b)) {
-      p <- p +
-        geom_path(data = b_cont, aes(x = x_add, y = y_add, group = b_group), col = "black", lty = "dotted") +
-        geom_label(data = addev_b_label, aes(x_add, y_add, group = b_group, label = b_group))
     }
     if(!is.null(x_trans_function)) {
       if(is.null(x_breaks)) {
@@ -648,7 +587,6 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
                                name = xlab)
         }
       }
-
     p <- p +
       coord_cartesian(xlim = x_limit,
                       ylim = y_limit, expand = F) +
@@ -659,7 +597,7 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
         guides(color = "none", shape = "none")
     }
     # Add black boxes around legend keys if addev_contour_sig is shown
-    if(addev_contours_sig == TRUE) {
+    if(addev_contours == TRUE) {
       legend.key <-  element_rect(color = "black")
     } else {
       legend.key <-  element_rect(color = "white")

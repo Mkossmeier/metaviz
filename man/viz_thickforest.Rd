@@ -4,79 +4,83 @@
 \alias{viz_thickforest}
 \title{Thick forest plots for meta-analyses}
 \usage{
-viz_thickforest(x, group = NULL, summary_symbol = TRUE, method = "FE",
-  study_labels = NULL, summary_label = NULL, study_table = NULL,
-  summary_table = NULL, table_headers = NULL, annotate_CI = FALSE,
-  confidence_level = 0.95, col = "Blues", tick_col = "firebrick",
-  text_size = 3, xlab = "Effect", x_limit = NULL,
-  x_trans_function = NULL, x_breaks = NULL)
+viz_thickforest(x, group = NULL, type = "standard", method = "FE",
+  study_labels = NULL, summary_label = NULL, confidence_level = 0.95,
+  col = "Blues", tick_col = "firebrick", text_size = 3, xlab = "Effect",
+  x_limit = NULL, x_trans_function = NULL, x_breaks = NULL,
+  annotate_CI = FALSE, study_table = NULL, summary_table = NULL,
+  table_headers = NULL, table_layout = NULL)
 }
 \arguments{
 \item{x}{data.frame or matrix with the effect sizes of all studies (e.g.,
 correlations, log odds ratios, or Cohen \emph{d}) in the first column and their
 respective standard errors in the second column. Alternatively, x can be the
 output object of function \code{\link[metafor]{rma.uni}} from package
-\pkg{metafor}.}
+\pkg{metafor}; then effect sizes and standard errors are extracted from \code{x}.}
 
-\item{group}{factor indicating the subgroup of each study to plot a subgroup thick forest plot. Has to be in the same order than \code{x}.}
+\item{group}{factor indicating the subgroup of each study to plot a subgroup forest plot. Has to be in the same order than \code{x}.}
 
-\item{summary_symbol}{logical scalar. Should the meta-analytic summary result(s) be computed using \code{method} and shown?}
+\item{type}{character string indicating the type of forest plot to be plotted. Can be "standard" (default), "study_only",
+"summary_only", "cumulative", or "sensitivity". See 'Details'.}
 
-\item{method}{Which method should be used to compute the study weights and summary effect(s)?
+\item{method}{character string indicating which method should be used to compute the study weights and summary effect(s).
 Can be any method argument from \code{\link[metafor]{rma.uni}}
 (e.g., "FE" for the fixed effect model, or "DL" for the random effects model using the
-DerSimonian-Laird method to estimate  \eqn{\tau^2}{tau squared}).}
+DerSimonian-Laird method to estimate \eqn{\tau^2}{tau squared}).}
 
-\item{study_labels}{a vector with names/identifiers to annotate each study in the thick forest plot.
-Has to be in the same order than \code{x}.}
+\item{study_labels}{a character vector with names/identifiers to annotate each study in the forest plot.
+Has to be in the same order than \code{x}. Ignored if \code{study_table} and/or \code{summary_table} is supplied.}
 
-\item{summary_label}{a name to annotate the summary effect. If a subgroup
-analysis is plotted, \code{summary_label} should be a vector with a name for each
-subgroup summary effect, arranged in the order of the levels of \code{group}.}
+\item{summary_label}{a character string specifying the name to annotate the summary effect. If a subgroup
+analysis is plotted, \code{summary_label} should be a character vector with a name for each
+subgroup summary effect, arranged in the order of the levels of \code{group}. Ignored if \code{study_table} and/or
+\code{summary_table} is supplied.}
 
-\item{study_table}{a data.frame with addtional study-level variables which should be shown in an aligned table.
-Has to be in the same order than \code{x}. See vignette('metaviz').}
+\item{confidence_level}{numeric value. The confidence level for the plotted confidence bars.}
 
-\item{summary_table}{a data.frame with addtional summary-level information shown in an aligned table.
-If \code{group} is supplied, \code{summary_table} must have a row for each subgroup
-summary effect, arranged in the order of the levels of \code{group}. See vignette('metaviz').}
+\item{col}{character string specifying the color used for the error bars and summary diamond.}
 
-\item{table_headers}{character vector. Headers for each column of the aligned table if \code{study_table} and/or \code{summary_table} is supplied.
-By default the names of \code{study_table}.}
+\item{tick_col}{character string specifying the color used for the ticks indicating the point estimates.}
 
-\item{annotate_CI}{logical scalar. Should the effect size and confidence interval values be annotated?}
+\item{text_size}{numeric value. Size of text in the forest plot. Default is 3.}
 
-\item{confidence_level}{the confidence level for the plotted confidence bars.}
-
-\item{col}{character specifying the color used for the error bars and summary diamond.}
-
-\item{tick_col}{character specifying the color used for the ticks indicating the point estimates.}
-
-\item{text_size}{numeric value. Values larger than 1 lead to larger text size,
-values smaller than 1 to smaller text size than the default.}
-
-\item{xlab}{character label of the x axis. Also used for the header of the aligned table if \code{annotate_CI} is TRUE.}
+\item{xlab}{character string specifying the label of the x axis. Also used for the header of the aligned table if \code{annotate_CI} is \code{TRUE}.}
 
 \item{x_limit}{numeric vector of length 2 with the limits (minimum, maximum) of the x axis.}
 
 \item{x_trans_function}{function to transform the labels of the x axis. Common uses are to transform
 log-odds-ratios or log-risk-ratios with \code{exp} to their original scale (odds ratios and risk ratios), or Fisher's z values
-back to correlation coefficents using \code{tanh}. See vignette('metaviz').}
+back to correlation coefficients using \code{tanh}. See vignette('metaviz').}
 
 \item{x_breaks}{numeric vector of values for the breaks on the x-axis. When used in tandem with \code{x_trans_function}
 the supplied values should be not yet transformed.}
+
+\item{annotate_CI}{logical scalar. Should the effect size and confidence interval values be shown as text in an aligned table on the right-hand side of the forest plot?}
+
+\item{study_table}{a data.frame with additional study-level variables which should be shown in an aligned table.
+Has to be in the same order than \code{x}. See vignette('metaviz').}
+
+\item{summary_table}{a data.frame with additional summary-level information shown in an aligned table.
+If \code{group} is supplied, \code{summary_table} must have a row for each subgroup
+summary effect, arranged in the order of the levels of \code{group}. See vignette('metaviz').}
+
+\item{table_headers}{character vector. Headers for each column of the aligned table if \code{study_table} and/or \code{summary_table} is supplied.
+By default the column names of \code{study_table} are used.}
+
+\item{table_layout}{numeric layout matrix passed to \code{layout_matrx} of \code{\link[gridExtra]{arrangeGrob}}. Can be used to overwrite the default spacing
+of the forest plot and aligned tables via \code{study_table}, \code{summary_table}, and \code{annotate_CI}. See vignette('metaviz').}
 }
 \value{
 A thick forest plot is created using ggplot2.
 }
 \description{
-Creates a thick forest plot, an enhanced variant of the forest plot.
+Creates a thick forest plot, a novel variant of the forest plot.
 }
 \details{
 The thick forest plot was proposed by Schild and Voracek (2015) as a variant and
-enhancement of classic forest plots. Thick forest plots use rectengular error bars
+enhancement of classic forest plots. Thick forest plots use rectangular error bars
 instead of traditional lines to display confidence intervals (width of the error bar), as well as the relative
-meta-analytic weight (height of the error bar) of each study. In addtion, study and summary level
+meta-analytic weight (height of the error bar) of each study. In addition, study and summary level
 point estimates are depicted clearly by a specific symbol.
 
 Thick forest plots have the following advantages, as compared to classic forest plots:
@@ -90,36 +94,47 @@ be visually less dominant.
 point estimates to a reasonable degree of accuracy, especially for studies
 with large meta-analytic weights and correspondingly large plotting symbols
 (commonly squares). Specific symbols within the thick forest plot improve the
-visualization of study point estimates. }
+visualization of study point estimates.}
 
 Note that for subgroup analysis the height of each error bar is scaled by the weight of each study within the subgroup divided by
 the sum of the weights of all studies irrespective of subgroup. Therefore, with subgroups present, the overall impression of error
-bar heights within a given subgroup compared to other subgroups conveys information about the relative precision of the meta-analyitc
+bar heights within a given subgroup compared to other subgroups conveys information about the relative precision of the meta-analytic
 estimate within the subgroup.
+
+\bold{Available forest plot types}
+
+Different aspects of meta-analytic data can be shown in forest plots. Five different types are available in \code{viz_forest} via the \code{type} parameter.
+Argument \code{"standard"} (default) shows study results as well as summary results in the forest plot. \code{"study_only"} allows to only show study results without the meta-analytic summary estimate.
+\code{"summary_only"} can be used to only show meta-analytic summary estimate(s), which is primarily useful to visualize several subgroup results (using \code{group}).
+\code{"cumulative"} shows a cumulative meta-analysis, that is, meta-analytic summary effects are computed sequentially by adding each study one-by-one.
+Studies are added in the same order than they were supplied in \code{x}. Finally, \code{"sensitivity"} shows for each study the meta-analytic summary
+effect if that particular study is not considered in the computation of the summary effect (leave-one-out analysis).
 }
 \examples{
 library(metaviz)
-# Plotting a thick forest plot using the mozart data (for details, see help(mozart)):
+# Plotting a thick forest plot using the mozart data
 viz_thickforest(x = mozart[, c("d", "se")],
 study_labels = mozart[, "study_name"], xlab = "Cohen d")
 
 # Visualizing a subgroup analysis of published and unpublished studies
-viz_thickforest(x = mozart[, c("d", "se")], group = mozart[, "unpublished"],
-study_labels = mozart[, "study_name"],
-summary_label = c("Summary (published)", "Summary (unpublished)"),
+viz_thickforest(x = mozart[, c("d", "se")], group = mozart[, "rr_lab"],
+study_labels = mozart[, "study_name"], method = "REML",
+summary_label = c("Summary (rr_lab = no)", "Summary (rr_lab = yes)"),
 xlab = "Cohen d")
 
 # Showing additional information in aligned tables. Log risk ratios are labeled
 # in their original metric (risk ratios) on the x axis.
 viz_thickforest(x = exrehab[, c("logrr", "logrr_se")],
-study_labels = exrehab[, "study_name"],
 annotate_CI = TRUE, xlab = "RR", x_trans_function = exp,
 study_table = data.frame(
+Name = exrehab[, "study_name"],
 eventsT = paste(exrehab$ai, "/", exrehab$ai + exrehab$bi, sep = ""),
 eventsC = paste(exrehab$ci, "/", exrehab$ci + exrehab$di, sep = "")),
 summary_table = data.frame(
+Name = "Summary",
 eventsT = paste(sum(exrehab$ai), "/", sum(exrehab$ai + exrehab$bi), sep = ""),
-eventsC = paste(sum(exrehab$ci), "/", sum(exrehab$ci + exrehab$di), sep = "")))
+eventsC = paste(sum(exrehab$ci), "/", sum(exrehab$ci + exrehab$di), sep = "")),
+table_layout = matrix(c(1, 1, 2, 2, 3), nrow = 1))
 }
 \references{
 Schild, A. H., & Voracek, M. (2015). Finding your way out of the

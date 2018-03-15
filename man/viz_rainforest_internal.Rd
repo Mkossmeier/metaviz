@@ -4,7 +4,7 @@
 \alias{viz_rainforest_internal}
 \title{Internal helper function of viz_rainforest and viz_forest to create a rainforst plot.}
 \usage{
-viz_rainforest_internal(plotdata, madata, ID, summary_symbol = TRUE,
+viz_rainforest_internal(plotdata, madata, type = "standard",
   study_labels = NULL, summary_label = NULL, study_table = NULL,
   summary_table = NULL, annotate_CI = FALSE, confidence_level = 0.95,
   col = "Blues", detail_level = 1, text_size = 3, xlab = "Effect",

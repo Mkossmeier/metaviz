@@ -5,52 +5,58 @@
 #'
 #' Funnel plots are widely used in meta-analysis to detect small study effects and in particular publication bias.
 #' However, interpretations of funnel plots often lead to false conclusions (e.g., Terrin, Schmid, and Lau, 2005). Visual inference
-#' (Buja et al. 2009; Majumder, Hofmann, and Cook 2013) can help to improve the validity of conclusions based on the visual inspection of a funnel plot.
-#' If the alternative hypothesis is true (e.g., publication bias led to an asymmetric funnel plot), the funnel plot showing the actually observed data
-#' should be identifiable when presented alongside funnel plots of simulated data under the null hypothesis. Only if this is possible,
-#' conclusion based on the visual inspection of the true-data funnel plot might be warranted.
+#' (Buja et al. 2009; Majumder, Hofmann, and Cook 2013) can help to improve the validity of conclusions based on the visual inspection of a
+#' funnel plot, by saving investigators from interpreting funnel-plot patterns which might be perfectly plausible by chance.
+#' Only if the real-data funnel plot is identifiable from null-plots, the null hypothesis is formally rejected and
+#' conclusions based on the visual inspection of the real-data funnel plot might be warranted.
 #'
-#' Function \code{funnelinf} builds on \pkg{nullabor} for null plot simulation and uses \pkg{ggplot2} for
+#' Function \code{funnelinf} utilizes package \pkg{nullabor} for null plot simulation and \pkg{ggplot2} for
 #' plotting the lineup. Several tailored features for visual inference with funnel plots are provided which currently include:
 #' \enumerate{
-#' \item options for null-plot simulation under both FEM and REM meta-analysis.
+#' \item options for null-plot simulation under both FEM and REM meta-analysis (see below).
 #' \item subgroup analysis.
-#' \item graphical options specific to the funnel plot (significance and confidence contours, and choice of the ordinate) .
-#' \item additional options to display various statistical information (Egger's regression line, and imputed studies by, as well as the adjusted summary effect from, the trim-and-fill method)
+#' \item graphical options specific to the funnel plot (significance and confidence contours, and choice of the ordinate).
+#' \item additional options to display various statistical information (Egger's regression line, and imputed studies by, as well as the adjusted summary effect from, the trim-and-fill method).
 #' }
+#'
+#' Null plots are simulated assuming normally distributed effect sizes with expected value equal to the observed summary effect and variance
+#' either equal to the observed study variances (\code{null_model = "FEM"}) or the sum of the observed study variances and the estimated
+#' between study variance \eqn{\tau^2}{tau squared} (\code{null_model = "REM"}).
+#'
 #'@param x data.frame or matrix with the effect sizes of all studies (e.g.,
 #'  correlations, log odds ratios, or Cohen \emph{d}) in the first column and their
 #'  respective standard errors in the second column. Alternatively, x can be the
 #'  output object of function \code{\link[metafor]{rma.uni}} from package
 #'  \pkg{metafor}; then effect sizes and standard errors are extracted from \code{x}.
-#'@param group a factor indicating the subgroup of each study.
+#'@param group factor indicating the subgroup of each study to show in the funnel plot. Has to be in the same order than \code{x}.
 #'@param group_permut logical scalar indicating if subgroup membership should be permutated
 #'  in the null plots. Ignored if no group is supplied.
-#'@param n integer specifying the absolute number of plots (number of null plots plus 1).
-#'@param y_axis Which y axis should be used in the funnel plot? Available options are se (default) for
-#'  standard error and precision for the reciprocal of the standard error.
-#'@param null_model Which meta-analytic model should be used to simulate the effect sizes for the null plots?
-#'  Available options are FEM for the fixed effect model and REM for the random-effects model (using the
-#'  DerSimonian-Laird method to estimate the between-study variance \eqn{\tau^2}{tau squared})
-#'@param contours logical scalar indicating if classic funnel plot contours and the summary effect should be displayed (i.e., summary effect +/-
+#'@param n integer specifying the absolute number of plots in the lineup.
+#'@param y_axis character string indicating which y axis should be used in the funnel plot. Available options are "se" (default) for
+#'  standard error and "precision" for the reciprocal of the standard error.
+#'@param null_model character string indicating which meta-analytic model should be used to simulate the effect sizes for the null plots.
+#'  Available options are "FEM" for the fixed effect model and "REM" (default) for the random-effects model (using the
+#'  DerSimonian-Laird method to estimate the between-study variance \eqn{\tau^2}{tau squared}).
+#'@param contours logical scalar indicating if classic funnel plot confidence contours and the summary effect should be displayed (i.e., summary effect +/-
 #'  qnorm(0.975) * SE).
 #'@param sig_contours logical scalar. Should significance contours be drawn? Significance contours show which combination of
 #' effect size and standard error lead to study p-values smaller than 0.05 or 0.01 (using a Wald test).
-#'@param contours_col character specifying the color palette from package \pkg{RColorBrewer} used for
+#'@param contours_col character string indicating the color palette used from package \pkg{RColorBrewer} for
 #'  \code{sig_contours}. Can be any of "Blues", "Greys", "Oranges", "Greens", "Reds", and "Purples".
-#'@param trim_and_fill logical scalar. Should studies imputed by the trim and fill method be displayed?
-#'@param trim_and_fill_side On which side should studies be imputed by the trim and fill method (i.e. on which side are studies presumably missing due to publication bias)?
-#'  Must be either "right" or "left".
-#'@param egger logical scalar. Should Egger's regression line be drawn?
-#'@param show_solution logical scalar. Should the plot with the real data be highlighted? Default is FALSE.
+#'@param trim_and_fill logical scalar. Should studies imputed by the trim and fill method be displayed? Also shows the adjusted summary
+#'  effect if \code{contours} is \code{TRUE} as well.
+#'@param trim_and_fill_side character string indicating on which side of the funnel plot studies should be imputed by the trim and fill method (i.e., on which side are studies presumably missing due to publication bias).
+#'  Must be either "right" or "left" (default).
+#'@param egger logical scalar. Should Egger's regression line be drawn? Only available if \code{y_axis} is \code{"se"}.
+#'@param show_solution logical scalar. Should the real-data plot be highlighted?
 #'@param rorschach logical scalar. Should the lineup only consist of null plots?
-#'@param text_size numeric value. Size of text in the funnel plots.
+#'@param text_size numeric value. Size of text in the lineup.
 #'@param point_size numeric value. Size of the study points in the funnel plots.
-#'@param xlab label of the x axis.
-#'@param ylab label of the y axis.
+#'@param xlab character string specifying the label of the x axis.
+#'@param ylab character string specifying the label of the y axis.
 #'@param x_trans_function function to transform the labels of the x axis. Common uses are to transform
 #'  log-odds-ratios or log-risk-ratios with \code{exp} to their original scale (odds ratios and risk ratios), or Fisher's z values
-#'  back to correlation coefficents using \code{tanh}.
+#'  back to correlation coefficients using \code{tanh}.
 #'@param x_breaks numeric vector of values for the breaks on the x-axis. When used in tandem with \code{x_trans_function}
 #'  the supplied values should be not yet transformed.
 #'@references Buja, A., Cook, D., Hofmann, H., Lawrence, M., Lee, E. K., Swayne, D. F., & Wickham, H. (2009).
@@ -69,13 +75,17 @@
 #'@author *Department of Basic Psychological Research and Research Methods, School of Psychology, University of Vienna
 #'@examples
 #' \dontrun{
+#' # Plotting a funnel plot lineup with the exrehab data to conduct visual funnel plot inference
+#' funnelinf(x = exrehab[, c("logrr", "logrr_se")])
+#'
 #' # Plotting a funnel plot lineup with the mozart data to conduct visual funnel plot inference
-#' # considering subgroups (for details, see help(mozart)):
+#' # considering subgroups
 #' funnelinf(x = mozart[, c("d", "se")],
 #' group = mozart[, "rr_lab"],
 #' group_permut = TRUE, null_model = "REM")
+#'
 #' # Plotting a funnel plot lineup with the brainvolume data to conduct visual funnel plot inference
-#' # considering heterogeneity (for details, see help(brainvol)):
+#' # considering heterogeneity by using the fixed effect model for null plot simulation
 #' funnelinf(x = brainvol[, c("z", "z_se")],
 #' null_model = "FEM")
 #' }
@@ -97,9 +107,9 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, null_model 
     se <- as.numeric(sqrt(x$vi))
 
     # If No group is supplied try to extract group from input object of class rma.uni (metafor)
-    if(is.null(group) & ncol(x$X) > 1) {
+    if(is.null(group) && ncol(x$X) > 1) {
       #check if only categorical moderators were used
-      if(!all(x$X == 1 | x$X == 0) | any(apply(as.matrix(x$X[, -1]), 1, sum) > 1))  {
+      if(!all(x$X == 1 || x$X == 0) || any(apply(as.matrix(x$X[, -1]), 1, sum) > 1))  {
         stop("Can not deal with metafor output object with continuous and/or more than one categorical moderator variable(s).")
       }
       # extract group vector from the design matrix of the metafor object
@@ -111,15 +121,19 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, null_model 
     if((is.data.frame(x) || is.matrix(x)) && ncol(x) >= 2) { # check if a data.frame or matrix with at least two columns is supplied
       # check if there are missing values
       if(sum(is.na(x[, 1])) != 0 || sum(is.na(x[, 2])) != 0) {
-        warning("The effect sizes or standard errors contain missing values, only complete cases are used")
+        warning("The effect sizes or standard errors contain missing values, only complete cases are used.")
         if(!is.null(group)) {
           group <- group[stats::complete.cases(x)]
         }
         x <- x[stats::complete.cases(x), ]
       }
+      # check if input is numeric
+      if(!is.numeric(x[, 1]) || !is.numeric(x[, 2])) {
+        stop("Input argument has to be numeric; see help(funnelinf) for details.")
+      }
       # check if there are any negative standard errors
-      if(!all(x[, 2] >= 0)) {
-        stop("Negative standard errors supplied")
+      if(!all(x[, 2] > 0)) {
+        stop("Non-positive standard errors supplied")
       }
       # extract effect sizes and standard errors
       es <- x[, 1]
@@ -131,7 +145,7 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, null_model 
   }
 
   # check if group is a factor
-  if(!is.null(group) & !is.factor(group)) {
+  if(!is.null(group) && !is.factor(group)) {
     group <- as.factor(group)
   }
   # check if group vector has the right length
@@ -142,7 +156,7 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, null_model 
   }
 
   k <- length(es)
-  summary_es <- metafor::rma.uni(yi = es, sei=se, method ="FE")$b[1] # for funnel plot contours
+  summary_es <- metafor::rma.uni(yi = es, sei = se, method = "FE")$b[1] # for funnel plot contours
 
   if(null_model == "FEM") {
     summary_es_simul <- summary_es
@@ -160,6 +174,10 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, null_model 
     data <- data.frame(es, se)
   } else {
     data <- data.frame(es, se, group)
+  }
+
+  if(n < 1 || n > 100 || (as.integer(n) != n)) {
+    stop("n must be an integer between 1 and 100.")
   }
   # Sample effect sizes from a normal distribution mu = summary effect and sd = se_simul
   if(rorschach != TRUE) {
@@ -185,22 +203,22 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, null_model 
       }
     }
   } else {
-    x <- nullabor::rorschach(nullabor::null_dist("es", dist="normal", params = list(mean = summary_es_simul, sd = se_simul)),
+    x <- nullabor::rorschach(nullabor::null_dist("es", dist = "normal", params = list(mean = summary_es_simul, sd = se_simul)),
                        true = data, n = n, p = 0)
-    names(x) <- c(".sample", "es", "se")
+    names(x)[1] <- ".sample"
     if(show_solution == TRUE) {
       warning("If rorschach = TRUE the lineup only consists of null plots. Argument show_solution = TRUE ignored.")
       show_solution <- FALSE
     }
   }
 
-  if(!is.null(group) & group_permut == TRUE) {
+  if(!is.null(group) && group_permut == TRUE) {
     plotdata <- x %>%
       group_by(.sample) %>%
       mutate(group_permut = sample(group, size = k, replace = F)) %>%
       ungroup()
     if(rorschach != TRUE) {
-    plotdata[plotdata$.sample == solution, "group_permut"] <- group
+      plotdata[plotdata$.sample == solution, "group_permut"] <- group
     }
     plotdata$group <- plotdata$group_permut
   } else {
@@ -212,6 +230,11 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, null_model 
   plotdata <- data.frame(plotdata, real_data = plotdata$.sample == solution)
   }
 
+  # Set Color palette for contours
+  if(!(contours_col %in% c("Blues", "Greys", "Oranges", "Greens", "Reds", "Purples"))) {
+    warning("Supported arguments for contours_col are Blues, Greys, Oranges, Greens, Reds, and Purples. Blues is used.")
+    contours_col <- "Blues"
+  }
   col <- RColorBrewer::brewer.pal(n = 9, name = contours_col)
 
   # set intial min and max values for x axis limits
@@ -223,7 +246,7 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, null_model 
       if(side == "right") {
         es <- -es
       }
-      if(side != "right" & side != "left") {
+      if(side != "right" && side != "left") {
         stop("trim_and_fill_side argument must be either left or right")
       }
 
@@ -242,7 +265,7 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, null_model 
       k0 <- k0_func(es = es, se = se, summary_es = summary_es_init)
       eps <- 1
       iter <- 0
-      while(eps > 0.01 | iter < 20) {
+      while(eps > 0.01 || iter < 20) {
         iter <- iter + 1
         es_ord <- es[order(es, decreasing = T)]
         se_ord <- se[order(es, decreasing = T)]
@@ -318,7 +341,7 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, null_model 
   # standard error on the y axis
   if(y_axis =="se") {
     plotdata$y <- se
-    max_se <- max(se) + diff(range(se))*0.1
+    max_se <- max(se) + ifelse(length(se) > 1, diff(range(se))*0.1, max(se)*0.1)
     y_limit <- c(0, max_se)
 
     if(is.null(ylab)) {
@@ -378,8 +401,8 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, null_model 
       plotdata$y <- 1/se
 
       # values for  y limit
-      max_y <- max(1/se) + diff(range(1/se))*0.05
-      min_y <- min(1/se) - diff(range(1/se))*0.05
+      max_y <- max(1/se) + ifelse(length(se) > 1, diff(range(1/se))*0.05, 1/se*0.05)
+      min_y <- min(1/se) - ifelse(length(se) > 1, diff(range(1/se))*0.05, 1/se*0.05)
       y_limit <- c(min_y, max_y)
 
       if(is.null(ylab)) {
@@ -438,6 +461,11 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, null_model 
     }
   }
 
+  if(!is.null(x_trans_function) && !is.function(x_trans_function)) {
+    warning("Argument x_trans_function must be a function; input ignored.")
+    x_trans_function <- NULL
+  }
+
   x_limit <- c(min_x - diff(c(min_x, max_x))*0.05, max_x + diff(c(min_x, max_x))*0.05)
 
   # workaround for "Undefined global functions or variables" Note in R CMD check while using ggplot2.
@@ -459,14 +487,14 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, null_model 
         p + geom_rect(data = subset(plotdata, real_data == T), xmin = -Inf, xmax = Inf,
                       ymin = -Inf, ymax = Inf, fill = "lightgreen")
     }
-    if(sig_contours == TRUE & y_axis == "se") {
+    if(sig_contours == TRUE && y_axis == "se") {
       p <- p +
         geom_polygon(data = sig_funneldata, aes(x = x.01, y = y), fill = col[9], alpha = 0.6) +
         geom_polygon(data = sig_funneldata, aes(x = x.05, y = y), fill = "white", alpha = 0.8) +
         geom_path(data = sig_funneldata, aes(x = x.05, y = y)) +
         geom_path(data = sig_funneldata, aes(x = x.01, y = y))
     } else {
-      if(sig_contours == TRUE & y_axis == "precision") {
+      if(sig_contours == TRUE && y_axis == "precision") {
         p <- p +
           geom_polygon(data = sig_funneldata, aes(x = x0.01, y = y), fill = col[9], alpha = 0.6) +
           geom_polygon(data = sig_funneldata, aes(x = x0.05, y = y), fill = "white", alpha = 0.8) +
@@ -481,11 +509,11 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, null_model 
     }
     if(y_axis == "se") {
       p <-
-        p + scale_y_reverse(name = ylab, labels = function(x) sprintf("%.1f", x))
+        p + scale_y_reverse(name = ylab)
     } else {
       if(y_axis == "precision") {
         p <-
-          p + scale_y_continuous(name = ylab, labels = function(x) sprintf("%.1f", x))
+          p + scale_y_continuous(name = ylab)
       }
     }
     if(trim_and_fill == TRUE) {
