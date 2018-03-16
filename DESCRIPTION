@@ -1,7 +1,7 @@
 Package: metaviz
 Type: Package
 Title: Forest Plots, Funnel Plots, and Visual Funnel Plot Inference for Meta-Analysis
-Version: 0.2
+Version: 0.2.0
 Authors@R: c(
     person("Michael", "Kossmeier", email = "michael.kossmeier@univie.ac.at", role = c("cre", "aut")),
     person("Ulrich S.", "Tran", email = "ulrich.tran@univie.ac.at", role = c("aut")),

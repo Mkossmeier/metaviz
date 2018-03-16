@@ -5,7 +5,6 @@
 ^README\.md$
 ^README-.*\.png$
 ^NEWS\.Rmd$
-^NEWS\.md$
 ^NEWS-.*\.png$
 ^\.travis\.yml$
 ^cran-comments\.Rmd$
