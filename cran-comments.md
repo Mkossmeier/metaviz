@@ -4,7 +4,7 @@ Update to version 0.2 (package metaviz)
 Test environments
 -----------------
 
--   Windows (R-release), R-3.4.3
+-   Windows (R-release), R-3.4.4
 -   Windows (R-devel), R-3.5.0
 -   Ubuntu 12.04 (on travis-ci), R-3.4.2
 
