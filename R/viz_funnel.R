@@ -129,6 +129,9 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
   #'@import ggplot2
   #'@import dplyr
 
+  if(missing(x)) {
+    stop("argument x is missing, with no default.")
+  }
   # input is output of rma (metafor)
   if("rma" %in% class(x)) {
     # extract effect size and standard error

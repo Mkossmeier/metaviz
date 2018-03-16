@@ -17,7 +17,7 @@ Package **metaviz** version 0.1.1
 Package **metaviz** version 0.2
 -------------------------------
 
--   March 12, 2018: Version 0.2 submitted to CRAN
--   Added viz\_funnel, a new function to create funnel plot variants (e.g.,additional evidence contour enhanced funnel plots)
+-   March 16, 2018: Version 0.2 submitted to CRAN
+-   Added viz\_funnel, a new function to create funnel plot variants (e.g., additional evidence contour enhanced funnel plots)
 -   Added viz\_forest, a new function to create forest plot variants (classic, thick forest, and rainforest plots)
--   Now includes an additional example dataset of meta-analyic data with dichotomous outcomes.
+-   Now includes an additional example dataset of a meta-analyis with dichotomous outcomes.

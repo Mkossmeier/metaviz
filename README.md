@@ -23,4 +23,4 @@ Questions, ideas, criticism: <michael.kossmeier@univie.ac.at>.
 
 ### Package **metaviz** version 0.2
 
--   March 12, 2018: Version 0.2 submitted to CRAN
+-   March 16, 2018: Version 0.2 submitted to CRAN

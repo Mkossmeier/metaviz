@@ -100,6 +100,9 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, null_model 
   #'@import ggplot2
   #'@import dplyr
 
+  if(missing(x)) {
+    stop("argument x is missing, with no default.")
+  }
   # input is output of rma (metafor)
   if("rma" %in% class(x)) {
     # extract effect size and standard error

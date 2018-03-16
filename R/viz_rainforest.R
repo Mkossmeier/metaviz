@@ -72,7 +72,7 @@
 #'@param col character string specifying the color palette from package \pkg{RColorBrewer} used.
 #'  Can be any of "Blues", "Greys", "Oranges", "Greens", "Reds", and "Purples".
 #'@param text_size numeric value. Size of text in the forest plot. Default is 3.
-#'@param xlab character string specifying the label of the x axis. Also used for the header of the aligned table if \code{annotate_CI} is \code{TRUE}.
+#'@param xlab character string specifying the label of the x axis. By default also used for the header of the aligned table if \code{annotate_CI} is \code{TRUE}.
 #'@param x_limit numeric vector of length 2 with the limits (minimum, maximum) of the x axis.
 #'@param x_trans_function function to transform the labels of the x axis. Common uses are to transform
 #'  log-odds-ratios or log-risk-ratios with \code{exp} to their original scale (odds ratios and risk ratios), or Fisher's z values
@@ -85,8 +85,7 @@
 #'@param summary_table a data.frame with additional summary-level information shown in an aligned table.
 #'  If \code{group} is supplied, \code{summary_table} must have a row for each subgroup
 #'  summary effect, arranged in the order of the levels of \code{group}. See vignette('metaviz').
-#'@param table_headers character vector. Headers for each column of the aligned table if \code{study_table} and/or \code{summary_table} is supplied.
-#'  By default the column names of \code{study_table} are used.
+#'@param table_headers character vector. Headers for each column of aligned tables via \code{study_table}, \code{summary_table}, or \code{annotate_CI}.
 #'@param table_layout numeric layout matrix passed to \code{layout_matrx} of \code{\link[gridExtra]{arrangeGrob}}. Can be used to overwrite the default spacing
 #'  of the forest plot and aligned tables via \code{study_table}, \code{summary_table}, and \code{annotate_CI}.
 #'@param ... deprecated argument names from earlier versions can still be passed to \code{viz_rainforest} via \code{...}.

@@ -42,7 +42,7 @@
 #'@param col character string specifying the main color for plotting. For \code{variant = "rain"} must be one of the following palettes from package
 #' \pkg{RColorBrewer}: "Blues", "Greys", "Oranges", "Greens", "Reds", or "Purples".
 #'@param text_size numeric value. Size of text in the forest plot. Default is 3.
-#'@param xlab character string specifying the label of the x axis. Also used for the header of the aligned table if \code{annotate_CI} is \code{TRUE}.
+#'@param xlab character string specifying the label of the x axis. By default also used for the header of the aligned table if \code{annotate_CI} is \code{TRUE}.
 #'@param x_limit numeric vector of length 2 with the limits (minimum, maximum) of the x axis.
 #'@param x_trans_function function to transform the labels of the x axis. Common uses are to transform
 #'  log-odds-ratios or log-risk-ratios with \code{exp} to their original scale (odds ratios and risk ratios), or Fisher's z values
@@ -55,8 +55,7 @@
 #'@param summary_table a data.frame with additional summary-level information shown in an aligned table.
 #'  If \code{group} is supplied, \code{summary_table} must have a row for each subgroup
 #'  summary effect, arranged in the order of the levels of \code{group}. See vignette('metaviz').
-#'@param table_headers character vector. Headers for each column of the aligned table if \code{study_table} and/or \code{summary_table} is supplied.
-#'  By default the column names of \code{study_table} are used.
+#'@param table_headers character vector. Headers for each column of aligned tables via \code{study_table}, \code{summary_table}, or \code{annotate_CI}.
 #'@param table_layout numeric layout matrix passed to \code{layout_matrx} of \code{\link[gridExtra]{arrangeGrob}}. Can be used to overwrite the default spacing
 #'  of the forest plot and aligned tables via \code{study_table}, \code{summary_table}, and \code{annotate_CI}.
 #'@param ... further arguments passed to \code{\link[metaviz]{viz_rainforest}} for \code{variant = "rain"}, or
@@ -106,6 +105,9 @@ viz_forest <- function(x, group = NULL, type = "standard", variant = "classic", 
   #'@import dplyr
 
 # Handle input object -----------------------------------------------------
+  if(missing(x)) {
+    stop("argument x is missing, with no default.")
+  }
   # input is output of rma (metafor)
   if("rma" %in% class(x)) {
     es <- as.numeric(x$yi)
@@ -114,11 +116,11 @@ viz_forest <- function(x, group = NULL, type = "standard", variant = "classic", 
 
     # check if group argument has the right length
     if(!is.null(group) & (length(group) != length(es))) {
-      warning("length of supplied group vector does not correspond to the number of studies; group argument is ignored")
+      warning("length of supplied group vector does not correspond to the number of studies; group argument is ignored.")
       group <- NULL
     }
     if(method != x$method) {
-      warning("Note: method argument used differs from input object of class rma.uni (metafor)")
+      message("Note: method argument used differs from input object of class rma.uni (metafor)")
     }
     # If No group is supplied try to extract group from input object of class rma.uni (metafor)
     if(is.null(group) && ncol(x$X) > 1) {
@@ -418,7 +420,7 @@ viz_forest <- function(x, group = NULL, type = "standard", variant = "classic", 
     }
 
     # Function to create table plots
-    table_plot <- function(tbl, ID, r = 5.5, l = 5.5, tbl_titles = table_headers) {
+    table_plot <- function(tbl, ID, r = 5.5, l = 5.5, tbl_titles = NULL) {
       # all columns and column names are stacked to a vector
       df_to_vector <- function(df) {
         v <- vector("character", 0)
@@ -524,17 +526,51 @@ viz_forest <- function(x, group = NULL, type = "standard", variant = "classic", 
 
     table_left <- data.frame(rbind(study_table, summary_table))
 
-    if(!is.null(table_headers) && length(table_headers) != ncol(table_left)) {
-      warning("Argument table_headers has not the right length and is ignored.")
-      table_headers <- NULL
+
+    # set table headers
+    if(!is.null(table_headers)) {
+      if(length(table_headers) >= ncol(table_left)) {
+        table_headers_left <- table_headers[1:ncol(table_left)]
+      } else {
+        warning("Argument table_headers has not the right length and is ignored.")
+        table_headers_left <- NULL
+      }
+    } else {
+      table_headers_left <- NULL
     }
-  table_left_plot <- table_plot(table_left, ID = ID$ID, r = 0, tbl_titles = table_headers)
+
+  table_left_plot <- table_plot(table_left, ID = ID$ID, r = 0, tbl_titles = table_headers_left)
   } else {
     table_left <- NULL
   }
 
   # Textual CI and effect size values right
   if(annotate_CI == TRUE) {
+
+    # set table headers
+    if(!is.null(table_headers)) {
+      if(is.null(table_left)) {
+        if(length(table_headers) == 1) {
+          table_headers_right <- table_headers
+        } else {
+          warning("Argument table_headers has not the right length and is ignored.")
+          table_headers_right <- NULL
+        }
+      } else {
+        if(length(table_headers) == ncol(table_left) + 1) {
+          table_headers_right <- table_headers[ncol(table_left) + 1]
+        } else {
+          table_headers_right <- NULL
+        }
+      }
+    } else {
+      table_headers_right <- NULL
+    }
+
+    if(is.null(table_headers_right)){
+      table_headers_right <- paste(xlab, " [", confidence_level*100, "% CI]", sep = "")
+    }
+
     if(type %in% c("standard", "sensitivity", "cumulative")) {
       x_hat <- c(plotdata$x, madata$summary_es)
       lb <- c(c(plotdata$x, madata$summary_es) - stats::qnorm(1 - (1 - confidence_level)/2, 0, 1)*c(plotdata$se, madata$summary_se))
@@ -553,8 +589,7 @@ viz_forest <- function(x, group = NULL, type = "standard", variant = "classic", 
       CI <- paste(x_hat, " [", lb, ", ", ub, "]", sep = "")
       CI_label <- data.frame(CI = CI, stringsAsFactors = FALSE)
 
-      table_CI <- table_plot(CI_label, ID = c(plotdata$ID, madata$ID), l = 0, r = 11,  tbl_titles =
-                               paste(xlab, " [", confidence_level*100, "% CI]", sep = ""))
+      table_CI <- table_plot(CI_label, ID = c(plotdata$ID, madata$ID), l = 0, r = 11,  tbl_titles = table_headers_right)
     } else {
       if(type %in% c("study_only", "summary_only")) {
         x_hat <- plotdata$x
@@ -572,8 +607,7 @@ viz_forest <- function(x, group = NULL, type = "standard", variant = "classic", 
         x_hat <- format(round(x_hat, 2), nsmall = 2)
         CI <- paste(x_hat, " [", lb, ", ", ub, "]", sep = "")
         CI_label <- data.frame(CI = CI, stringsAsFactors = FALSE)
-        table_CI <- table_plot(CI_label, ID = plotdata$ID, l = 0, r = 11, tbl_titles =
-                                 paste(xlab, " [", confidence_level*100, "% CI]", sep = ""))
+        table_CI <- table_plot(CI_label, ID = plotdata$ID, l = 0, r = 11, tbl_titles = table_headers_right)
       }
     }
   } else {
