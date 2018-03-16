@@ -1,4 +1,4 @@
-#'Internal helper function of viz_rainforest and viz_forest to create a rainforst plot.
+#'Internal helper function of viz_rainforest and viz_forest to create a rainforest plot.
 #'
 #'Creates a thick forest plot. Called by viz_rainforest and viz_forest for type = "rain"
 #'@keywords internal
@@ -244,7 +244,7 @@ viz_rainforest_internal <- function(plotdata, madata,
 }
 
 
-#'Internal helper function of viz_thickforst and viz_forest to create a thick forest plot
+#'Internal helper function of viz_thickforest and viz_forest to create a thick forest plot
 #'
 #'Creates a thick forest plot. Called by viz_thickforest and viz_forest for type = "thick"
 #'@keywords internal
@@ -385,7 +385,7 @@ viz_thickforest_internal <- function(plotdata, madata,
 
 #'Internal helper function of viz_forest to create a classic forest plot
 #'
-#'Creates a classsic forest plot. Called by viz_forest for type = "classic"
+#'Creates a classic forest plot. Called by viz_forest for type = "classic"
 #'@keywords internal
 viz_classicforest_internal <- function(plotdata, madata,
                                        type = "standard",

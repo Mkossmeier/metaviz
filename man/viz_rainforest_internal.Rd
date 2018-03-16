@@ -2,7 +2,7 @@
 % Please edit documentation in R/viz_forest_internal.R
 \name{viz_rainforest_internal}
 \alias{viz_rainforest_internal}
-\title{Internal helper function of viz_rainforest and viz_forest to create a rainforst plot.}
+\title{Internal helper function of viz_rainforest and viz_forest to create a rainforest plot.}
 \usage{
 viz_rainforest_internal(plotdata, madata, type = "standard",
   study_labels = NULL, summary_label = NULL, study_table = NULL,

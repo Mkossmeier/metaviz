@@ -11,6 +11,6 @@ viz_classicforest_internal(plotdata, madata, type = "standard",
   x_limit = NULL, x_trans_function = NULL, x_breaks = NULL)
 }
 \description{
-Creates a classsic forest plot. Called by viz_forest for type = "classic"
+Creates a classic forest plot. Called by viz_forest for type = "classic"
 }
 \keyword{internal}

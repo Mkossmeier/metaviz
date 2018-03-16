@@ -2,7 +2,7 @@
 % Please edit documentation in R/viz_forest_internal.R
 \name{viz_thickforest_internal}
 \alias{viz_thickforest_internal}
-\title{Internal helper function of viz_thickforst and viz_forest to create a thick forest plot}
+\title{Internal helper function of viz_thickforest and viz_forest to create a thick forest plot}
 \usage{
 viz_thickforest_internal(plotdata, madata, type = "standard",
   study_labels = NULL, summary_label = NULL, study_table = NULL,
