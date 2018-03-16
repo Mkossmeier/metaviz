@@ -1,6 +1,11 @@
 Update to version 0.2 (package metaviz)
 ---------------------------------------
 
+Resubmission
+------------
+
+-   Package names are now sinlge quoted in the Description field.
+
 Test environments
 -----------------
 
