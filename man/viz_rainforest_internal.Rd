@@ -11,6 +11,6 @@ viz_rainforest_internal(plotdata, madata, type = "standard",
   x_limit = NULL, x_trans_function = NULL, x_breaks = NULL)
 }
 \description{
-Creates a thick forest plot. Called by viz_rainforest and viz_forest for type = "rain"
+Creates a rainforest plot. Called by viz_rainforest and viz_forest for type = "rain"
 }
 \keyword{internal}

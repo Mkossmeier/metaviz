@@ -20,7 +20,7 @@ output object of function \code{\link[metafor]{rma.uni}} from package
 
 \item{group}{factor indicating the subgroup of each study to show in the funnel plot. Has to be in the same order than \code{x}.}
 
-\item{group_permut}{logical scalar indicating if subgroup membership should be permutated
+\item{group_permut}{logical scalar indicating if subgroup membership should be permuted
 in the null plots. Ignored if no group is supplied.}
 
 \item{n}{integer specifying the absolute number of plots in the lineup.}

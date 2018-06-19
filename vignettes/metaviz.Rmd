@@ -41,7 +41,7 @@ viz_forest(x = mozart[1:10, c("d", "se")], study_labels = mozart[1:10, c("study_
 
 ### Forest plot variants: rainforest plot and thick forest plots
 
-In addition to traditional forest plots, rainforest plots as well as the thick forest plots can be created via the `variant` argument. Rainforest and thick forest plots are two variants and enhancements of the classical forest plot recently proposed by Schild and Voracek (2015). Both variants give visually emphasize large studies (with short confidence intervals and more weight in the meta-analysis), while small studies (with wide confidence intervals and less weight in the meta-analysis) are visually less dominant. For further details see `help(viz_rainforest)` and `help(viz_thickforest)`.
+In addition to traditional forest plots, rainforest plots as well as the thick forest plots can be created via the `variant` argument. Rainforest and thick forest plots are two variants and enhancements of the classical forest plot recently proposed by Schild and Voracek (2015). Both variants visually emphasize large studies (with short confidence intervals and more weight in the meta-analysis), while small studies (with wide confidence intervals and less weight in the meta-analysis) are visually less dominant. For further details see `help(viz_rainforest)` and `help(viz_thickforest)`.
 
 ```{r, dev='CairoPNG'}
 viz_forest(x = mozart[1:10, c("d", "se")], study_labels = mozart[1:10, c("study_name")],

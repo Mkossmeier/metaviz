@@ -23,6 +23,8 @@
 #'  respective standard errors in the second column. Alternatively, x can be the
 #'  output object of function \code{\link[metafor]{rma.uni}} from package
 #'  \pkg{metafor}; then effect sizes and standard errors are extracted from \code{x}.
+#'@param weights An optional vector of study weights used to compute the meta-analytic summary effect.
+#'  If not NULL (default), study weights are not computed with \code{method} from \code{\link[metafor]{rma.uni}} but the user supplied weights are used.
 #'@param group factor indicating the subgroup of each study to plot a subgroup forest plot. Has to be in the same order than \code{x}.
 #'@param type character string indicating the type of forest plot to be plotted. Can be "standard" (default), "study_only",
 #'  "summary_only", "cumulative", or "sensitivity". See 'Details'.
@@ -94,7 +96,7 @@
 #' eventsC = paste(sum(exrehab$ci), "/", sum(exrehab$ci + exrehab$di), sep = "")),
 #' table_layout = matrix(c(1, 1, 2, 2, 3), nrow = 1))
 #'@export
-viz_forest <- function(x, group = NULL, type = "standard", variant = "classic", method = "FE",
+viz_forest <- function(x, weights = NULL, group = NULL, type = "standard", variant = "classic", method = "FE",
                             study_labels = NULL, summary_label = NULL,
                             confidence_level = 0.95, col = "Blues",
                             text_size = 3, xlab = "Effect", x_limit = NULL,
@@ -177,6 +179,11 @@ viz_forest <- function(x, group = NULL, type = "standard", variant = "classic", 
     group <- factor(rep(1, times = n))
   }
 
+  # if weights has wrong type or wrong length it is ignored
+  if(!is.null(weights)) {
+    if(length(weights) != n | !is.numeric(weights) | !all(weights > 0)) weights <- NULL
+  }
+
   # drop unused levels of group factor
   group <- droplevels(group)
   k <- length(levels(group))
@@ -194,28 +201,28 @@ viz_forest <- function(x, group = NULL, type = "standard", variant = "classic", 
     # compute meta-analytic summary effect for each group
     M <- x %>%
       group_by(group) %>%
-      summarise(M = metafor::rma.uni(yi = es, sei = se, method = method)$b[[1]]) %>%
+      summarise(M = metafor::rma.uni(yi = es, sei = se, weights = weights, method = method)$b[[1]]) %>%
       select(M)
       summary_es <-  unlist(M)
 
     # compute standard error of the meta-analytic summary effect for each group
     M <- x %>%
       group_by(group) %>%
-      summarise(M = metafor::rma.uni(yi = es, sei = se, method = method)$se[[1]]) %>%
+      summarise(M = metafor::rma.uni(yi = es, sei = se, weights = weights, method = method)$se[[1]]) %>%
       select(M)
       summary_se <- unlist(M)
     if(type == "sensitivity") {
       loo_es <- function(es, se) {
         res <- numeric(length(es))
         for(i in 1:length(es)) {
-          res[i] <- metafor::rma.uni(yi = es[-i], sei = se[-i], method = method)$b[[1]]
+          res[i] <- metafor::rma.uni(yi = es[-i], sei = se[-i], weights = weights[-i], method = method)$b[[1]]
         }
         res
       }
       loo_se <- function(es, se) {
         res <- numeric(length(es))
         for(i in 1:length(es)) {
-          res[i] <- metafor::rma.uni(yi = es[-i], sei = se[-i], method = method)$se[[1]]
+          res[i] <- metafor::rma.uni(yi = es[-i], sei = se[-i], weights = weights[-i], method = method)$se[[1]]
         }
         res
       }
@@ -228,14 +235,14 @@ viz_forest <- function(x, group = NULL, type = "standard", variant = "classic", 
       rollingma_es <- function(es, se) {
         res <- numeric(length(es))
         for(i in 1:length(es)) {
-          res[i] <- metafor::rma.uni(yi = es[1:i], sei = se[1:i], method = method)$b[[1]]
+          res[i] <- metafor::rma.uni(yi = es[1:i], sei = se[1:i], weights = weights[1:i], method = method)$b[[1]]
         }
         res
       }
       rollingma_se <- function(es, se) {
         res <- numeric(length(es))
         for(i in 1:length(es)) {
-          res[i] <- metafor::rma.uni(yi = es[1:i], sei = se[1:i], method = method)$se[[1]]
+          res[i] <- metafor::rma.uni(yi = es[1:i], sei = se[1:i], weights = weights[1:i], method = method)$se[[1]]
         }
         res
       }
@@ -341,6 +348,8 @@ viz_forest <- function(x, group = NULL, type = "standard", variant = "classic", 
                            "group"= group,
                            "x_min" = es - stats::qnorm(1 - (1 - confidence_level)/2)*se,
                            "x_max" = es + stats::qnorm(1 - (1 - confidence_level)/2)*se)
+    if(!is.null(weights)) plotdata <- data.frame(plotdata, "weights" = weights)
+
     if(type == "standard") {
       madata <- data.frame("summary_es" = summary_es,
                            "summary_se" = summary_se,

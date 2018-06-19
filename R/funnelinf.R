@@ -29,7 +29,7 @@
 #'  output object of function \code{\link[metafor]{rma.uni}} from package
 #'  \pkg{metafor}; then effect sizes and standard errors are extracted from \code{x}.
 #'@param group factor indicating the subgroup of each study to show in the funnel plot. Has to be in the same order than \code{x}.
-#'@param group_permut logical scalar indicating if subgroup membership should be permutated
+#'@param group_permut logical scalar indicating if subgroup membership should be permuted
 #'  in the null plots. Ignored if no group is supplied.
 #'@param n integer specifying the absolute number of plots in the lineup.
 #'@param y_axis character string indicating which y axis should be used in the funnel plot. Available options are "se" (default) for

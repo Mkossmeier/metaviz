@@ -456,7 +456,7 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
 
     } else {
       # set search grid für y_axis == "precision"
-      y_range <- c(max_y + diff(range(x_limit))*0.2, min_y - diff(range(x_limit))*0.2)
+      y_range <- c(max_y + diff(range(y_limit))*0.2, min_y - diff(range(y_limit))*0.2)
       x_range <- c(min_x - diff(range(x_limit))*0.2, max_x + diff(range(x_limit))*0.2)
 
       step <- abs(summary_es - x_range[1])/ (150 * detail_level - 1)
