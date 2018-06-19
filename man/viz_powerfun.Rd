@@ -50,10 +50,6 @@ back to correlation coefficients using \code{tanh}.}
 
 \item{x_breaks}{numeric vector of values for the breaks on the x-axis. When used in tandem with \code{x_trans_function}
 the supplied values should be not yet transformed.}
-
-\item{group_legend}{logical scalar. Should there be a legend shown at the bottom of the graph if \code{group} was supplied?}
-
-\item{group_legend_title}{a character string specifying the title of the legend if \code{group} was supplied and \code{group_legend} is \code{TRUE}.}
 }
 \value{
 A funnel plot with power contours is created using ggplot2.

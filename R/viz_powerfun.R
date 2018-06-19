@@ -34,8 +34,6 @@
 #'@param point_size numeric value. Size of the study points in the funnel plot. Default is 2.
 #'@param xlab character string specifying the label of the x axis.
 #'@param ylab character string specifying the label of the y axis.
-#'@param group_legend logical scalar. Should there be a legend shown at the bottom of the graph if \code{group} was supplied?
-#'@param group_legend_title a character string specifying the title of the legend if \code{group} was supplied and \code{group_legend} is \code{TRUE}.
 #'@param x_trans_function function to transform the labels of the x axis. Common uses are to transform
 #'  log-odds-ratios or log-risk-ratios with \code{exp} to their original scale (odds ratios and risk ratios), or Fisher's z values
 #'  back to correlation coefficients using \code{tanh}.
@@ -212,9 +210,9 @@ viz_powerfun <- function(x, y_axis = "se", method = "FE", true_effect = NULL, po
 
     yseq <- seq(from = y_limit[1], to = y_limit[2], length.out = 1000)
     if(y_axis == "se") {
-      power <- (1 - pnorm(qnorm(0.975) * yseq, abs(true_effect), yseq)) + pnorm(qnorm(0.025) * yseq, abs(true_effect), yseq)
+      power <- (1 - stats::pnorm(stats::qnorm(0.975) * yseq, abs(true_effect), yseq)) + stats::pnorm(stats::qnorm(0.025) * yseq, abs(true_effect), yseq)
     } else {
-      power <- 1 - pnorm(1.96 * 1/yseq, abs(true_effect), 1/yseq) + pnorm(qnorm(0.025) * 1/yseq, abs(true_effect), 1/yseq)
+      power <- 1 - stats::pnorm(1.96 * 1/yseq, abs(true_effect), 1/yseq) + stats::pnorm(stats::qnorm(0.025) * 1/yseq, abs(true_effect), 1/yseq)
     }
 
     if(power_contours == "discrete") {
@@ -250,18 +248,28 @@ viz_powerfun <- function(x, y_axis = "se", method = "FE", true_effect = NULL, po
     power_col <- RColorBrewer::brewer.pal(n = 9, name = "RdYlGn")
 
     # compute statistics
-    study_power <- (1 - pnorm(qnorm(0.975) * se, abs(true_effect), se)) + pnorm(qnorm(0.025) * se, abs(true_effect), se)
-    med_power <- paste(round(median(study_power)*100, 1), "%", sep = "")
+    study_power <- (1 - stats::pnorm(stats::qnorm(0.975) * se, abs(true_effect), se)) + stats::pnorm(stats::qnorm(0.025) * se, abs(true_effect), se)
+    med_power <- paste(round(stats::median(study_power)*100, 1), "%", sep = "")
     expected <- sum(study_power)
-    observed <- sum(2*(1 - pnorm(abs(es/se))) <= 0.05)
+    observed <- sum(2*(1 - stats::pnorm(abs(es/se))) <= 0.05)
     c2 <- (observed - expected)^2/expected + (observed - expected)^2/(length(study_power) - expected)
-    p_tes <- round(1 - pchisq(c2, df = 1), 3)
+    p_tes <- round(1 - stats::pchisq(c2, df = 1), 3)
 
   if(!is.null(x_trans_function) && !is.function(x_trans_function)) {
     warning("Argument x_trans_function must be a function; input ignored.")
     x_trans_function <- NULL
   }
 
+
+  # workaround for "Undefined global functions or variables" Note in R CMD check while using ggplot2.
+  y <- NULL
+  fill <- NULL
+  xstart <- NULL
+  xend <- NULL
+  ystart <- NULL
+  yend <- NULL
+  x_min <- NULL
+  x_max <- NULL
   # Construct plot
   p <- ggplot(data = plotdata, aes(x = es, y = y))
   if(power_contours == "continuous") {
@@ -299,7 +307,7 @@ viz_powerfun <- function(x, y_axis = "se", method = "FE", true_effect = NULL, po
                             dup_axis(~.,
                                      name = "Power",
                                      labels = function(x) {
-                                       paste(round((1-pnorm((qnorm(0.975)*x - true_effect)/x) + pnorm((-qnorm(0.975)*x - true_effect)/x)) * 100, 1), "%", sep = "")}))
+                                       paste(round((1-stats::pnorm((stats::qnorm(0.975)*x - true_effect)/x) + stats::pnorm((-stats::qnorm(0.975)*x - true_effect)/x)) * 100, 1), "%", sep = "")}))
   } else {
     if(y_axis == "precision") {
       p <-
@@ -308,7 +316,7 @@ viz_powerfun <- function(x, y_axis = "se", method = "FE", true_effect = NULL, po
                                  dup_axis(~.,
                                           name = "Power",
                                           labels = function(x) {
-                                            paste(round((1-pnorm((qnorm(0.975)*1/x - true_effect)/(1/x)) + pnorm((-qnorm(0.975)*1/x - true_effect)/(1/x))) * 100, 1), "%", sep = "")}))
+                                            paste(round((1-stats::pnorm((stats::qnorm(0.975)*1/x - true_effect)/(1/x)) + stats::pnorm((-stats::qnorm(0.975)*1/x - true_effect)/(1/x))) * 100, 1), "%", sep = "")}))
     }
   }
   p <- p + geom_point(size = point_size , fill = "white", shape = 21, col = "black", alpha = 1)

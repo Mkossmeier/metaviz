@@ -51,8 +51,6 @@
 #'  respective standard errors in the second column. Alternatively, x can be the
 #'  output object of function \code{\link[metafor]{rma.uni}} from package
 #'  \pkg{metafor}; then effect sizes and standard errors are extracted from \code{x}.
-#'@param weights An optional vector of study weights used to compute the meta-analytic summary effect.
-#'  If not NULL (default), study weights are not computed with \code{method} from \code{\link[metafor]{rma.uni}} but the user supplied weights are used.
 #'@param group factor indicating the subgroup of each study to plot a subgroup forest plot. Has to be in the same order than \code{x}.
 #'@param type character string indicating the type of forest plot to be plotted. Can be "standard" (default), "study_only",
 #'  "summary_only", "cumulative", or "sensitivity". See 'Details'.

@@ -82,9 +82,6 @@ summary effect, arranged in the order of the levels of \code{group}. See vignett
 of the forest plot and aligned tables via \code{study_table}, \code{summary_table}, and \code{annotate_CI}.}
 
 \item{...}{deprecated argument names from earlier versions can still be passed to \code{viz_rainforest} via \code{...}.}
-
-\item{weights}{An optional vector of study weights used to compute the meta-analytic summary effect.
-If not NULL (default), study weights are not computed with \code{method} from \code{\link[metafor]{rma.uni}} but the user supplied weights are used.}
 }
 \value{
 A Rainforest plot is created using ggplot2.
