@@ -4,13 +4,12 @@
 \alias{viz_forest}
 \title{Forest plot variants for meta-analyses}
 \usage{
-viz_forest(x, weights = NULL, group = NULL, type = "standard",
-  variant = "classic", method = "FE", study_labels = NULL,
-  summary_label = NULL, confidence_level = 0.95, col = "Blues",
-  text_size = 3, xlab = "Effect", x_limit = NULL,
-  x_trans_function = NULL, x_breaks = NULL, annotate_CI = FALSE,
-  study_table = NULL, summary_table = NULL, table_headers = NULL,
-  table_layout = NULL, ...)
+viz_forest(x, group = NULL, type = "standard", variant = "classic",
+  method = "FE", study_labels = NULL, summary_label = NULL,
+  confidence_level = 0.95, col = "Blues", text_size = 3,
+  xlab = "Effect", x_limit = NULL, x_trans_function = NULL,
+  x_breaks = NULL, annotate_CI = FALSE, study_table = NULL,
+  summary_table = NULL, table_headers = NULL, table_layout = NULL, ...)
 }
 \arguments{
 \item{x}{data.frame or matrix with the effect sizes of all studies (e.g.,
@@ -18,9 +17,6 @@ correlations, log odds ratios, or Cohen \emph{d}) in the first column and their
 respective standard errors in the second column. Alternatively, x can be the
 output object of function \code{\link[metafor]{rma.uni}} from package
 \pkg{metafor}; then effect sizes and standard errors are extracted from \code{x}.}
-
-\item{weights}{An optional vector of study weights used to compute the meta-analytic summary effect.
-If not NULL (default), study weights are not computed with \code{method} from \code{\link[metafor]{rma.uni}} but the user supplied weights are used.}
 
 \item{group}{factor indicating the subgroup of each study to plot a subgroup forest plot. Has to be in the same order than \code{x}.}
 

@@ -5,21 +5,19 @@
 \alias{rainforest}
 \title{Rainforest plots for meta-analyses}
 \usage{
-viz_rainforest(x, weights = NULL, group = NULL, type = "standard",
-  method = "FE", study_labels = NULL, summary_label = NULL,
-  confidence_level = 0.95, detail_level = 1, col = "Blues",
-  text_size = 3, xlab = "Effect", x_limit = NULL,
-  x_trans_function = NULL, x_breaks = NULL, annotate_CI = FALSE,
-  study_table = NULL, summary_table = NULL, table_headers = NULL,
-  table_layout = NULL, ...)
+viz_rainforest(x, group = NULL, type = "standard", method = "FE",
+  study_labels = NULL, summary_label = NULL, confidence_level = 0.95,
+  detail_level = 1, col = "Blues", text_size = 3, xlab = "Effect",
+  x_limit = NULL, x_trans_function = NULL, x_breaks = NULL,
+  annotate_CI = FALSE, study_table = NULL, summary_table = NULL,
+  table_headers = NULL, table_layout = NULL, ...)
 
-rainforest(x, weights = NULL, group = NULL, type = "standard",
-  method = "FE", study_labels = NULL, summary_label = NULL,
-  confidence_level = 0.95, detail_level = 1, col = "Blues",
-  text_size = 3, xlab = "Effect", x_limit = NULL,
-  x_trans_function = NULL, x_breaks = NULL, annotate_CI = FALSE,
-  study_table = NULL, summary_table = NULL, table_headers = NULL,
-  table_layout = NULL, ...)
+rainforest(x, group = NULL, type = "standard", method = "FE",
+  study_labels = NULL, summary_label = NULL, confidence_level = 0.95,
+  detail_level = 1, col = "Blues", text_size = 3, xlab = "Effect",
+  x_limit = NULL, x_trans_function = NULL, x_breaks = NULL,
+  annotate_CI = FALSE, study_table = NULL, summary_table = NULL,
+  table_headers = NULL, table_layout = NULL, ...)
 }
 \arguments{
 \item{x}{data.frame or matrix with the effect sizes of all studies (e.g.,
@@ -27,9 +25,6 @@ correlations, log odds ratios, or Cohen \emph{d}) in the first column and their
 respective standard errors in the second column. Alternatively, x can be the
 output object of function \code{\link[metafor]{rma.uni}} from package
 \pkg{metafor}; then effect sizes and standard errors are extracted from \code{x}.}
-
-\item{weights}{An optional vector of study weights used to compute the meta-analytic summary effect.
-If not NULL (default), study weights are not computed with \code{method} from \code{\link[metafor]{rma.uni}} but the user supplied weights are used.}
 
 \item{group}{factor indicating the subgroup of each study to plot a subgroup forest plot. Has to be in the same order than \code{x}.}
 
@@ -87,6 +82,9 @@ summary effect, arranged in the order of the levels of \code{group}. See vignett
 of the forest plot and aligned tables via \code{study_table}, \code{summary_table}, and \code{annotate_CI}.}
 
 \item{...}{deprecated argument names from earlier versions can still be passed to \code{viz_rainforest} via \code{...}.}
+
+\item{weights}{An optional vector of study weights used to compute the meta-analytic summary effect.
+If not NULL (default), study weights are not computed with \code{method} from \code{\link[metafor]{rma.uni}} but the user supplied weights are used.}
 }
 \value{
 A Rainforest plot is created using ggplot2.

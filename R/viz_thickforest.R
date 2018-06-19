@@ -40,8 +40,6 @@
 #'  respective standard errors in the second column. Alternatively, x can be the
 #'  output object of function \code{\link[metafor]{rma.uni}} from package
 #'  \pkg{metafor}; then effect sizes and standard errors are extracted from \code{x}.
-#'@param weights An optional vector of study weights used to compute the meta-analytic summary effect.
-#'  If not NULL (default), study weights are not computed with \code{method} from \code{\link[metafor]{rma.uni}} but the user supplied weights are used.
 #'@param group factor indicating the subgroup of each study to plot a subgroup forest plot. Has to be in the same order than \code{x}.
 #'@param type character string indicating the type of forest plot to be plotted. Can be "standard" (default), "study_only",
 #'  "summary_only", "cumulative", or "sensitivity". See 'Details'.
@@ -110,7 +108,7 @@
 #' eventsC = paste(sum(exrehab$ci), "/", sum(exrehab$ci + exrehab$di), sep = "")),
 #' table_layout = matrix(c(1, 1, 2, 2, 3), nrow = 1))
 #'@export
-viz_thickforest <- function(x, weights = NULL, group = NULL, type = "standard", method = "FE",
+viz_thickforest <- function(x, group = NULL, type = "standard", method = "FE",
                            study_labels = NULL, summary_label = NULL,
                            confidence_level = 0.95, col = "Blues", tick_col = "firebrick",
                            text_size = 3, xlab = "Effect", x_limit = NULL,
@@ -118,7 +116,7 @@ viz_thickforest <- function(x, weights = NULL, group = NULL, type = "standard", 
                            study_table = NULL, summary_table = NULL, table_headers = NULL,
                            table_layout = NULL) {
 
-  viz_forest(x, weights = weights, group = group, type = type, variant = "thick", method = method,
+  viz_forest(x, group = group, type = type, variant = "thick", method = method,
              study_labels = study_labels, summary_label = summary_label,
              confidence_level = confidence_level, col = col,  tick_col = tick_col,
              text_size = text_size, xlab = xlab, x_limit = x_limit,

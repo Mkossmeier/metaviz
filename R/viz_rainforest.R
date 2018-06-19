@@ -130,7 +130,7 @@
 #' eventsT = paste(sum(exrehab$ai), "/", sum(exrehab$ai + exrehab$bi), sep = ""),
 #' eventsC = paste(sum(exrehab$ci), "/", sum(exrehab$ci + exrehab$di), sep = "")))
 #'@export
-viz_rainforest <- function(x, weights = NULL, group = NULL, type = "standard", method = "FE",
+viz_rainforest <- function(x, group = NULL, type = "standard", method = "FE",
                        study_labels = NULL, summary_label = NULL,
                        confidence_level = 0.95, detail_level = 1, col = "Blues",
                        text_size = 3, xlab = "Effect", x_limit = NULL,
@@ -157,7 +157,7 @@ viz_rainforest <- function(x, weights = NULL, group = NULL, type = "standard", m
 
   }
 
-  viz_forest(x, weights = weights, group = group, type = type, variant = "rain", method = method,
+  viz_forest(x, group = group, type = type, variant = "rain", method = method,
              study_labels = study_labels, summary_label = summary_label,
              confidence_level = confidence_level, detail_level = detail_level, col = col,
              text_size = text_size, xlab = xlab, x_limit = x_limit,

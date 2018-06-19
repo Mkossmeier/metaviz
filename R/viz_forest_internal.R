@@ -14,11 +14,7 @@ viz_rainforest_internal <- function(plotdata, madata,
 
   # weight of each study used to scale the height of each raindrop
   if(type %in% c("standard", "study_only")) {
-    if(is.null(plotdata$weights)) {
-      weight <- 1/(plotdata$se^2 + madata$summary_tau2[as.numeric(plotdata$group)])
-    } else {
-      weight <- plotdata$weights
-    }
+    weight <- 1/(plotdata$se^2 + madata$summary_tau2[as.numeric(plotdata$group)])
   } else {
     weight <- 1/plotdata$se^2
   }
@@ -265,11 +261,7 @@ viz_thickforest_internal <- function(plotdata, madata,
 
   # weight of each study used to scale the height of each raindrop
   if(type %in% c("standard", "study_only")) {
-    if(is.null(plotdata$weights)) {
-      weight <- 1/(plotdata$se^2 + madata$summary_tau2[as.numeric(plotdata$group)])
-    } else {
-      weight <- plotdata$weights
-    }
+     weight <- 1/(plotdata$se^2 + madata$summary_tau2[as.numeric(plotdata$group)])
   } else {
     weight <- 1/plotdata$se^2
   }
@@ -407,11 +399,7 @@ viz_classicforest_internal <- function(plotdata, madata,
 
   # weight of each study used to scale the height of each raindrop
   if(type %in% c("standard", "study_only")) {
-    if(is.null(plotdata$weights)) {
-      weight <- 1/(plotdata$se^2 + madata$summary_tau2[as.numeric(plotdata$group)])
-    } else {
-      weight <- plotdata$weights
-    }
+    weight <- 1/(plotdata$se^2 + madata$summary_tau2[as.numeric(plotdata$group)])
   } else {
     weight <- 1/plotdata$se^2
   }
