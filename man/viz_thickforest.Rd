@@ -6,10 +6,11 @@
 \usage{
 viz_thickforest(x, group = NULL, type = "standard", method = "FE",
   study_labels = NULL, summary_label = NULL, confidence_level = 0.95,
-  col = "Blues", tick_col = "firebrick", text_size = 3, xlab = "Effect",
-  x_limit = NULL, x_trans_function = NULL, x_breaks = NULL,
-  annotate_CI = FALSE, study_table = NULL, summary_table = NULL,
-  table_headers = NULL, table_layout = NULL)
+  col = "Blues", summary_col = "black", tick_col = "firebrick",
+  text_size = 3, xlab = "Effect", x_limit = NULL,
+  x_trans_function = NULL, x_breaks = NULL, annotate_CI = FALSE,
+  study_table = NULL, summary_table = NULL, table_headers = NULL,
+  table_layout = NULL)
 }
 \arguments{
 \item{x}{data.frame or matrix with the effect sizes of all studies (e.g.,
@@ -38,7 +39,11 @@ subgroup summary effect, arranged in the order of the levels of \code{group}. Ig
 
 \item{confidence_level}{numeric value. The confidence level for the plotted confidence bars.}
 
-\item{col}{character string specifying the color used for the error bars and summary diamond.}
+\item{col}{character string specifying the color used for the study-level error bars. Can be a vector of length \code{nrow(x)}
+with colors for each study-level result individually.}
+
+\item{summary_col}{character string specifying the main color for plotting the summary effect(s). Can be a vector
+with colors for each subgroup summary effect individually.}
 
 \item{tick_col}{character string specifying the color used for the ticks indicating the point estimates.}
 

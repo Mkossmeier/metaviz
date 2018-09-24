@@ -6,7 +6,8 @@ viz_rainforest_internal <- function(plotdata, madata,
                                     type = "standard",
                                     study_labels = NULL, summary_label = NULL,
                                     study_table = NULL, summary_table = NULL, annotate_CI = FALSE,
-                                    confidence_level = 0.95, col = "Blues", detail_level = 1,
+                                    confidence_level = 0.95, col = "Blues", summary_col = "black",
+                                    detail_level = 1,
                                     text_size = 3, xlab = "Effect", x_limit = NULL,
                                     x_trans_function = NULL, x_breaks = NULL) {
   n <- nrow(plotdata)
@@ -27,7 +28,7 @@ viz_rainforest_internal <- function(plotdata, madata,
 
   # function ll constructs a likelihood raindrop of a study. Each raindrop is built out of
   # several distinct segments (to color shade the raindrop)
-  ll <- function(x, max.range) {
+  ll <- function(x, max.range, max.weight) {
     # width of the region over which the raindop is built
     se.factor <- ceiling(stats::qnorm(1 - (1 - confidence_level)/2))
     width <- abs((x[1] - se.factor * x[2]) - (x[1] + se.factor * x[2]))
@@ -55,8 +56,13 @@ viz_rainforest_internal <- function(plotdata, madata,
     threshold <- stats::qchisq(confidence_level, df = 1)/2
     l_mu <- log(stats::dnorm(x[1], mean = support, sd = x[2])) - log(stats::dnorm(x[1], mean = x[1], sd = x[2])) + threshold
 
-    # scale the height of each raindrop such that it is proportional to the relative meta-analytic weight
-    l_mu <- l_mu/max(l_mu) * x[3]
+    #scale raindrop such that it is proportional to the meta-analytic weight and has height smaller than 0.5
+    l_mu <- l_mu/max(l_mu) * x[3]/max.weight * 0.45
+
+    # Force raindrops of studies to have minimum height of 0.05 (i.e. approx. one tenth of the raindrop with maximum height)
+    if(max(l_mu) < 0.05) {
+      l_mu <- l_mu/max(l_mu) * 0.05
+    }
 
     # mirror values for raindrop
     l_mu_mirror <- -l_mu
@@ -71,7 +77,7 @@ viz_rainforest_internal <- function(plotdata, madata,
     # The number of segments for shading is chosen as follows: 40 segements times the detail_level per drop
     # as default. The minimum count of segments is 20 (If detail_level is << 1), with the exception that
     # if there are too few points for 20 segments then nrow(d)/4 is used (i.e. at least 4 points per segment)
-    data.frame(d, "segment" = cut(d$support, max(c(40 * detail_level), min(c(20, nrow(d) / 4)))))
+    data.frame(d, "segment" = cut(d$support, max(c(40*detail_level), min(c(20, nrow(d)/4)))))
   }
 
   # compute the max range of all likelihood drops for function ll.
@@ -80,7 +86,7 @@ viz_rainforest_internal <- function(plotdata, madata,
 
   # computes all likelihood values and segments. The output is a list, where every element
   # constitutes one study raindop
-  res <- apply(cbind(plotdata$x, plotdata$se, plotdata$rel_weight), 1,  FUN = function(x) {ll(x, max.range = max.range)})
+  res <- apply(cbind(plotdata$x, plotdata$se, plotdata$rel_weight), 1,  FUN = function(x) {ll(x, max.range = max.range, max.weight = max(plotdata$rel_weight))})
 
   # name every list entry, i.e. raindrop, and add id column
   names(res) <- plotdata$ID
@@ -118,11 +124,6 @@ viz_rainforest_internal <- function(plotdata, madata,
   # merge the list of raindops in one dataframe for plotting
   res <- do.call(rbind, res)
 
-  # scale the height of each raindrop by the maximum height, such that they
-  # fit in their respective plotting region with length 1
-  res$log_density <- res$log_density/(4*abs(max(res$log_density)))
-
-
   # set limits and breaks for the y axis and construct summary diamond (for type standard and sensitivity)
   if(type %in% c("standard", "sensitivity", "cumulative")) {
     y_limit <- c(min(plotdata$ID) - 3, max(plotdata$ID) + 1.5)
@@ -158,11 +159,25 @@ viz_rainforest_internal <- function(plotdata, madata,
   res <- merge(res, min.ld, sort = F)
 
   # Set Color palette for shading
-  if(!(col %in% c("Blues", "Greys", "Oranges", "Greens", "Reds", "Purples"))) {
-    warning("Supported arguments for col for rainforest plots are Blues, Greys, Oranges, Greens, Reds, and Purples. Blues is used.")
-    col <- "Blues"
+  if(type != "summary_only") {
+    if(!(col %in% c("Blues", "Greys", "Oranges", "Greens", "Reds", "Purples"))) {
+      warning("Supported arguments for col for rainforest plots are Blues, Greys, Oranges, Greens, Reds, and Purples. Blues is used.")
+      col <- "Blues"
+    }
+    col <- RColorBrewer::brewer.pal(n = 9, name = col)
+    if(summary_col %in% c("Blues", "Greys", "Oranges", "Greens", "Reds", "Purples")) {
+      summary_col <- RColorBrewer::brewer.pal(n = 9, name = summary_col)[9]
+    }
+  } else {
+    if(type == "summary_only") {
+      if(!(summary_col %in% c("Blues", "Greys", "Oranges", "Greens", "Reds", "Purples"))) {
+        warning("Supported arguments for summary_col for summary-only rainforest plots are Blues, Greys, Oranges, Greens, Reds, and Purples. Blues is used.")
+        summary_col <- "Blues"
+      }
+      summary_col <- RColorBrewer::brewer.pal(n = 9, name = col)
+      col <- summary_col
+    }
   }
-  col <- RColorBrewer::brewer.pal(n = 9, name = col)
 
   # Set plot margins. If table is aligned on the left, no y axis breaks and ticks are plotted
   l <- 5.5
@@ -193,14 +208,14 @@ viz_rainforest_internal <- function(plotdata, madata,
   # Create Rainforest plot
   p <-
     ggplot(data = res, aes(y = .id, x = support)) +
-    geom_errorbarh(data = plotdata, col = col[1], aes(x = x, xmin = x_min, xmax = x_max, y = ID, height = 0)) +
+    geom_errorbarh(data = plotdata, col = col[1], aes(xmin = x_min, xmax = x_max, y = ID, height = 0), inherit.aes = FALSE) +
     geom_polygon(data = res, aes(x = support, y = as.numeric(.id) + log_density,
                                  color = min_log_density, fill = min_log_density,
                                  group = paste(.id, segment)), size = 0.1) +
     geom_line(data = tickdata, aes(x = x, y = y, group = ID), col = "grey", size = 1)
     # geom_errorbarh(data = plotdata, col = "grey", aes(x = x, xmin = x_min, xmax = x_max, y = ID, height = 0))
   if(type %in% c("standard", "sensitivity", "cumulative")) {
-    p <- p + geom_polygon(data = summarydata, aes(x = x.diamond, y = y.diamond, group = diamond_group), color="black", fill = col[9], size = 0.1)
+    p <- p + geom_polygon(data = summarydata, aes(x = x.diamond, y = y.diamond, group = diamond_group), color="black", fill = summary_col, size = 0.1)
   }
   p <- p +
     scale_fill_gradient(high = col[9], low = col[3], guide = FALSE) +
@@ -252,7 +267,7 @@ viz_thickforest_internal <- function(plotdata, madata,
                                      type = "standard",
                                      study_labels = NULL, summary_label = NULL,
                                      study_table = NULL, summary_table = NULL, annotate_CI = FALSE,
-                                     confidence_level = 0.95, col = "Blues", tick_col = "firebrick",
+                                     confidence_level = 0.95, col = "Blues", summary_col = "black", tick_col = "firebrick",
                                      text_size = 3, xlab = "Effect", x_limit = NULL,
                                      x_trans_function = NULL, x_breaks = NULL) {
 
@@ -306,9 +321,23 @@ viz_thickforest_internal <- function(plotdata, madata,
   }
 
   # Set Color palette for shading
-  if(col %in% c("Blues", "Greys", "Oranges", "Greens", "Reds", "Purples")) {
-    col <- RColorBrewer::brewer.pal(n = 9, name = col)[9]
+  if(type != "summary_only") {
+    if(all(col %in% c("Blues", "Greys", "Oranges", "Greens", "Reds", "Purples"))) {
+      col <- unlist(lapply(col, function(x) RColorBrewer::brewer.pal(n = 9, name = x)[9]))
+    }
   }
+  if(type != "study_only") {
+    if(all(summary_col %in% c("Blues", "Greys", "Oranges", "Greens", "Reds", "Purples"))) {
+      summary_col <- unlist(lapply(summary_col, function(x) RColorBrewer::brewer.pal(n = 9, name = x)[9]))
+    }
+    if(type == "summary_only") {
+      col <- summary_col
+    } else {
+      summary_col <- rep(summary_col, times = 4)
+      }
+  }
+
+
 
   # Set plot margins. If table is aligned on the left, no y axus breaks and ticks are plotted
   l <- 5.5
@@ -336,12 +365,12 @@ viz_thickforest_internal <- function(plotdata, madata,
   # Create thick forest plot
   p <-
     ggplot(data = plotdata, aes(y = ID, x = x)) +
-    geom_errorbarh(data = plotdata, col = col, aes(x = x, xmin = x_min, xmax = x_max, y = ID, height = 0)) +
+    geom_errorbarh(data = plotdata, col = col, aes(xmin = x_min, xmax = x_max, y = ID, height = 0)) +
     geom_rect(aes(xmin = x_min, xmax = x_max, ymin = y_min, ymax = y_max,
                   group = ID), fill = col, size = 0.1) +
     geom_line(data = tickdata, aes(x = x, y = y, group = ID), col = tick_col, size = 1.5)
   if(type %in% c("standard", "sensitivity", "cumulative")) {
-    p <- p + geom_polygon(data = summarydata, aes(x = x.diamond, y = y.diamond, group = diamond_group), color= "black", fill = col, size = 0.1)
+    p <- p + geom_polygon(data = summarydata, aes(x = x.diamond, y = y.diamond, group = diamond_group), color= "black", fill = summary_col, size = 0.1)
   }
   p <- p +
     geom_vline(xintercept = 0, linetype = 2) +
@@ -391,7 +420,7 @@ viz_classicforest_internal <- function(plotdata, madata,
                                        type = "standard",
                                        study_labels = NULL, summary_label = NULL,
                                        study_table = NULL, summary_table = NULL, annotate_CI = FALSE,
-                                       confidence_level = 0.95, col = "Blues", tick_col = "firebrick",
+                                       confidence_level = 0.95, col = "Blues", summary_col = "black", tick_col = "firebrick",
                                        text_size = 3, xlab = "Effect", x_limit = NULL,
                                        x_trans_function = NULL, x_breaks = NULL) {
   n <- nrow(plotdata)
@@ -441,9 +470,22 @@ viz_classicforest_internal <- function(plotdata, madata,
   }
 
   # Set Color palette for shading
-  if(col %in% c("Blues", "Greys", "Oranges", "Greens", "Reds", "Purples")) {
-    col <- RColorBrewer::brewer.pal(n = 9, name = col)[9]
+  if(type != "summary_only") {
+    if(all(col %in% c("Blues", "Greys", "Oranges", "Greens", "Reds", "Purples"))) {
+      col <- unlist(lapply(col, function(x) RColorBrewer::brewer.pal(n = 9, name = x)[9]))
+    }
   }
+  if(type != "study_only") {
+    if(all(summary_col %in% c("Blues", "Greys", "Oranges", "Greens", "Reds", "Purples"))) {
+      summary_col <- unlist(lapply(summary_col, function(x) RColorBrewer::brewer.pal(n = 9, name = x)[9]))
+    }
+    if(type == "summary_only") {
+      col <- summary_col
+    } else {
+      summary_col <- rep(summary_col, times = 4)
+    }
+  }
+
 
   # Set plot margins. If table is aligned on the left, no y axus breaks and ticks are plotted
   l <- 5.5
@@ -470,7 +512,7 @@ viz_classicforest_internal <- function(plotdata, madata,
   p <-
     ggplot(data = plotdata, aes(y = ID, x = x)) +
     geom_vline(xintercept = 0, linetype = 2) +
-    geom_errorbarh(data = plotdata, col = "black", aes(x = x, xmin = x_min, xmax = x_max, y = ID, height = 0))
+    geom_errorbarh(data = plotdata, col = "black", aes(xmin = x_min, xmax = x_max, y = ID, height = 0))
 
   if(type %in% c("cumulative", "sensitivity")) {
     p <- p + geom_line(data = tickdata, aes(x = x, y = y, group = ID), col = col, size = 1)
@@ -479,7 +521,7 @@ viz_classicforest_internal <- function(plotdata, madata,
   }
 
   if(type %in% c("standard", "sensitivity", "cumulative")) {
-    p <- p + geom_polygon(data = summarydata, aes(x = x.diamond, y = y.diamond, group = diamond_group), color= "black", fill = col, size = 0.1)
+    p <- p + geom_polygon(data = summarydata, aes(x = x.diamond, y = y.diamond, group = diamond_group), color= "black", fill = summary_col, size = 0.1)
   }
   p <- p +
     scale_y_continuous(name = "",

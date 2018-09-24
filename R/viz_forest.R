@@ -39,8 +39,13 @@
 #'  subgroup summary effect, arranged in the order of the levels of \code{group}. Ignored if \code{study_table} and/or
 #'  \code{summary_table} is supplied.
 #'@param confidence_level numeric value. The confidence level for the plotted confidence intervals.
-#'@param col character string specifying the main color for plotting. For \code{variant = "rain"} must be one of the following palettes from package
-#' \pkg{RColorBrewer}: "Blues", "Greys", "Oranges", "Greens", "Reds", or "Purples".
+#'@param col character string specifying the main color for plotting study-level results. For \code{variant = "thick"} and \code{variant = "classic"} can be a vector of length \code{nrow(x)}
+#'  with colors for each study-level result individually.
+#'  For \code{variant = "rain"} must be one of the following palettes from package
+#'  \pkg{RColorBrewer}: "Blues", "Greys", "Oranges", "Greens", "Reds", or "Purples".
+#'@param summary_col character string specifying the main color for plotting the summary effect(s). For \code{variant = "thick"} and \code{variant = "classic"} can be a vector
+#'  with colors for each subgroup summary effect individually. For \code{variant = "rain"} with \code{type = "summary_only"} must be one of the following palettes from package
+#'  \pkg{RColorBrewer}: "Blues", "Greys", "Oranges", "Greens", "Reds", or "Purples".
 #'@param text_size numeric value. Size of text in the forest plot. Default is 3.
 #'@param xlab character string specifying the label of the x axis. By default also used for the header of the aligned table if \code{annotate_CI} is \code{TRUE}.
 #'@param x_limit numeric vector of length 2 with the limits (minimum, maximum) of the x axis.
@@ -96,7 +101,7 @@
 #'@export
 viz_forest <- function(x, group = NULL, type = "standard", variant = "classic", method = "FE",
                             study_labels = NULL, summary_label = NULL,
-                            confidence_level = 0.95, col = "Blues",
+                            confidence_level = 0.95, col = "Blues", summary_col = "black",
                             text_size = 3, xlab = "Effect", x_limit = NULL,
                             x_trans_function = NULL, x_breaks = NULL,
                             annotate_CI = FALSE, study_table = NULL, summary_table = NULL,
@@ -183,6 +188,28 @@ viz_forest <- function(x, group = NULL, type = "standard", variant = "classic", 
 
   # main data
   x <- data.frame(es, se, group)
+
+
+  # check col is of length 1, or nrow(x) in case of variant classic or thick
+  if(type != "summary_only") {
+    if(variant == "rain") {
+      stopifnot(length(col) == 1)
+    } else {
+      if(variant == "thick" || variant == "classic") {
+        stopifnot(length(col) == 1 || length(col) == nrow(x))
+      }
+    }
+  }
+  # check summary_col is of length 1, or length(levels(group)) in case of variant classic or thick
+  if(type != "study_only") {
+    if(variant == "rain") {
+      stopifnot(length(summary_col) == 1)
+    } else {
+      if(variant == "thick" || variant == "classic") {
+        stopifnot(length(summary_col) == 1 || length(summary_col) == k)
+      }
+    }
+  }
 
   if(n <= 1 && type == "sensitivity") {
     stop('For type = "sensitvitiy" there has to be more than 1 study.')
@@ -393,6 +420,7 @@ viz_forest <- function(x, group = NULL, type = "standard", variant = "classic", 
             study_labels = study_labels, summary_label = summary_label,
             study_table = study_table, summary_table = summary_table,
             annotate_CI = annotate_CI, confidence_level = confidence_level, col = col,
+            summary_col = summary_col,
             text_size = text_size, xlab = xlab, x_limit = x_limit,
             x_trans_function = x_trans_function, x_breaks = x_breaks), list(...))
 

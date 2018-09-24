@@ -54,8 +54,11 @@
 #'  subgroup summary effect, arranged in the order of the levels of \code{group}. Ignored if \code{study_table} and/or
 #'  \code{summary_table} is supplied.
 #'@param confidence_level numeric value. The confidence level for the plotted confidence bars.
-#'@param col character string specifying the color used for the error bars and summary diamond.
+#'@param col character string specifying the color used for the study-level error bars. Can be a vector of length \code{nrow(x)}
+#'  with colors for each study-level result individually.
 #'@param tick_col character string specifying the color used for the ticks indicating the point estimates.
+#'@param summary_col character string specifying the main color for plotting the summary effect(s). Can be a vector
+#'  with colors for each subgroup summary effect individually.
 #'@param text_size numeric value. Size of text in the forest plot. Default is 3.
 #'@param xlab character string specifying the label of the x axis. By default also used for the header of the aligned table if \code{annotate_CI} is \code{TRUE}.
 #'@param x_limit numeric vector of length 2 with the limits (minimum, maximum) of the x axis.
@@ -110,7 +113,7 @@
 #'@export
 viz_thickforest <- function(x, group = NULL, type = "standard", method = "FE",
                            study_labels = NULL, summary_label = NULL,
-                           confidence_level = 0.95, col = "Blues", tick_col = "firebrick",
+                           confidence_level = 0.95, col = "Blues", summary_col = "black", tick_col = "firebrick",
                            text_size = 3, xlab = "Effect", x_limit = NULL,
                            x_trans_function = NULL, x_breaks = NULL, annotate_CI = FALSE,
                            study_table = NULL, summary_table = NULL, table_headers = NULL,
@@ -118,7 +121,7 @@ viz_thickforest <- function(x, group = NULL, type = "standard", method = "FE",
 
   viz_forest(x, group = group, type = type, variant = "thick", method = method,
              study_labels = study_labels, summary_label = summary_label,
-             confidence_level = confidence_level, col = col,  tick_col = tick_col,
+             confidence_level = confidence_level, col = col,  summary_col = summary_col, tick_col = tick_col,
              text_size = text_size, xlab = xlab, x_limit = x_limit,
              x_trans_function = x_trans_function, x_breaks = NULL,
              annotate_CI = annotate_CI, study_table = study_table, summary_table = summary_table,

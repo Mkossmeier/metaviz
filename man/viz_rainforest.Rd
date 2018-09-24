@@ -7,17 +7,17 @@
 \usage{
 viz_rainforest(x, group = NULL, type = "standard", method = "FE",
   study_labels = NULL, summary_label = NULL, confidence_level = 0.95,
-  detail_level = 1, col = "Blues", text_size = 3, xlab = "Effect",
-  x_limit = NULL, x_trans_function = NULL, x_breaks = NULL,
-  annotate_CI = FALSE, study_table = NULL, summary_table = NULL,
-  table_headers = NULL, table_layout = NULL, ...)
+  detail_level = 1, col = "Blues", summary_col = "black", text_size = 3,
+  xlab = "Effect", x_limit = NULL, x_trans_function = NULL,
+  x_breaks = NULL, annotate_CI = FALSE, study_table = NULL,
+  summary_table = NULL, table_headers = NULL, table_layout = NULL, ...)
 
 rainforest(x, group = NULL, type = "standard", method = "FE",
   study_labels = NULL, summary_label = NULL, confidence_level = 0.95,
-  detail_level = 1, col = "Blues", text_size = 3, xlab = "Effect",
-  x_limit = NULL, x_trans_function = NULL, x_breaks = NULL,
-  annotate_CI = FALSE, study_table = NULL, summary_table = NULL,
-  table_headers = NULL, table_layout = NULL, ...)
+  detail_level = 1, col = "Blues", summary_col = "black", text_size = 3,
+  xlab = "Effect", x_limit = NULL, x_trans_function = NULL,
+  x_breaks = NULL, annotate_CI = FALSE, study_table = NULL,
+  summary_table = NULL, table_headers = NULL, table_layout = NULL, ...)
 }
 \arguments{
 \item{x}{data.frame or matrix with the effect sizes of all studies (e.g.,
@@ -51,8 +51,10 @@ plotting detail (i.e., smoother likelihood raindrop polygons and more fluent
 color shading), values smaller than 1 to less plotting detail compared to
 the default plot.}
 
-\item{col}{character string specifying the color palette from package \pkg{RColorBrewer} used.
+\item{col}{character string specifying the color palette for plotting study-level results from package \pkg{RColorBrewer}.
 Can be any of "Blues", "Greys", "Oranges", "Greens", "Reds", and "Purples".}
+
+\item{summary_col}{character string specifying the color for plotting the summary effect(s). Can be any of "Blues", "Greys", "Oranges", "Greens", "Reds", and "Purples".}
 
 \item{text_size}{numeric value. Size of text in the forest plot. Default is 3.}
 

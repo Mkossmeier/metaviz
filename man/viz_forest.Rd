@@ -6,10 +6,11 @@
 \usage{
 viz_forest(x, group = NULL, type = "standard", variant = "classic",
   method = "FE", study_labels = NULL, summary_label = NULL,
-  confidence_level = 0.95, col = "Blues", text_size = 3,
-  xlab = "Effect", x_limit = NULL, x_trans_function = NULL,
-  x_breaks = NULL, annotate_CI = FALSE, study_table = NULL,
-  summary_table = NULL, table_headers = NULL, table_layout = NULL, ...)
+  confidence_level = 0.95, col = "Blues", summary_col = "black",
+  text_size = 3, xlab = "Effect", x_limit = NULL,
+  x_trans_function = NULL, x_breaks = NULL, annotate_CI = FALSE,
+  study_table = NULL, summary_table = NULL, table_headers = NULL,
+  table_layout = NULL, ...)
 }
 \arguments{
 \item{x}{data.frame or matrix with the effect sizes of all studies (e.g.,
@@ -41,7 +42,13 @@ subgroup summary effect, arranged in the order of the levels of \code{group}. Ig
 
 \item{confidence_level}{numeric value. The confidence level for the plotted confidence intervals.}
 
-\item{col}{character string specifying the main color for plotting. For \code{variant = "rain"} must be one of the following palettes from package
+\item{col}{character string specifying the main color for plotting study-level results. For \code{variant = "thick"} and \code{variant = "classic"} can be a vector of length \code{nrow(x)}
+with colors for each study-level result individually.
+For \code{variant = "rain"} must be one of the following palettes from package
+\pkg{RColorBrewer}: "Blues", "Greys", "Oranges", "Greens", "Reds", or "Purples".}
+
+\item{summary_col}{character string specifying the main color for plotting the summary effect(s). For \code{variant = "thick"} and \code{variant = "classic"} can be a vector
+with colors for each subgroup summary effect individually. For \code{variant = "rain"} with \code{type = "summary_only"} must be one of the following palettes from package
 \pkg{RColorBrewer}: "Blues", "Greys", "Oranges", "Greens", "Reds", or "Purples".}
 
 \item{text_size}{numeric value. Size of text in the forest plot. Default is 3.}
