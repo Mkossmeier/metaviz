@@ -7,7 +7,7 @@
 viz_classicforest_internal(plotdata, madata, type = "standard",
   study_labels = NULL, summary_label = NULL, study_table = NULL,
   summary_table = NULL, annotate_CI = FALSE, confidence_level = 0.95,
-  col = "Blues", summary_col = "black", tick_col = "firebrick",
+  col = "Blues", summary_col = "Blues", tick_col = "firebrick",
   text_size = 3, xlab = "Effect", x_limit = NULL,
   x_trans_function = NULL, x_breaks = NULL)
 }
