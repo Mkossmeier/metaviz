@@ -6,7 +6,7 @@ viz_rainforest_internal <- function(plotdata, madata,
                                     type = "standard",
                                     study_labels = NULL, summary_label = NULL,
                                     study_table = NULL, summary_table = NULL, annotate_CI = FALSE,
-                                    confidence_level = 0.95, col = "Blues", summary_col = "black",
+                                    confidence_level = 0.95, col = "Blues", summary_col = "Blues",
                                     detail_level = 1,
                                     text_size = 3, xlab = "Effect", x_limit = NULL,
                                     x_trans_function = NULL, x_breaks = NULL) {
@@ -267,7 +267,7 @@ viz_thickforest_internal <- function(plotdata, madata,
                                      type = "standard",
                                      study_labels = NULL, summary_label = NULL,
                                      study_table = NULL, summary_table = NULL, annotate_CI = FALSE,
-                                     confidence_level = 0.95, col = "Blues", summary_col = "black", tick_col = "firebrick",
+                                     confidence_level = 0.95, col = "Blues", summary_col = "Blues", tick_col = "firebrick",
                                      text_size = 3, xlab = "Effect", x_limit = NULL,
                                      x_trans_function = NULL, x_breaks = NULL) {
 
@@ -333,7 +333,7 @@ viz_thickforest_internal <- function(plotdata, madata,
     if(type == "summary_only") {
       col <- summary_col
     } else {
-      summary_col <- rep(summary_col, times = 4)
+      if(length(summary_col) > 1) summary_col <- rep(summary_col, times = 4)
       }
   }
 
@@ -420,7 +420,7 @@ viz_classicforest_internal <- function(plotdata, madata,
                                        type = "standard",
                                        study_labels = NULL, summary_label = NULL,
                                        study_table = NULL, summary_table = NULL, annotate_CI = FALSE,
-                                       confidence_level = 0.95, col = "Blues", summary_col = "black", tick_col = "firebrick",
+                                       confidence_level = 0.95, col = "Blues", summary_col = "Blues", tick_col = "firebrick",
                                        text_size = 3, xlab = "Effect", x_limit = NULL,
                                        x_trans_function = NULL, x_breaks = NULL) {
   n <- nrow(plotdata)
@@ -482,7 +482,7 @@ viz_classicforest_internal <- function(plotdata, madata,
     if(type == "summary_only") {
       col <- summary_col
     } else {
-      summary_col <- rep(summary_col, times = 4)
+      if(length(summary_col) > 1) summary_col <- rep(summary_col, times = 4)
     }
   }
 
