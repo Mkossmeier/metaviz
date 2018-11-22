@@ -29,7 +29,7 @@ Suggests:
     rmarkdown
 Depends:
     R (>= 2.10)
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 VignetteBuilder: knitr
 URL: https://github.com/Mkossmeier/metaviz
 BugReports: https://github.com/Mkossmeier/metaviz/issues

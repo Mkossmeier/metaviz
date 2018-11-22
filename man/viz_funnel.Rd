@@ -8,8 +8,9 @@ viz_funnel(x, group = NULL, y_axis = "se", method = "FE",
   contours = TRUE, sig_contours = TRUE, addev_contours = FALSE,
   contours_col = "Blues", detail_level = 1, egger = FALSE,
   trim_and_fill = FALSE, trim_and_fill_side = "left", text_size = 3,
-  point_size = 2, xlab = "Effect", ylab = NULL, group_legend = FALSE,
-  group_legend_title = "", x_trans_function = NULL, x_breaks = NULL)
+  point_size = 2, xlab = "Effect", ylab = NULL,
+  group_legend = FALSE, group_legend_title = "",
+  x_trans_function = NULL, x_breaks = NULL)
 }
 \arguments{
 \item{x}{data.frame or matrix with the effect sizes of all studies (e.g.,
