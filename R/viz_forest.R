@@ -101,7 +101,7 @@
 #'@export
 viz_forest <- function(x, group = NULL, type = "standard", variant = "classic", method = "FE",
                             study_labels = NULL, summary_label = NULL,
-                            confidence_level = 0.95, col = "Blues", summary_col = "Blues",
+                            confidence_level = 0.95, col = "Blues", summary_col = col,
                             text_size = 3, xlab = "Effect", x_limit = NULL,
                             x_trans_function = NULL, x_breaks = NULL,
                             annotate_CI = FALSE, study_table = NULL, summary_table = NULL,
@@ -212,64 +212,66 @@ viz_forest <- function(x, group = NULL, type = "standard", variant = "classic", 
   }
 
   if(n <= 1 && type == "sensitivity") {
-    stop('For type = "sensitvitiy" there has to be more than 1 study.')
+    stop('For type = "sensitivity" there has to be more than 1 study.')
   }
+
 
   # Compute meta-analytic summary effect estimates
   if(type %in% c("standard", "summary_only", "sensitivity", "cumulative")) {
     M <- NULL # To avoid "no visible binding for global variable" warning for non-standard evaluation
+    . <- NULL # avoid no visible binding for global variable warning (non standard evaluation)
     # compute meta-analytic summary effect for each group
     M <- x %>%
       group_by(group) %>%
-      summarise(M = metafor::rma.uni(yi = es, sei = se, method = method)$b[[1]]) %>%
+      summarise(M = metafor::rma.uni(yi = es, sei = se, method = method, data = .)$b[[1]]) %>%
       select(M)
       summary_es <-  unlist(M)
 
     # compute standard error of the meta-analytic summary effect for each group
     M <- x %>%
       group_by(group) %>%
-      summarise(M = metafor::rma.uni(yi = es, sei = se, method = method)$se[[1]]) %>%
+      summarise(M = metafor::rma.uni(yi = es, sei = se, method = method, data = .)$se[[1]]) %>%
       select(M)
       summary_se <- unlist(M)
     if(type == "sensitivity") {
-      loo_es <- function(es, se) {
+      loo_es <- function(es, se, data) {
         res <- numeric(length(es))
         for(i in 1:length(es)) {
-          res[i] <- metafor::rma.uni(yi = es[-i], sei = se[-i], method = method)$b[[1]]
+          res[i] <- metafor::rma.uni(yi = es[-i], sei = se[-i], method = method, data = data)$b[[1]]
         }
         res
       }
-      loo_se <- function(es, se) {
+      loo_se <- function(es, se, data) {
         res <- numeric(length(es))
         for(i in 1:length(es)) {
-          res[i] <- metafor::rma.uni(yi = es[-i], sei = se[-i], method = method)$se[[1]]
+          res[i] <- metafor::rma.uni(yi = es[-i], sei = se[-i], method = method, data = data)$se[[1]]
         }
         res
       }
       sens_data <- x %>%
         group_by(group) %>%
-        mutate(summary_es = loo_es(es, se),
-               summary_se = loo_se(es, se))
+        mutate(summary_es = loo_es(es, se, .),
+               summary_se = loo_se(es, se, .))
     }
     if(type == "cumulative") {
-      rollingma_es <- function(es, se) {
+      rollingma_es <- function(es, se, data) {
         res <- numeric(length(es))
         for(i in 1:length(es)) {
-          res[i] <- metafor::rma.uni(yi = es[1:i], sei = se[1:i], method = method)$b[[1]]
+          res[i] <- metafor::rma.uni(yi = es[1:i], sei = se[1:i], method = method, data = data)$b[[1]]
         }
         res
       }
-      rollingma_se <- function(es, se) {
+      rollingma_se <- function(es, se, data) {
         res <- numeric(length(es))
         for(i in 1:length(es)) {
-          res[i] <- metafor::rma.uni(yi = es[1:i], sei = se[1:i], method = method)$se[[1]]
+          res[i] <- metafor::rma.uni(yi = es[1:i], sei = se[1:i], method = method, data = data)$se[[1]]
         }
         res
       }
       cum_data <- x %>%
         group_by(group) %>%
-        mutate(summary_es = rollingma_es(es, se),
-               summary_se = rollingma_se(es, se))
+        mutate(summary_es = rollingma_es(es, se, .),
+               summary_se = rollingma_se(es, se, .))
     }
   } else {
     if(type != "study_only") {
@@ -283,7 +285,7 @@ viz_forest <- function(x, group = NULL, type = "standard", variant = "classic", 
     # compute tau squared for each group
     M <- x %>%
       group_by(group) %>%
-      summarise(M = metafor::rma.uni(yi = es, sei = se, method = method)$tau2[[1]]) %>%
+      summarise(M = metafor::rma.uni(yi = es, sei = se, method = method, data = .)$tau2[[1]]) %>%
       select(M)
      summary_tau2 <- unlist(M)
     } else {

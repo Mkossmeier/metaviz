@@ -1,17 +1,16 @@
 Package: metaviz
 Type: Package
 Title: Forest Plots, Funnel Plots, and Visual Funnel Plot Inference for Meta-Analysis
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: c(
     person("Michael", "Kossmeier", email = "michael.kossmeier@univie.ac.at", role = c("cre", "aut")),
     person("Ulrich S.", "Tran", email = "ulrich.tran@univie.ac.at", role = c("aut")),
     person("Martin", "Voracek", email = "martin.voracek@univie.ac.at", role = c("aut"))
     )
 Description: A compilation of functions to plot meta-analytic data using 'ggplot2'. Currently allows to 
-    create forest plots, funnel plots, and many of their variants, such as rainforest plots and 
-    additional evidence contour enhanced funnel plots. In addition, functionalities for visual funnel 
-    plot inference are provided. In the near future, the 'metaviz' package will be extended by further, 
-    established as well as novel, plotting options for visualizing meta-analytic data.
+    create forest plots, funnel plots, and many of their variants, such as rainforest plots, thick forest plots,
+    additional evidence contour enhanced funnel plots, and sunset funnel plots. In addition, functionalities for 
+    visual inference with the funnel plot are provided.
 License: GPL-2
 Encoding: UTF-8
 LazyData: true

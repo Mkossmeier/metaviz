@@ -74,7 +74,7 @@ A lineup of n (20 by default) funnel plots; one showing the real data and n-1 sh
  simulated data under the null hypothesis
 }
 \description{
-Creates a lineup of funnel plots to conduct visual funnel plot inference. The funnel plot showing the actually observed, supplied data is
+Creates a lineup of funnel plots to conduct visual funnel plot inference (Kossmeier, Tran, & Voracek, 2019). The funnel plot showing the actually observed, supplied data is
 presented alongside null plots showing simulated data under the null hypothesis.
 }
 \details{
@@ -83,7 +83,7 @@ However, interpretations of funnel plots often lead to false conclusions (e.g., 
 (Buja et al. 2009; Majumder, Hofmann, and Cook 2013) can help to improve the validity of conclusions based on the visual inspection of a
 funnel plot, by saving investigators from interpreting funnel-plot patterns which might be perfectly plausible by chance.
 Only if the real-data funnel plot is identifiable from null-plots, the null hypothesis is formally rejected and
-conclusions based on the visual inspection of the real-data funnel plot might be warranted.
+conclusions based on the visual inspection of the real-data funnel plot might be warranted (for furhter details, see Kossmeier, Tran, & Voracek, 2019).
 
 Function \code{funnelinf} utilizes package \pkg{nullabor} for null plot simulation and \pkg{ggplot2} for
 plotting the lineup. Several tailored features for visual inference with funnel plots are provided which currently include:
@@ -120,6 +120,8 @@ Buja, A., Cook, D., Hofmann, H., Lawrence, M., Lee, E. K., Swayne, D. F., & Wick
  Statistical inference for exploratory data analysis and model diagnostics.
  \emph{Philosophical Transactions of the Royal Society of London A: Mathematical, Physical and Engineering Sciences},
  \emph{367}, 4361-4383.
+
+Kossmeier, M., Tran, U. & Voracek, M. (2019) Visual inference for the funnel plot in meta-analysis. \emph{Zeitschrift für Psychologie - Journal of Psychology}, \emph{227}.
 
 Majumder, M., Hofmann, H., & Cook, D. (2013). Validation of visual statistical inference, applied to linear models.
  \emph{Journal of the American Statistical Association}, \emph{108}, 942-956.

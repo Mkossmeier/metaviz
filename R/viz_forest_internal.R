@@ -41,9 +41,9 @@ viz_rainforest_internal <- function(plotdata, madata,
     length.out <- max(c(floor(1000 * width / max.range), 200))
 
     # Create sequence of points to construct the raindrop. The number of points is chosen by length.out
-    # and can be changed by the user with the parameter detail_level (maximum 100).
+    # and can be changed by the user with the parameter detail_level.
     # At least 50 support points (for detail level << 1) per raindrop are chosen
-    support <- seq(x[1] - se.factor * x[2], x[1] + se.factor * x[2], length.out = max(c(length.out * min(c(detail_level, 100)), 50)))
+    support <- seq(x[1] - se.factor * x[2], x[1] + se.factor * x[2], length.out = max(c(length.out * detail_level, 50)))
 
     # The values for the likelihood drop are determined: The likelihood for different hypothetical true values
     # minus likelihood for the observed value (i.e. the maximum likelihood) plus the confidence.level quantile of the chi square

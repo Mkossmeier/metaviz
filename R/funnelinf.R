@@ -1,6 +1,6 @@
 #' Visual funnel plot inference for meta-analysis
 #'
-#' Creates a lineup of funnel plots to conduct visual funnel plot inference. The funnel plot showing the actually observed, supplied data is
+#' Creates a lineup of funnel plots to conduct visual funnel plot inference (Kossmeier, Tran, & Voracek, 2019). The funnel plot showing the actually observed, supplied data is
 #' presented alongside null plots showing simulated data under the null hypothesis.
 #'
 #' Funnel plots are widely used in meta-analysis to detect small study effects and in particular publication bias.
@@ -8,7 +8,7 @@
 #' (Buja et al. 2009; Majumder, Hofmann, and Cook 2013) can help to improve the validity of conclusions based on the visual inspection of a
 #' funnel plot, by saving investigators from interpreting funnel-plot patterns which might be perfectly plausible by chance.
 #' Only if the real-data funnel plot is identifiable from null-plots, the null hypothesis is formally rejected and
-#' conclusions based on the visual inspection of the real-data funnel plot might be warranted.
+#' conclusions based on the visual inspection of the real-data funnel plot might be warranted (for furhter details, see Kossmeier, Tran, & Voracek, 2019).
 #'
 #' Function \code{funnelinf} utilizes package \pkg{nullabor} for null plot simulation and \pkg{ggplot2} for
 #' plotting the lineup. Several tailored features for visual inference with funnel plots are provided which currently include:
@@ -63,6 +63,7 @@
 #'  Statistical inference for exploratory data analysis and model diagnostics.
 #'  \emph{Philosophical Transactions of the Royal Society of London A: Mathematical, Physical and Engineering Sciences},
 #'  \emph{367}, 4361-4383.
+#'@references Kossmeier, M., Tran, U. & Voracek, M. (2019) Visual inference for the funnel plot in meta-analysis. \emph{Zeitschrift für Psychologie - Journal of Psychology}, \emph{227}.
 #'@references Majumder, M., Hofmann, H., & Cook, D. (2013). Validation of visual statistical inference, applied to linear models.
 #'  \emph{Journal of the American Statistical Association}, \emph{108}, 942-956.
 #'@references Terrin, N., Schmid, C. H., & Lau, J. (2005). In an empirical evaluation of the funnel plot, researchers could not
@@ -208,7 +209,6 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, null_model 
   } else {
     x <- nullabor::rorschach(nullabor::null_dist("es", dist = "normal", params = list(mean = summary_es_simul, sd = se_simul)),
                        true = data, n = n, p = 0)
-    names(x)[1] <- ".sample"
     if(show_solution == TRUE) {
       warning("If rorschach = TRUE the lineup only consists of null plots. Argument show_solution = TRUE ignored.")
       show_solution <- FALSE
@@ -383,7 +383,7 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, null_model 
       min_x <- min(c(min_x, min(funneldata$x)))
       max_x <- max(c(max_x, max(funneldata$x)))
 
-      meandata <- data.frame (M = M, .sample = 1:n)
+      meandata <- data.frame(M = M, .sample = 1:n)
 
     }
     # determine egger's regression line

@@ -7,7 +7,7 @@
 \usage{
 viz_rainforest(x, group = NULL, type = "standard", method = "FE",
   study_labels = NULL, summary_label = NULL, confidence_level = 0.95,
-  detail_level = 1, col = "Blues", summary_col = "Blues",
+  detail_level = 1, col = "Blues", summary_col = col,
   text_size = 3, xlab = "Effect", x_limit = NULL,
   x_trans_function = NULL, x_breaks = NULL, annotate_CI = FALSE,
   study_table = NULL, summary_table = NULL, table_headers = NULL,
@@ -15,7 +15,7 @@ viz_rainforest(x, group = NULL, type = "standard", method = "FE",
 
 rainforest(x, group = NULL, type = "standard", method = "FE",
   study_labels = NULL, summary_label = NULL, confidence_level = 0.95,
-  detail_level = 1, col = "Blues", summary_col = "Blues",
+  detail_level = 1, col = "Blues", summary_col = col,
   text_size = 3, xlab = "Effect", x_limit = NULL,
   x_trans_function = NULL, x_breaks = NULL, annotate_CI = FALSE,
   study_table = NULL, summary_table = NULL, table_headers = NULL,

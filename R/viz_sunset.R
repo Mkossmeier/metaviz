@@ -3,16 +3,16 @@
 #'Creates a funnel plot with power regions and computes power-related statistics.
 #'
 #'The funnel plot is the most widely used diagnostic plot in meta-analysis, primarily to assess
-#'small study effects. The power-enhanced funnel plot incorporates study-level power information
+#'small-study effects. The power-enhanced funnel plot incorporates study-level power information
 #'in the funnel display. This directly allows to examine the power studies had to detect an effect of interest
 #'(e.g., the observed meta-analytic summary effect), whether funnel plot asymmetry is driven by underpowered but significanct studies, and to visually
-#'assess if there is an excess of low-powered significant effects in the meta-analysis
+#'in particualr assess if there is an excess of low-powered significant effects in the meta-analysis
 #'(conceptually related to the test of excess signficance, Ioannidis & Trikalinos, 2007).
 #'For effect sizes assumed to be normally distributed (e.g., Cohen d, log OR),
 #'the power corresponding to a given standard error is computed by using a two-sided Wald test and (by default) the meta-analytic
 #'summary effect as assumed true effect. Colored regions of different power levels and a second axis with study level power are shown in the
 #'funnel plot. In addition, power-related statistics are shown: a) The median power of all studies, b) the true effect size necessary such that
-#'the median power of the studies would have been 33% or 66%, c) Test of excess significance results (Ioannidis & Trikalinos, 2007), and d)
+#'the median power of the studies would have been 33\% or 66\%, c) Test of excess significance results (Ioannidis & Trikalinos, 2007), and d)
 #'the R-Index for expected replicability (Schimmack, 2016).
 #'
 #'@param x data.frame or matrix with the effect sizes of all studies (e.g.,

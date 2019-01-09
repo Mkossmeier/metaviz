@@ -1,5 +1,5 @@
 ---
-title: "Visualizing meta-analytic data with *R* package **metaviz**"
+title: "Visualize meta-analytic data with *R* package **metaviz**"
 author: "Michael Kossmeier, Ulrich S. Tran, and Martin Voracek (Department of Basic Psychological Research and Research Methods, School of Psychology, University of Vienna, Austria)"
 date: "`r Sys.Date()`" 
 output: 
@@ -7,7 +7,7 @@ output:
       toc: true
       depth: 3
 vignette: >
-  %\VignetteIndexEntry{metaviz}
+  %\VignetteIndexEntry{Visualize meta-analytic data with package metaviz}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,11 +17,11 @@ knitr::opts_chunk$set(include = TRUE, echo = TRUE, eval = TRUE, message = FALSE,
                       cache = T)
 ```
 
-The *R* package **metaviz** is a collection of functions to create visually appealing and information-rich plots of meta-analytic data using **ggplot2**. Currently functions to create several variants of forest plots (`viz_forest`), funnel plots (`viz_forest`), and to conduct visual funnel plots inference (`funnelinf`) are provided. See the function documentations for more details and relevant references. 
+The *R* package **metaviz** is a collection of functions to create visually appealing and information-rich plots of meta-analytic data using **ggplot2**. Currently functions to create several variants of forest plots (`viz_forest`) and funnel plots (`viz_funnel`, `viz_sunset`) are provided. See the function documentations for more details and relevant references.
 
-This vignette is a tutorial for the use of **metaviz** and presents some of its main features.
+This vignette is a tutorial for the use of **metaviz** to visualize meta-analytic data and presents some of its main features.
 
-In the following, we use three different example datasets distributed with the package **metaviz**. The dataset `mozart` includes a published meta-analysis using the Cohen d metric (Pietschnig, Voracek, & Formann, 2010), `brainvol` contains data for a meta-analysis using correlation coefficients (Pietschnig et al., 2015), and `exrehab` contains data of a published meta-analysis with dichotomous outcomes and risk ratios as effect size (Anderson et al. 2016). More details can be found in the respective help files (`help(mozart)`, `help(brainvol)`, `help(exrehab)`).
+In the following, we use four different example datasets distributed with the package **metaviz**. The datasets `mozart` and `homeopath` include a published meta-analyses using the Cohen d metric (Pietschnig, Voracek, & Formann, 2010; Mathie et al. 2017), `brainvol` contains data for a meta-analysis using correlation coefficients (Pietschnig et al., 2015), and `exrehab` contains data of a published meta-analysis with dichotomous outcomes and risk ratios as effect size (Anderson et al. 2016). More details can be found in the respective help files (`help(mozart)`, `help(homeopath)`, `help(brainvol)`, `help(exrehab)`).
 
 The main input of functions in package **metaviz** is a data.frame or matrix with the study effect sizes in the first column and the respective standard errors in the second column. Alternatively, the output of the function `rma.uni` from *R* package [**metafor**](https://CRAN.R-project.org/package=metafor) can be supplied as input, then effect sizes and standard errors are taken from there.
 
@@ -41,7 +41,7 @@ viz_forest(x = mozart[1:10, c("d", "se")], study_labels = mozart[1:10, c("study_
 
 ### Forest plot variants: rainforest plot and thick forest plots
 
-In addition to traditional forest plots, rainforest plots as well as the thick forest plots can be created via the `variant` argument. Rainforest and thick forest plots are two variants and enhancements of the classical forest plot recently proposed by Schild and Voracek (2015). Both variants visually emphasize large studies (with short confidence intervals and more weight in the meta-analysis), while small studies (with wide confidence intervals and less weight in the meta-analysis) are visually less dominant. For further details see `help(viz_rainforest)` and `help(viz_thickforest)`.
+In addition to traditional forest plots, rainforest plots as well as thick forest plots can be created via the `variant` argument. Alternatively, the wrapper function `viz_thickforest` and `viz_rainforest` can be used. Rainforest and thick forest plots are two variants and enhancements of the classical forest plot recently proposed by Schild and Voracek (2015). Both variants visually emphasize large studies (with short confidence intervals and more weight in the meta-analysis), while small studies (with wide confidence intervals and less weight in the meta-analysis) are visually less dominant. For further details see `help(viz_rainforest)` and `help(viz_thickforest)`.
 
 ```{r, dev='CairoPNG'}
 viz_forest(x = mozart[1:10, c("d", "se")], study_labels = mozart[1:10, c("study_name")],
@@ -170,6 +170,18 @@ table_headers = c("ID", "Events (T)", "Events (C)"),
 x_trans_function = exp, xlab = "RR")
 ```
 
+### Color highlighting single studies or groups of studies
+For forest plots and thick forest plots it is possible to custimize the color of studies by suppplying a vector of colors to the `col` argument. The color of the summary effect(s) can be customized individually as well with the `summary_col` argument.
+
+```{r, dev='CairoPNG'}
+viz_forest(x = mozart[1:10, c("d", "se")], 
+           group = mozart[1:10, "rr_lab"], 
+           study_labels = mozart[1:10, "study_name"], 
+           summary_label = c("Summary (rr_lab = no)", "Summary (rr_lab = yes)"), 
+           xlab = "Cohen d",
+           col = c("firebrick", "steelblue4")[mozart[1:10, "rr_lab"]],
+           summary_col = c("firebrick", "steelblue4"))
+```
 
 ## Creating funnel plots with viz_funnel
 
@@ -182,12 +194,12 @@ knitr::opts_chunk$set(include = TRUE, echo = TRUE, eval = TRUE, message = FALSE,
 The function `viz_funnel` is capable to create a large set of different funnel plot variants. Options for several graphical augmentations (e.g., confidence, significance, and additional evidence contours; choice of the ordinate; showing study subgroups), and different statistical information displayed are provided (Egger's regression line, and imputed studies by, as well as the adjusted summary effect from, the trim-and-fill method). See `help(viz_funnel)` for further details and relevant references.
 
 By default, significance contours (for the 5% and 1% level) and 95% confidence contours (fixed effect model) are shown.
-```{r, dev='CairoPNG'}
+```{r, fig.asp = 0.75, fig.width = 8}
 viz_funnel(brainvol[, c("z", "z_se")])
 ```
 
 In the `brainvol` meta-analysis Fisher's z values are used. It is convenient to show Fisher's z values on their original scale (correlations) using the `x_trans_function`. The meta-analytic model can be changed to a random effects model using `method`.
-```{r, dev='CairoPNG'}
+```{r, fig.asp = 0.75, fig.width = 8}
 viz_funnel(brainvol[, c("z", "z_se")],
            method = "DL",
            contours_col = "Greys",
@@ -197,7 +209,7 @@ viz_funnel(brainvol[, c("z", "z_se")],
 
 ### Trim-and-fill analysis, Egger's regression
 Showing imputed studies by the trim and fill method, the adjusted summary effect, as well as egger's regression line can help to visually assess funnel plot asymmetry.
-```{r, dev='CairoPNG'}
+```{r, fig.asp = 0.75, fig.width = 8}
 viz_funnel(exrehab[, c("logrr", "logrr_se")], 
            contours_col = "Greys",
            trim_and_fill = TRUE, trim_and_fill_side = "right", 
@@ -207,14 +219,30 @@ viz_funnel(exrehab[, c("logrr", "logrr_se")],
 ### Additional evidence contours
 Additional evidence contours can help to assess the robustness of the meta-analytic result. These contours show the effect of one hypothetical new study (with a certain effect size and standard error) on the significance of the updated meta-analytic summary effect (given a certain `method`).
 
-```{r, dev='CairoPNG'}
+```{r, fig.asp = 0.75, fig.width = 8}
 viz_funnel(mozart[1:10, c("d", "se")], sig_contours = FALSE, addev_contours = TRUE)
 ```
+
+### Sunset (power-enhanced) funnel plots
+A novel variant of the funnel plot displays the power of studies to detect an effect of interest using a two-sided Wald test. The sunset (power-enhanced) funnel plot can be crated with the function `viz_sunset`. Per default the fixed meta-analytic summary is used as the underlying true effect for power computations. 
+
+```{r, fig.asp = 0.75, fig.width = 8}
+viz_sunset(homeopath[, c("d", "se")])
+```
+
+Many options for `viz_sunset` are provided. For instance, continuous power contours can be drawn, a user-specified underlying true effect chosen, and the significance level for power calication altered. See `help(brainvol)` for further details.
+
+```{r, fig.asp = 0.75, fig.width = 8}
+viz_sunset(homeopath[, c("d", "se")], true_effect = -0.3, sig_level = 0.1, power_contours = "continuous")
+```
+
 
 ## References
 
 Anderson, L., Oldridge, N., Thompson, D. R., Zwisler, A. D., Rees, K., Martin, N., & Taylor, R. S. (2016). Exercise-based cardiac rehabilitation for coronary
 heart disease: Cochrane systematic review and meta-analysis. _Journal of the American College of Cardiology_, _67_, 1-12.
+
+Mathie, R. T., Ramparsad, N., Legg, L. A., Clausen, J., Moss, S., Davidson, J. R., ... McConnachie, A. (2017). Randomised, double-blind, placebo-controlled trials of non-individualised homeopathic treatment: Systematic review and meta-analysis. _Systematic Reviews_, _6_, 63.
 
 Pietschnig, J., Penke, L., Wicherts, J. M., Zeiler, M., & Voracek, M. (2015). Meta-analysis of associations between human brain volume and intelligence differences: How strong are they and what do they mean? _Neuroscience & Biobehavioral Reviews_, _57_, 411-432.
 
