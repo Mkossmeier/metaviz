@@ -29,8 +29,6 @@ knitr::opts_chunk$set(
 - Added viz_forest, a new function to create forest plot variants (classic, thick forest, and rainforest plots)
 - Now includes an additional example dataset of a meta-analyis with dichotomous outcomes.
 
-## Package **metaviz** version 0.3
-
-- January 14, 2019: Version 0.3 submitted to CRAN
+## Package **metaviz** version 0.3 (not yet on CRAN)
 - Added `viz_sunset`, a dedicated function for sunset (power-enhanced) funnel plots. Also available as shiny app: https://metaviz.shinyapps.io/sunset/
 - Now includes an additional example dataset of a meta-analyis with standardized mean differences.

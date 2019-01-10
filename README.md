@@ -38,9 +38,8 @@ Questions, ideas, criticism: <michael.kossmeier@univie.ac.at>.
   - Added numerous funnel plot variants including additional evidence
     contour funnel plots with the function `viz_funnel`.
 
-### Package **metaviz** version 0.3
+### Package **metaviz** version 0.3 (not yet on CRAN)
 
-  - January 14, 2019: Version 0.3 submitted to CRAN
   - Added a dedicated function for sunset (power-enhanced) funnel plots
     (`viz_sunset`). Also available as shiny app:
     <https://metaviz.shinyapps.io/sunset/>

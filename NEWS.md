@@ -24,9 +24,8 @@
   - Now includes an additional example dataset of a meta-analyis with
     dichotomous outcomes.
 
-## Package **metaviz** version 0.3
+## Package **metaviz** version 0.3 (not yet on CRAN)
 
-  - January 14, 2019: Version 0.3 submitted to CRAN
   - Added `viz_sunset`, a dedicated function for sunset (power-enhanced)
     funnel plots. Also available as shiny app:
     <https://metaviz.shinyapps.io/sunset/>
