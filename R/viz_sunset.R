@@ -3,16 +3,16 @@
 #'Creates a funnel plot with power regions and computes power-related statistics.
 #'
 #'The funnel plot is the most widely used diagnostic plot in meta-analysis, primarily to assess
-#'small-study effects. The power-enhanced funnel plot incorporates study-level power information
+#'small-study effects. The sunset (power-enhanced) funnel plot incorporates study-level power information
 #'in the funnel display. This directly allows to examine the power studies had to detect an effect of interest
 #'(e.g., the observed meta-analytic summary effect), whether funnel plot asymmetry is driven by underpowered but significanct studies, and to visually
-#'in particualr assess if there is an excess of low-powered significant effects in the meta-analysis
+#'assess if there is an excess of low-powered significant effects in the meta-analysis
 #'(conceptually related to the test of excess signficance, Ioannidis & Trikalinos, 2007).
 #'For effect sizes assumed to be normally distributed (e.g., Cohen d, log OR),
 #'the power corresponding to a given standard error is computed by using a two-sided Wald test and (by default) the meta-analytic
 #'summary effect as assumed true effect. Colored regions of different power levels and a second axis with study level power are shown in the
 #'funnel plot. In addition, power-related statistics are shown: a) The median power of all studies, b) the true effect size necessary such that
-#'the median power of the studies would have been 33\% or 66\%, c) Test of excess significance results (Ioannidis & Trikalinos, 2007), and d)
+#'the median power of the studies would have been 33\% or 66\%, c) results of a test of excess significance (Ioannidis & Trikalinos, 2007), and d)
 #'the R-Index for expected replicability (Schimmack, 2016).
 #'
 #'@param x data.frame or matrix with the effect sizes of all studies (e.g.,
@@ -60,7 +60,7 @@
 viz_sunset <- function(x, y_axis = "se", true_effect = NULL,
                          sig_level = 0.05, power_stats = TRUE,
                          power_contours = "discrete", contours = FALSE, sig_contours = TRUE,
-                         text_size = 4, point_size = 2, xlab = "Effect", ylab = NULL,
+                         text_size = 3, point_size = 2, xlab = "Effect", ylab = NULL,
                          x_trans_function = NULL, x_breaks = NULL, y_breaks = NULL,
                          x_limit = NULL, y_limit = NULL) {
   #'@import ggplot2
@@ -122,7 +122,7 @@ viz_sunset <- function(x, y_axis = "se", true_effect = NULL,
   if(y_axis =="se") {
     plotdata$y <- se
     if(is.null(y_limit)) {
-      max_se <- max(se) + ifelse(length(se) > 1, diff(range(se))*0.1, max(se)*0.1)
+      max_se <- max(se) + ifelse(diff(range(se)) != 0, diff(range(se))*0.1, max(se)*0.1)
       y_limit <- c(0, max_se)
     } else {
       max_se <- max(y_limit)
@@ -160,8 +160,8 @@ viz_sunset <- function(x, y_axis = "se", true_effect = NULL,
 
       if(is.null(y_limit)) {
         # inital value for upper y axis limit
-        max_y <- max(1/se) + ifelse(length(se) > 1, diff(range(1/se))*0.05, 1/se*0.05)
-        min_y <- min(1/se) - ifelse(length(se) > 1, diff(range(1/se))*0.05, 1/se*0.05)
+        max_y <- max(1/se) + ifelse(diff(range(se)) != 0, diff(range(1/se))*0.05, 1/se*0.05)
+        min_y <- min(1/se) - ifelse(diff(range(se)) != 0, diff(range(1/se))*0.05, 1/se*0.05)
       } else {
         max_y <- max(y_limit)
         min_y <- min(y_limit)

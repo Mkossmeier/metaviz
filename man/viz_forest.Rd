@@ -24,11 +24,11 @@ output object of function \code{\link[metafor]{rma.uni}} from package
 \item{type}{character string indicating the type of forest plot to be plotted. Can be "standard" (default), "study_only",
 "summary_only", "cumulative", or "sensitivity". See 'Details'.}
 
-\item{variant}{character string indicating the forest plot variant that should be plotted. Can be "rain" for rainforest plot,
-"thick" for a thick forest plot, or "classic" (default) for a traditional forest plot.}
+\item{variant}{character string indicating the forest plot variant that should be plotted. Can be "classic" (default) for a traditional forest plot,
+"rain" for rainforest plot, "thick" for a thick forest plot.}
 
 \item{method}{character string indicating which method should be used to compute the study weights and summary effect(s).
-Can be any method argument from \code{\link[metafor]{rma.uni}}
+Can be any method argument from function \code{rma.uni} of package \pkg{metafor}
 (e.g., "FE" for the fixed effect model, or "DL" for the random effects model using the
 DerSimonian-Laird method to estimate \eqn{\tau^2}{tau squared}).}
 
@@ -59,7 +59,7 @@ with colors for each subgroup summary effect individually. For \code{variant = "
 
 \item{x_trans_function}{function to transform the labels of the x axis. Common uses are to transform
 log-odds-ratios or log-risk-ratios with \code{exp} to their original scale (odds ratios and risk ratios), or Fisher's z values
-back to correlation coefficients using \code{tanh}. See vignette('metaviz').}
+back to correlation coefficients using \code{tanh}.}
 
 \item{x_breaks}{numeric vector of values for the breaks on the x-axis. When used in tandem with \code{x_trans_function}
 the supplied values should be not yet transformed.}
@@ -67,13 +67,13 @@ the supplied values should be not yet transformed.}
 \item{annotate_CI}{logical scalar. Should the effect size and confidence interval values be shown as text in an aligned table on the right-hand side of the forest plot?}
 
 \item{study_table}{a data.frame with additional study-level variables which should be shown in an aligned table.
-Has to be in the same order than \code{x}. See vignette('metaviz').}
+Has to be in the same order than \code{x}.}
 
 \item{summary_table}{a data.frame with additional summary-level information shown in an aligned table.
 If \code{group} is supplied, \code{summary_table} must have a row for each subgroup
-summary effect, arranged in the order of the levels of \code{group}. See vignette('metaviz').}
+summary effect, arranged in the order of the levels of \code{group}.}
 
-\item{table_headers}{character vector. Headers for each column of aligned tables via \code{study_table}, \code{summary_table}, or \code{annotate_CI}.}
+\item{table_headers}{character vector. Headers for each column of aligned tables via \code{study_table}, \code{summary_table}, and/or \code{annotate_CI}.}
 
 \item{table_layout}{numeric layout matrix passed to \code{layout_matrx} of \code{\link[gridExtra]{arrangeGrob}}. Can be used to overwrite the default spacing
 of the forest plot and aligned tables via \code{study_table}, \code{summary_table}, and \code{annotate_CI}.}
@@ -93,7 +93,7 @@ The function \code{viz_forest} creates visually appealing and informative-rich f
 to flexibly customize the visual appearance and statistical information displayed are provided. In addition,
 rainforest plots as well as the thick forest plots can be created, two variants and enhancements of the
 classical forest plot recently proposed by Schild and Voracek (2015). For further details see the documentation of
-\code{\link[metaviz]{viz_rainforest}}, and \code{\link[metaviz]{viz_thickforest}}.
+the wrapper functions \code{\link[metaviz]{viz_rainforest}}, and \code{\link[metaviz]{viz_thickforest}}.
 
 \bold{Available forest plot types}
 

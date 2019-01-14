@@ -2,7 +2,7 @@
 #'
 #'Creates a rainforest plot. Called by viz_rainforest and viz_forest for type = "rain"
 #'@keywords internal
-viz_rainforest_internal <- function(plotdata, madata,
+internal_viz_rainforest <- function(plotdata, madata,
                                     type = "standard",
                                     study_labels = NULL, summary_label = NULL,
                                     study_table = NULL, summary_table = NULL, annotate_CI = FALSE,
@@ -263,7 +263,7 @@ viz_rainforest_internal <- function(plotdata, madata,
 #'
 #'Creates a thick forest plot. Called by viz_thickforest and viz_forest for type = "thick"
 #'@keywords internal
-viz_thickforest_internal <- function(plotdata, madata,
+internal_viz_thickforest <- function(plotdata, madata,
                                      type = "standard",
                                      study_labels = NULL, summary_label = NULL,
                                      study_table = NULL, summary_table = NULL, annotate_CI = FALSE,
@@ -416,7 +416,7 @@ viz_thickforest_internal <- function(plotdata, madata,
 #'
 #'Creates a classic forest plot. Called by viz_forest for type = "classic"
 #'@keywords internal
-viz_classicforest_internal <- function(plotdata, madata,
+internal_viz_classicforest <- function(plotdata, madata,
                                        type = "standard",
                                        study_labels = NULL, summary_label = NULL,
                                        study_table = NULL, summary_table = NULL, annotate_CI = FALSE,

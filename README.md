@@ -6,13 +6,14 @@
 A compilation of functions to plot meta-analytic data using ‘ggplot2’.
 Currently allows to create forest plots, funnel plots, and many of their
 variants, such as rainforest plots, thick forest plots, additional
-evidence contour enhanced funnel plots, and sunset funnel plots. In
-addition, functionalities for visual inference with the funnel plot are
-provided.
+evidence contour funnel plots, and sunset funnel plots. In addition,
+functionalities for visual inference with the funnel plot are provided.
 
-### Contact
+## Contact
 
 Questions, ideas, criticism: <michael.kossmeier@univie.ac.at>.
+
+## History
 
 ### Package **metaviz** version 0.1.0
 
@@ -38,8 +39,9 @@ Questions, ideas, criticism: <michael.kossmeier@univie.ac.at>.
   - Added numerous funnel plot variants including additional evidence
     contour funnel plots with the function `viz_funnel`.
 
-### Package **metaviz** version 0.3 (not yet on CRAN)
+### Package **metaviz** version 0.3
 
+  - January 14, 2019: Version 0.3 submitted to CRAN
   - Added a dedicated function for sunset (power-enhanced) funnel plots
     (`viz_sunset`). Also available as shiny app:
     <https://metaviz.shinyapps.io/sunset/>
