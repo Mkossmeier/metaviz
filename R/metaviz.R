@@ -27,30 +27,30 @@
 #' Further details and references can be found in the corresponding help file (\code{help(viz_funnel)}).
 #'
 #' Moreover, a novel variant of the funnel plot is introduced which displays the power of studies to detect an effect
-#' of interest (e.g., the meta-analytic summary estimate) using a two-sided Wald test. This sunset (power-enhanced)
+#' of interest (e.g., the meta-analytic summary effect) using a two-sided Wald test. This sunset (power-enhanced)
 #' funnel plot uses color-coded regions and a second y axis to visualize study-level power and can help to
 #' critically examine the evidentiality and credibility of a set of studies. For further details see \code{help(viz_sunset)}.
 #'
-#' @section Visual inference with funnel plots (funnelinf):
-#' Funnel plots are widely used in meta-analysis to assess small study effects and in particular publication bias.
-#' However, visually examining funnel plots often leads to false conclusions. Visual inference
-#' can help to improve the objectivity and validity of funnel plot based conclusions by guarding from
-#' interpreting patterns in the funnel plot that are perfectly plausible by chance.
-#' Only if the funnel plot showing the real data is identifiable out of simultaneously presented
-#' funnel plots showing simulated data under the null hypothesis, conclusion based on visually inspecting
+#' @section Visual inference with funnel plots (\code{funnelinf}):
+#' Funnel plots are widely used in meta-analysis to assess small study effects as potential indicator of publication bias.
+#' Visual inference can help to improve the objectivity and validity of conclusions based on funnel plot examinations by
+#' guarding the meta-analyst from interpreting patterns in the funnel plot that might be perfectly plausible by chance.
+#' Only if the funnel plot showing the real data is distinguishable from simultaneously presented
+#' null funnel plots showing data simulated under the null hypothesis, conclusion based on visually inspecting
 #' the real-data funnel plot might be warranted. The function \code{funnelinf} provides numerous tailored
-#' options to conduct visual inference with the funnel plot graph (see \code{help(funnelinf)} for further details and relevant references).
+#' options to conduct visual inference with the funnel plot graph in the context of meta-analysis. See \code{help(funnelinf)} for further details and relevant references.
 #'
 #' @section Meta-analytic example datasets:
 #' Four different example datasets from published meta-analyses are distributed
 #' with the package: \itemize{
-#' \item Two datasets for meta-analysis with standardized mean differences (mozart, homeopath)
-#' \item One dataset for meta-analysis with correlation coefficients (brainvol)
-#' \item One dataset for meta-analysis with dichotomous outcome data (exrehab).
+#' \item Two datasets for meta-analysis with standardized mean differences (\code{mozart}, \code{homeopath})
+#' \item One dataset for meta-analysis with correlation coefficients (\code{brainvol})
+#' \item One dataset for meta-analysis with dichotomous outcome data (\code{exrehab}).
 #' }
 #' More details and corresponding references can be found in the respective help files
 #' (\code{help(mozart)}, \code{help(homeopath)}, \code{help(brainvol)}, \code{help(exrehab)}).
 #'
 #' @docType package
-#' @name metaviz
+#' @name metaviz-package
+#' @aliases metaviz
 NULL

@@ -7,17 +7,18 @@ Authors@R: c(
     person("Ulrich S.", "Tran", email = "ulrich.tran@univie.ac.at", role = c("aut")),
     person("Martin", "Voracek", email = "martin.voracek@univie.ac.at", role = c("aut"))
     )
-Description: A compilation of functions to plot meta-analytic data using 'ggplot2'. Currently allows to 
-    create forest plots, funnel plots, and many of their variants, such as rainforest plots, thick forest plots,
-    additional evidence contour enhanced funnel plots, and sunset funnel plots. In addition, functionalities for 
-    visual inference with the funnel plot are provided.
+Description: A compilation of functions to create visually appealing and information-rich 
+    plots of meta-analytic data using 'ggplot2'. Currently allows to create forest plots, 
+    funnel plots, and many of their variants, such as rainforest plots, thick forest plots, 
+    additional evidence contour funnel plots, and sunset funnel plots. In addition, functionalities 
+    for visual inference with the funnel plot in the context of meta-analysis are provided.
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
 Imports:
-    ggplot2 (>= 2.2.1),
-    nullabor (>= 0.3.1),
-    dplyr (>= 0.7.1),
+    ggplot2 (>= 3.1.0),
+    nullabor (>= 0.3.5),
+    dplyr (>= 0.7.8),
     RColorBrewer (>= 1.1-2),
     metafor (>= 1.9-9),
     gridExtra (>= 2.2.1),
@@ -27,8 +28,8 @@ Suggests:
     knitr,
     rmarkdown
 Depends:
-    R (>= 2.10)
-RoxygenNote: 6.1.0
+    R (>= 3.2.0)
+RoxygenNote: 6.1.1
 VignetteBuilder: knitr
 URL: https://github.com/Mkossmeier/metaviz
 BugReports: https://github.com/Mkossmeier/metaviz/issues
