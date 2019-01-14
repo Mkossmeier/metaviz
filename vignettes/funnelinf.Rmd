@@ -111,7 +111,7 @@ funnelinf(homeopath[, c("d", "se")], n = 4, null_model = "FEM",
 Several funnel plot variants can be used for visual funnel plot inference.
 
 ### Contours, axis
-By default confidence (`contours = TRUE`) and significance contours (`sig_contours = TRUE`) are shown. In addtion, instead of the standard error, the precision (i.e., 1 divided by the standard error) can be used on the y axis. This y-axis choice might have advantages if one or few large studies (with high precision) should be compared to the results of smaller studies condensed at the bottom of the funnel plot (Sterne & Egger, 2001).
+By default confidence (`contours = TRUE`) and significance contours (`sig_contours = TRUE`) are shown. In addition, instead of the standard error, the precision (i.e., 1 divided by the standard error) can be used on the y axis. This y-axis choice might have advantages if one or few large studies (with high precision) should be compared to the results of smaller studies condensed at the bottom of the funnel plot (Sterne & Egger, 2001).
 
 ```{r, echo = FALSE}
 set.seed(4)
@@ -127,7 +127,7 @@ set.seed(4)
 ```
 
 ### Trim-and-fill and Egger's regression
-The trim-and-fill alogithm (Duval & Tweedie, 2000), and Egger's regression test (Egger, Smith, Schneider, & Minder, 1997) are two widely used methods to examine small study effects. Computing and showing their results in each funnel plot in the lineup might have the potential to increase the power of the lineup procedure to detect small-study effects. With `egger = TRUE` Egger's regression line is drawn in each funnel plot and with `trim_and_fill = TRUE` imputed studies potentially missing due to publication bias are shown by black symbols. In the `homeopath` data used, small values (on the left-hand side of the funnel plot) are in favor of homeopathic treatment compared to placebo. Therefore studies potentially missing due to publication bias should be imputed on the right-hand side of the funnel plot by the trim-and-fill algorithm. This must be specified with the option `trim_and_fill_side = "right"`. 
+The trim-and-fill algorithm (Duval & Tweedie, 2000), and Egger's regression test (Egger, Smith, Schneider, & Minder, 1997) are two widely used methods to examine small study effects. Computing and showing their results in each funnel plot in the lineup might have the potential to increase the power of the lineup procedure to detect small-study effects. With `egger = TRUE` Egger's regression line is drawn in each funnel plot and with `trim_and_fill = TRUE` imputed studies potentially missing due to publication bias are shown by black symbols. In the `homeopath` data used, small values (on the left-hand side of the funnel plot) are in favor of homeopathic treatment compared to placebo. Therefore studies potentially missing due to publication bias should be imputed on the right-hand side of the funnel plot by the trim-and-fill algorithm. This must be specified with the option `trim_and_fill_side = "right"`. 
 
 ```{r, dpi = 300}
 funnelinf(homeopath[, c("d", "se")], n = 4, 

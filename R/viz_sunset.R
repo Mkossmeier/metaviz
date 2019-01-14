@@ -5,9 +5,9 @@
 #'The funnel plot is the most widely used diagnostic plot in meta-analysis, primarily to assess
 #'small-study effects. The sunset (power-enhanced) funnel plot incorporates study-level power information
 #'in the funnel display. This directly allows to examine the power studies had to detect an effect of interest
-#'(e.g., the observed meta-analytic summary effect), whether funnel plot asymmetry is driven by underpowered but significanct studies, and to visually
+#'(e.g., the observed meta-analytic summary effect), whether funnel plot asymmetry is driven by underpowered but significant studies, and to visually
 #'assess if there is an excess of low-powered significant effects in the meta-analysis
-#'(conceptually related to the test of excess signficance, Ioannidis & Trikalinos, 2007).
+#'(conceptually related to the test of excess significance, Ioannidis & Trikalinos, 2007).
 #'For effect sizes assumed to be normally distributed (e.g., Cohen d, log OR),
 #'the power corresponding to a given standard error is computed by using a two-sided Wald test and (by default) the meta-analytic
 #'summary effect as assumed true effect. Colored regions of different power levels and a second axis with study level power are shown in the
@@ -22,11 +22,11 @@
 #'  \pkg{metafor}; then effect sizes and standard errors are extracted from \code{x}.
 #'@param y_axis character string indicating which y axis should be used in the funnel plot. Available options are "se" (default) for
 #'  standard error and "precision" for the reciprocal of the standard error.
-#'@param true_effect numeric scalar. Which true effect should be assumed for power caluclations? The default is \code{NULL},
+#'@param true_effect numeric scalar. Which true effect should be assumed for power calculations? The default is \code{NULL},
 #'  for which the meta-analytic summary effect (fixed-effect model) is used.
 #'@param sig_level logical scalar. For which significance level alpha should the study power be computed?
 #'@param power_stats logical scalar. Should power-related statistics be computed and printed in the caption of the plot? (see details)
-#'@param power_contours character string specifying how different power regions are plotted. Can be eiter "continuous"
+#'@param power_contours character string specifying how different power regions are plotted. Can be either "continuous"
 #'  or "discrete" (default).
 #'@param contours logical scalar indicating if classic funnel plot confidence contours and the summary effect
 #'  should be displayed.
@@ -41,8 +41,8 @@
 #'@param x_breaks numeric vector of values for the breaks on the x-axis. When used in tandem with \code{x_trans_function}
 #'  the supplied values should be not yet transformed.
 #'@param y_breaks numeric vector of values for the breaks on the y-axis.
-#'@param x_limit numeric vector of length two with user specificed x axis limits.
-#'@param y_limit numeric vector of length two with user specificed y axis limits.
+#'@param x_limit numeric vector of length two with user specified x axis limits.
+#'@param y_limit numeric vector of length two with user specified y axis limits.
 #'@references Ioannidis, J. P., & Trikalinos, T. A. (2007). An exploratory test for an excess of significant
 #'  findings. \emph{Clinical Trials}, \emph{4}, 245-253.
 #'@references Schimmack, U. (2016). The replicability-index: Quantifying statistical research integrity.

@@ -173,7 +173,7 @@ x_trans_function = exp, xlab = "RR")
 ```
 
 ### Color highlighting single studies or groups of studies
-For forest plots and thick forest plots it is possible to individually custimize the color of studies by suppplying a vector of colors to the `col` argument. The color of the summary effect(s) can be customized individually as well with the `summary_col` argument.
+For forest plots and thick forest plots it is possible to individually customize the color of studies by supplying a vector of colors to the `col` argument. The color of the summary effect(s) can be customized individually as well with the `summary_col` argument.
 
 ```{r, dpi = 300}
 viz_forest(x = mozart[1:10, c("d", "se")], 

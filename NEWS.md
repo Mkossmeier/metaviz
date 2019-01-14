@@ -18,7 +18,7 @@
     (e.g., additional evidence contour enhanced funnel plots)
   - Added viz\_forest, a new function to create forest plot variants
     (classic, thick forest, and rainforest plots)
-  - Now includes an additional example dataset of a meta-analyis with
+  - Now includes an additional example dataset of a meta-analysis with
     dichotomous outcomes.
 
 ## Package **metaviz** version 0.3
@@ -27,5 +27,5 @@
   - Added `viz_sunset`, a dedicated function for sunset (power-enhanced)
     funnel plots. Also available as shiny app:
     <https://metaviz.shinyapps.io/sunset/>
-  - Now includes an additional example dataset of a meta-analyis with
+  - Now includes an additional example dataset of a meta-analysis with
     standardized mean differences.
