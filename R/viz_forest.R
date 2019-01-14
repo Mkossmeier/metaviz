@@ -274,13 +274,13 @@ viz_forest <- function(x, group = NULL, type = "standard", variant = "classic", 
         res <- numeric(length(es))
         if(type == "b") {
           for(i in 1:length(es)) {
-            res[i] <- metafor::rma.uni(yi = es[1:i], sei = se[1:i], method = method, data = data)$b[[1]]
+            res[i] <- metafor::rma.uni(yi = es[1:i], sei = se[1:i], method = method)$b[[1]]
           }
           res
         } else {
           if(type == "se") {
             for(i in 1:length(es)) {
-              res[i] <- metafor::rma.uni(yi = es[1:i], sei = se[1:i], method = method, data = data)$se[[1]]
+              res[i] <- metafor::rma.uni(yi = es[1:i], sei = se[1:i], method = method)$se[[1]]
             }
             res
           } else {
