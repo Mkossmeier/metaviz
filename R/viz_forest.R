@@ -488,7 +488,7 @@ viz_forest <- function(x, group = NULL, type = "standard", variant = "classic", 
       }
       v <- df_to_vector(tbl)
       
-      nchar2<-function(x){unlist(sapply(strsplit(x,"\n"),nchar, keepNA = FALSE))}
+      nchar2<-function(x){unlist(sapply(strsplit(x,"\n"), function(x) max(nchar(x, keepNA = FALSE))))}
       
       area_per_column <- cumsum(c(1, apply(rbind(tbl_titles, tbl), 2, function(x) max(round(max(nchar2(x))/100, 2),  0.03))))
       x_values <- area_per_column[1:ncol(tbl)]
