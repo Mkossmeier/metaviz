@@ -232,7 +232,7 @@ A novel variant of the funnel plot displays the power of studies to detect an ef
 viz_sunset(homeopath[, c("d", "se")])
 ```
 
-Many options for `viz_sunset` are provided. For instance, continuous power contours can be drawn, a user-specified underlying true effect chosen, and the significance level for power calculations altered. See `help(brainvol)` for further details.
+Many options for `viz_sunset` are provided. For instance, continuous power contours can be drawn, a user-specified underlying true effect chosen, and the significance level for power calculations altered. See `help(viz_sunset)` for further details.
 
 ```{r, dpi = 300}
 viz_sunset(homeopath[, c("d", "se")], true_effect = -0.3, sig_level = 0.1, power_contours = "continuous")

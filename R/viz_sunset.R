@@ -402,17 +402,31 @@ viz_sunset <- function(x, y_axis = "se", true_effect = NULL,
     coord_cartesian(xlim = x_limit,
                     ylim = y_limit, expand = F)
   if(power_stats == TRUE) {
-  p <- p +
-    labs(caption = bquote(
-           paste(alpha, " = ", .(sig_level), ", ",
-                 delta , " = ", .(round(true_effect, 2)), " | ",
-                 med[power], " = ", .(med_power), ", ",
-                 d[33*'%'], " = ", .(d33), ", ",
-                 d[66*'%'], " = ", .(d66), " | ",
-                 "E = ",  .(round(expected, 2)), ", ",
-                 "O = ", .(observed), ", ",
-                 p[TES], " = ", .(p_tes), ", ",
-                 "R-Index = ", .(R), sep = "")))
+    if(is.null(x_trans_function)) {
+      p <- p +
+        labs(caption = bquote(
+               paste(alpha, " = ", .(sig_level), ", ",
+                     delta , " = ", .(round(true_effect, 2)), " | ",
+                     med[power], " = ", .(med_power), ", ",
+                     d[33*'%'], " = ", .(d33), ", ",
+                     d[66*'%'], " = ", .(d66), " | ",
+                     "E = ",  .(round(expected, 2)), ", ",
+                     "O = ", .(observed), ", ",
+                     p[TES], .(ifelse(p_tes == 0, " < ", " = ")), .(ifelse(p_tes == 0, "0.001", p_tes)), ", ",
+                     "R-Index = ", .(R), sep = "")))
+    } else {
+      p <- p +
+        labs(caption = bquote(
+          paste(alpha, " = ", .(sig_level), ", ",
+                delta , " = ", .(round(x_trans_function(true_effect), 2)), " | ",
+                med[power], " = ", .(med_power), ", ",
+                d[33*'%'], " = ", .(round(x_trans_function(d33), 2)), ", ",
+                d[66*'%'], " = ", .(round(x_trans_function(d66), 2)), " | ",
+                "E = ",  .(round(expected, 2)), ", ",
+                "O = ", .(observed), ", ",
+                p[TES], .(ifelse(p_tes == 0, " < ", " = ")), .(ifelse(p_tes == 0, "0.001", p_tes)), ", ",
+                "R-Index = ", .(R), sep = "")))
+    }
   }
   p <- p +
     theme_bw() +

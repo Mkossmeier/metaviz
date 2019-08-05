@@ -78,12 +78,12 @@ Creates a lineup of funnel plots to conduct visual funnel plot inference (Kossme
 presented alongside null plots showing simulated data under the null hypothesis.
 }
 \details{
-Funnel plots are widely used in meta-analysis to assess small study effects as potential indicatior for publication bias.
+Funnel plots are widely used in meta-analysis to assess small study effects as potential indicator for publication bias.
 However, interpretations of funnel plots often lead to false conclusions about the presence and severity of bias (e.g., Terrin, Schmid, and Lau, 2005).
 Visual inference (Buja et al. 2009; Majumder, Hofmann, and Cook 2013) can help to improve the validity of conclusions based on the visual inspection of a
 funnel plot by saving investigators from interpreting funnel-plot patterns which might be perfectly plausible by chance.
 Only if the real-data funnel plot is distinguishable from null-plots, the null hypothesis is formally rejected and
-conclusions based on the visual inspection of the real-data funnel plot might be warranted (for furhter details, see Kossmeier, Tran, & Voracek, 2019).
+conclusions based on the visual inspection of the real-data funnel plot might be warranted (for further details, see Kossmeier, Tran, & Voracek, 2019).
 
 Function \code{funnelinf} utilizes package \pkg{nullabor} for null plot simulation and \pkg{ggplot2} for
 plotting the lineup. Several tailored features for visual inference with funnel plots are provided which currently include:
