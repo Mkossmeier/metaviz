@@ -5,10 +5,10 @@
 \title{Funnel plot variants for meta-analysis}
 \usage{
 viz_funnel(x, group = NULL, y_axis = "se", method = "FE",
-  contours = TRUE, sig_contours = TRUE, addev_contours = FALSE,
-  contours_col = "Blues", detail_level = 1, egger = FALSE,
-  trim_and_fill = FALSE, trim_and_fill_side = "left", text_size = 3,
-  point_size = 2, xlab = "Effect", ylab = NULL,
+  contours = TRUE, contours_pred = FALSE, sig_contours = TRUE,
+  addev_contours = FALSE, contours_col = "Blues", detail_level = 1,
+  egger = FALSE, trim_and_fill = FALSE, trim_and_fill_side = "left",
+  text_size = 3, point_size = 2, xlab = "Effect", ylab = NULL,
   group_legend = FALSE, group_legend_title = "",
   x_trans_function = NULL, x_breaks = NULL)
 }
@@ -30,7 +30,12 @@ the between-study variance \eqn{\tau^2}{tau squared}. Can be any method argument
 Used for \code{contours}, and \code{addev_contours}.}
 
 \item{contours}{logical scalar indicating if classic funnel plot confidence contours and the summary effect
-should be displayed.}
+should be displayed. Contours are by default given as M +/- qnorm(0.975)*SE, with M the meta-analytic summary effect and SE the study standard error.}
+
+\item{contours_pred}{logical scalar indicating if funnel plot confidence contours should be incorporating estimated \eqn{\tau^2}{tau squared} in case of a random effects meta-analysis
+(i.e. contours showing 95% prediction intervals for study effect sizes under a random effects meta-analysis assuming the summary effect as known).
+If contours_pred is set to TRUE, contours are given as M +/- qnorm(0.975)*sqrt(SE^2 + \eqn{\tau^2}{tau squared}), with M the meta-analytic summary effect, SE the study standard error and tau^2 the esimated between
+study heterogeneity from a random effects model. Argument contours_pred has no effect for fixed effect models.}
 
 \item{sig_contours}{logical scalar. Should significance contours be drawn (at the 0.05 or 0.01 level using a Wald test)?}
 

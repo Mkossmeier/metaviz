@@ -62,7 +62,11 @@
 #'@param y_axis character string indicating which y axis should be used in the funnel plot. Available options are "se" (default) for
 #'  standard error and "precision" for the reciprocal of the standard error.
 #'@param contours logical scalar indicating if classic funnel plot confidence contours and the summary effect
-#'  should be displayed.
+#'  should be displayed. Contours are by default given as M +/- qnorm(0.975)*SE, with M the meta-analytic summary effect and SE the study standard error.
+#'@param contours_pred logical scalar indicating if funnel plot confidence contours should be incorporating estimated \eqn{\tau^2}{tau squared} in case of a random effects meta-analysis
+#'  (i.e. contours showing 95% prediction intervals for study effect sizes under a random effects meta-analysis assuming the summary effect as known).
+#'  If contours_pred is set to TRUE, contours are given as M +/- qnorm(0.975)*sqrt(SE^2 + \eqn{\tau^2}{tau squared}), with M the meta-analytic summary effect, SE the study standard error and tau^2 the esimated between
+#'  study heterogeneity from a random effects model. Argument contours_pred has no effect for fixed effect models.
 #'@param sig_contours logical scalar. Should significance contours be drawn (at the 0.05 or 0.01 level using a Wald test)?
 #'@param addev_contours logical scalar. Should approximate additional evidence contours be drawn, showing the significance of the updated summary effect? See Details.
 #'  Note: For \code{method} other than "FE" or "DL" runtime is increased significantly. Consider reducing \code{detail_level}.
@@ -119,7 +123,7 @@
 #' group_legend_title = "unpublished?")
 #'@export
 viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
-                      contours = TRUE, sig_contours = TRUE, addev_contours = FALSE,
+                      contours = TRUE, contours_pred = FALSE, sig_contours = TRUE, addev_contours = FALSE,
                       contours_col = "Blues", detail_level = 1,
                       egger = FALSE, trim_and_fill = FALSE, trim_and_fill_side = "left",
                       text_size = 3, point_size = 2,
@@ -139,7 +143,7 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
     se <- as.numeric(sqrt(x$vi))
     # method <- x$method
     if(method != x$method) {
-      message("Note: method argument used differs from input object of class rma.uni (metafor)")
+      message(paste0("Note: method argument supplied differs from input object of class rma.uni (metafor). Meta-analysis is recomputed with supplied method (", method, ")."))
     }
     # If No group is supplied try to extract group from input object of class rma.uni (metafor)
     if(is.null(group) & ncol(x$X) > 1) {
@@ -194,7 +198,15 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
   k <- length(es)
   summary_es <- metafor::rma.uni(yi = es, sei = se, method = method)$b[[1]]
   summary_se <- sqrt(metafor::rma.uni(yi = es, sei = se, method = method)$vb[[1]])
-  summary_tau2 <- metafor::rma.uni(yi = es, sei = se, method = method)$tau2
+  if(contours_pred == TRUE) {
+    summary_tau2 <- metafor::rma.uni(yi = es, sei = se, method = method)$tau2
+  } else {
+    if(contours_pred == FALSE) {
+      summary_tau2 <- 0
+    } else {
+      warning("Supported arguments for contours_pred are TRUE or FALSE. FALSE (the default) is used.")
+    }
+  }
 
   # main data for plotting
   if(is.null(group)) {
@@ -542,6 +554,7 @@ viz_funnel <- function(x, group = NULL, y_axis = "se", method = "FE",
     if(y_axis == "se") {
     p <-
       p + scale_y_reverse(name = ylab)
+    y_limit <- rev(y_limit)
     } else {
       if(y_axis == "precision") {
       p <-

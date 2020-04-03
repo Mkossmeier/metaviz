@@ -354,6 +354,7 @@ viz_sunset <- function(x, y_axis = "se", true_effect = NULL,
                                          paste(round((1-stats::pnorm((stats::qnorm(1-sig_level/2)*x - true_effect)/x) + stats::pnorm((-stats::qnorm(1-sig_level/2)*x - true_effect)/x)) * 100, 1), "%", sep = "")}))
 
     }
+    y_limit <- rev(y_limit)
   } else {
     if(y_axis == "precision") {
       if(is.null(y_breaks)) {
