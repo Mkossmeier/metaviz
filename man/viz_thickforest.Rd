@@ -27,7 +27,8 @@ output object of function \code{\link[metafor]{rma.uni}} from package
 \item{method}{character string indicating which method should be used to compute the study weights and summary effect(s).
 Can be any method argument from \code{\link[metafor]{rma.uni}}
 (e.g., "FE" for the fixed effect model, or "DL" for the random effects model using the
-DerSimonian-Laird method to estimate \eqn{\tau^2}{tau squared}).}
+DerSimonian-Laird method to estimate \eqn{\tau^2}{tau squared}).
+If input \code{x} is an output object of function \code{\link[metafor]{rma.uni}} from package \pkg{metafor}, then the method is extracted from \code{x}.}
 
 \item{study_labels}{a character vector with names/identifiers to annotate each study in the forest plot.
 Has to be in the same order than \code{x}. Ignored if \code{study_table} and/or \code{summary_table} is supplied.}

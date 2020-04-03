@@ -4,11 +4,12 @@
 \alias{viz_sunset}
 \title{Sunset (power-enhanced) funnel plot}
 \usage{
-viz_sunset(x, y_axis = "se", true_effect = NULL, sig_level = 0.05,
-  power_stats = TRUE, power_contours = "discrete", contours = FALSE,
-  sig_contours = TRUE, text_size = 3, point_size = 2,
-  xlab = "Effect", ylab = NULL, x_trans_function = NULL,
-  x_breaks = NULL, y_breaks = NULL, x_limit = NULL, y_limit = NULL)
+viz_sunset(x, y_axis = "se", true_effect = NULL, method = "FE",
+  sig_level = 0.05, power_stats = TRUE, power_contours = "discrete",
+  contours = FALSE, sig_contours = TRUE, text_size = 3,
+  point_size = 2, xlab = "Effect", ylab = NULL,
+  x_trans_function = NULL, x_breaks = NULL, y_breaks = NULL,
+  x_limit = NULL, y_limit = NULL)
 }
 \arguments{
 \item{x}{data.frame or matrix with the effect sizes of all studies (e.g.,
@@ -21,7 +22,11 @@ output object of function \code{\link[metafor]{rma.uni}} from package
 standard error and "precision" for the reciprocal of the standard error.}
 
 \item{true_effect}{numeric scalar. Which true effect should be assumed for power calculations? The default is \code{NULL},
-for which the meta-analytic summary effect (fixed-effect model) is used.}
+for which the meta-analytic summary effect is used (computed with \code{method}).}
+
+\item{method}{character string indicating the method used to compute the meta-analytic summary effect. Can be any method argument from \code{\link[metafor]{rma.uni}}
+(e.g., "FE" for the fixed effect model (default), or "DL" for the random effects model using the DerSimonian-Laird method to estimate \eqn{\tau^2}{tau squared}).
+If input \code{x} is an output object of function \code{\link[metafor]{rma.uni}} from package \pkg{metafor}, then the method is extracted from \code{x}.}
 
 \item{sig_level}{logical scalar. For which significance level alpha should the study power be computed?}
 

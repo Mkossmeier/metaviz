@@ -5,8 +5,8 @@
 \title{Funnel plot variants for meta-analysis}
 \usage{
 viz_funnel(x, group = NULL, y_axis = "se", method = "FE",
-  contours = TRUE, contours_pred = FALSE, sig_contours = TRUE,
-  addev_contours = FALSE, contours_col = "Blues", detail_level = 1,
+  contours = TRUE, sig_contours = TRUE, addev_contours = FALSE,
+  contours_col = "Blues", contours_type = "FEM", detail_level = 1,
   egger = FALSE, trim_and_fill = FALSE, trim_and_fill_side = "left",
   text_size = 3, point_size = 2, xlab = "Effect", ylab = NULL,
   group_legend = FALSE, group_legend_title = "",
@@ -27,15 +27,10 @@ standard error and "precision" for the reciprocal of the standard error.}
 \item{method}{character string indicating the method used to compute the meta-analytic summary effect and, for a random effects model,
 the between-study variance \eqn{\tau^2}{tau squared}. Can be any method argument from \code{\link[metafor]{rma.uni}}
 (e.g., "FE" for the fixed effect model, or "DL" for the random effects model using the DerSimonian-Laird method to estimate \eqn{\tau^2}{tau squared}).
-Used for \code{contours}, and \code{addev_contours}.}
+If input \code{x} is an output object of function \code{\link[metafor]{rma.uni}} from package \pkg{metafor}, then the method is extracted from \code{x}.}
 
 \item{contours}{logical scalar indicating if classic funnel plot confidence contours and the summary effect
-should be displayed. Contours are by default given as M +/- qnorm(0.975)*SE, with M the meta-analytic summary effect and SE the study standard error.}
-
-\item{contours_pred}{logical scalar indicating if funnel plot confidence contours should be incorporating estimated \eqn{\tau^2}{tau squared} in case of a random effects meta-analysis
-(i.e. contours showing 95% prediction intervals for study effect sizes under a random effects meta-analysis assuming the summary effect as known).
-If contours_pred is set to TRUE, contours are given as M +/- qnorm(0.975)*sqrt(SE^2 + \eqn{\tau^2}{tau squared}), with M the meta-analytic summary effect, SE the study standard error and tau^2 the esimated between
-study heterogeneity from a random effects model. Argument contours_pred has no effect for fixed effect models.}
+should be displayed.}
 
 \item{sig_contours}{logical scalar. Should significance contours be drawn (at the 0.05 or 0.01 level using a Wald test)?}
 
@@ -44,6 +39,12 @@ Note: For \code{method} other than "FE" or "DL" runtime is increased significant
 
 \item{contours_col}{character string indicating the color palette used from package \pkg{RColorBrewer} for
 \code{sig_contours}, and \code{addev_contours}. Can be any of "Blues", "Greys", "Oranges", "Greens", "Reds", and "Purples".}
+
+\item{contours_type}{character string indicating how confidence contours are computed.
+Must be either "FEM" or "REM". If contours_type is set to "FEM" (default), contours are given as M +/- qnorm(0.975)*SE,
+with M the meta-analytic summary effect and SE the study standard error. If contours_type is set to "REM", contours are given as
+M +/- qnorm(0.975)*sqrt(SE^2 + \eqn{\tau^2}{tau squared}), with M again the meta-analytic summary effect, SE the study standard error
+and \eqn{\tau^2}{tau squared} the esimated between study heterogeneity from a random effects model. The argument of contours_type has no effect if \eqn{\tau^2}{tau squared} is zero.}
 
 \item{detail_level}{numeric scalar. Allows to increase or decrease the plotting detail of contours. Values can be chosen between 0.1 and 10. Default is 1.}
 
