@@ -29,3 +29,16 @@
     <https://metaviz.shinyapps.io/sunset/>
   - Now includes an additional example dataset of a meta-analysis with
     standardized mean differences.
+
+## Package **metaviz** version 0.3.1
+
+  - April 7th, 2020: Version 0.3.1 submitted to CRAN
+  - Fixed problem of up-side-down funnel plots (`viz_funnel`,
+    `viz_sunset`, `funnelinf`) with y\_axis = “se”, which seemed to
+    occur with newer versions of **ggplot2** installed.
+  - Function `viz_funnel` now allows to customize funnel plot contours
+    for random effects models via the `contours_type` argument.
+  - Changed behavior of `viz_forest`, `viz_funnel` and `viz_sunset`,
+    such that when output of function `rma.uni` from package **metafor**
+    is used as input, then the `method` argument is now extracted from
+    the `rma.uni` object.

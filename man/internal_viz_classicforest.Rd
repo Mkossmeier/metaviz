@@ -4,12 +4,25 @@
 \alias{internal_viz_classicforest}
 \title{Internal helper function of viz_forest to create a classic forest plot}
 \usage{
-internal_viz_classicforest(plotdata, madata, type = "standard",
-  study_labels = NULL, summary_label = NULL, study_table = NULL,
-  summary_table = NULL, annotate_CI = FALSE, confidence_level = 0.95,
-  col = "Blues", summary_col = "Blues", tick_col = "firebrick",
-  text_size = 3, xlab = "Effect", x_limit = NULL,
-  x_trans_function = NULL, x_breaks = NULL)
+internal_viz_classicforest(
+  plotdata,
+  madata,
+  type = "standard",
+  study_labels = NULL,
+  summary_label = NULL,
+  study_table = NULL,
+  summary_table = NULL,
+  annotate_CI = FALSE,
+  confidence_level = 0.95,
+  col = "Blues",
+  summary_col = "Blues",
+  tick_col = "firebrick",
+  text_size = 3,
+  xlab = "Effect",
+  x_limit = NULL,
+  x_trans_function = NULL,
+  x_breaks = NULL
+)
 }
 \description{
 Creates a classic forest plot. Called by viz_forest for type = "classic"

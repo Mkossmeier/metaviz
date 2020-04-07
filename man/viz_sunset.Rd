@@ -4,12 +4,26 @@
 \alias{viz_sunset}
 \title{Sunset (power-enhanced) funnel plot}
 \usage{
-viz_sunset(x, y_axis = "se", true_effect = NULL, method = "FE",
-  sig_level = 0.05, power_stats = TRUE, power_contours = "discrete",
-  contours = FALSE, sig_contours = TRUE, text_size = 3,
-  point_size = 2, xlab = "Effect", ylab = NULL,
-  x_trans_function = NULL, x_breaks = NULL, y_breaks = NULL,
-  x_limit = NULL, y_limit = NULL)
+viz_sunset(
+  x,
+  y_axis = "se",
+  true_effect = NULL,
+  method = "FE",
+  sig_level = 0.05,
+  power_stats = TRUE,
+  power_contours = "discrete",
+  contours = FALSE,
+  sig_contours = TRUE,
+  text_size = 3,
+  point_size = 2,
+  xlab = "Effect",
+  ylab = NULL,
+  x_trans_function = NULL,
+  x_breaks = NULL,
+  y_breaks = NULL,
+  x_limit = NULL,
+  y_limit = NULL
+)
 }
 \arguments{
 \item{x}{data.frame or matrix with the effect sizes of all studies (e.g.,

@@ -4,7 +4,8 @@
 \name{brainvol}
 \alias{brainvol}
 \title{Example data for a meta-analysis of correlations: Human brain volume and intelligence}
-\format{A data frame with 83 rows and 8 variables:
+\format{
+A data frame with 83 rows and 8 variables:
 \describe{
   \item{study_name}{short name of each study}
   \item{year}{publication year of each study}
@@ -14,7 +15,8 @@
   \item{n}{sample size of each study}
   \item{sex}{categorical moderator variable: gender of the participants in each study}
   \item{mean_age}{continuous moderator variable: mean age of all participants in each study}
-  }}
+  }
+}
 \usage{
 brainvol
 }

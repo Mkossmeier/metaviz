@@ -4,13 +4,15 @@
 \name{homeopath}
 \alias{homeopath}
 \title{Example data for a meta-analysis of standardized mean differences: Homeopathic treatment vs. Placebo}
-\format{A data frame with 54 rows and 4 variables:
+\format{
+A data frame with 54 rows and 4 variables:
 \describe{
   \item{name}{short name of each RCT}
   \item{year}{publication year of each RCT}
   \item{d}{observed effect size (Standardized mean differences). Negative effect sizes indicate superiority of homeopathic treatment.}
   \item{se}{standard error of observed effect size}
-  }}
+  }
+}
 \usage{
 homeopath
 }
