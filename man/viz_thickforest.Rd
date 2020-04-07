@@ -4,13 +4,28 @@
 \alias{viz_thickforest}
 \title{Thick forest plots for meta-analyses}
 \usage{
-viz_thickforest(x, group = NULL, type = "standard", method = "FE",
-  study_labels = NULL, summary_label = NULL, confidence_level = 0.95,
-  col = "Blues", summary_col = col, tick_col = "firebrick",
-  text_size = 3, xlab = "Effect", x_limit = NULL,
-  x_trans_function = NULL, x_breaks = NULL, annotate_CI = FALSE,
-  study_table = NULL, summary_table = NULL, table_headers = NULL,
-  table_layout = NULL)
+viz_thickforest(
+  x,
+  group = NULL,
+  type = "standard",
+  method = "FE",
+  study_labels = NULL,
+  summary_label = NULL,
+  confidence_level = 0.95,
+  col = "Blues",
+  summary_col = col,
+  tick_col = "firebrick",
+  text_size = 3,
+  xlab = "Effect",
+  x_limit = NULL,
+  x_trans_function = NULL,
+  x_breaks = NULL,
+  annotate_CI = FALSE,
+  study_table = NULL,
+  summary_table = NULL,
+  table_headers = NULL,
+  table_layout = NULL
+)
 }
 \arguments{
 \item{x}{data.frame or matrix with the effect sizes of all studies (e.g.,

@@ -4,13 +4,28 @@
 \alias{funnelinf}
 \title{Visual funnel plot inference for meta-analysis}
 \usage{
-funnelinf(x, group = NULL, group_permut = FALSE, n = 20,
-  null_model = "REM", y_axis = "se", contours = TRUE,
-  sig_contours = TRUE, contours_col = "Blues", trim_and_fill = FALSE,
-  trim_and_fill_side = "left", egger = FALSE, show_solution = FALSE,
-  rorschach = FALSE, point_size = 1.5, text_size = 3,
-  xlab = "Effect", ylab = NULL, x_trans_function = NULL,
-  x_breaks = NULL)
+funnelinf(
+  x,
+  group = NULL,
+  group_permut = FALSE,
+  n = 20,
+  null_model = "REM",
+  y_axis = "se",
+  contours = TRUE,
+  sig_contours = TRUE,
+  contours_col = "Blues",
+  trim_and_fill = FALSE,
+  trim_and_fill_side = "left",
+  egger = FALSE,
+  show_solution = FALSE,
+  rorschach = FALSE,
+  point_size = 1.5,
+  text_size = 3,
+  xlab = "Effect",
+  ylab = NULL,
+  x_trans_function = NULL,
+  x_breaks = NULL
+)
 }
 \arguments{
 \item{x}{data.frame or matrix with the effect sizes of all studies (e.g.,

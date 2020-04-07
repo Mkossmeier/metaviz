@@ -4,7 +4,8 @@
 \name{mozart}
 \alias{mozart}
 \title{Example data for a meta-analysis of standardized mean differences: Mozart effect}
-\format{A data frame with 38 rows and 6 variables:
+\format{
+A data frame with 38 rows and 6 variables:
 \describe{
   \item{study_name}{short name of each study}
   \item{n}{sample size of each study}
@@ -13,7 +14,8 @@
   \item{unpublished}{dichotomous moderator variable: Was the
   study unpublished?}
   \item{rr_lab}{dichotomous moderator variable: Was the study conducted in the lab of authors Rauscher or Rideout?}
-  }}
+  }
+}
 \usage{
 mozart
 }

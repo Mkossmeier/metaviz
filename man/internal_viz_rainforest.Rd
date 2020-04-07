@@ -4,12 +4,25 @@
 \alias{internal_viz_rainforest}
 \title{Internal helper function of viz_rainforest and viz_forest to create a rainforest plot.}
 \usage{
-internal_viz_rainforest(plotdata, madata, type = "standard",
-  study_labels = NULL, summary_label = NULL, study_table = NULL,
-  summary_table = NULL, annotate_CI = FALSE, confidence_level = 0.95,
-  col = "Blues", summary_col = "Blues", detail_level = 1,
-  text_size = 3, xlab = "Effect", x_limit = NULL,
-  x_trans_function = NULL, x_breaks = NULL)
+internal_viz_rainforest(
+  plotdata,
+  madata,
+  type = "standard",
+  study_labels = NULL,
+  summary_label = NULL,
+  study_table = NULL,
+  summary_table = NULL,
+  annotate_CI = FALSE,
+  confidence_level = 0.95,
+  col = "Blues",
+  summary_col = "Blues",
+  detail_level = 1,
+  text_size = 3,
+  xlab = "Effect",
+  x_limit = NULL,
+  x_trans_function = NULL,
+  x_breaks = NULL
+)
 }
 \description{
 Creates a rainforest plot. Called by viz_rainforest and viz_forest for type = "rain"

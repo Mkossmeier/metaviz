@@ -1,7 +1,7 @@
 Package: metaviz
 Type: Package
 Title: Forest Plots, Funnel Plots, and Visual Funnel Plot Inference for Meta-Analysis
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: c(
     person("Michael", "Kossmeier", email = "michael.kossmeier@univie.ac.at", role = c("cre", "aut")),
     person("Ulrich S.", "Tran", email = "ulrich.tran@univie.ac.at", role = c("aut")),
@@ -29,7 +29,7 @@ Suggests:
     rmarkdown
 Depends:
     R (>= 3.2.0)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 VignetteBuilder: knitr
 URL: https://github.com/Mkossmeier/metaviz
 BugReports: https://github.com/Mkossmeier/metaviz/issues

@@ -4,7 +4,8 @@
 \name{exrehab}
 \alias{exrehab}
 \title{Example data for a meta-analysis of dichotomous outcomes: Exercise-based cardiac rehabilitation}
-\format{A data frame with 14 rows and 15 variables:
+\format{
+A data frame with 14 rows and 15 variables:
 \describe{
   \item{study_name}{short name of each study}
   \item{year}{publication year of each study}
@@ -21,7 +22,8 @@
   \item{logor}{natural logarithm of the odds ratio (\code{or}) for meta-analysis.}
   \item{logor_se}{standard error of the natural logarithm of the odds ratio for meta-analysis, sqrt(1/ai + 1/bi +1/ci + 1/di).}
   \item{followup}{dichotomous moderator: follow up duration.}
-  }}
+  }
+}
 \usage{
 exrehab
 }

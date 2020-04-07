@@ -513,6 +513,7 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, null_model 
     if(y_axis == "se") {
       p <-
         p + scale_y_reverse(name = ylab)
+      y_limit <- rev(y_limit)
     } else {
       if(y_axis == "precision") {
         p <-
