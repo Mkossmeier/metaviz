@@ -343,7 +343,7 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, null_model 
   }
   # standard error on the y axis
   if(y_axis =="se") {
-    plotdata$y <- se
+    plotdata$y <- plotdata$se
     max_se <- max(se) + ifelse(length(se) > 1, diff(range(se))*0.1, max(se)*0.1)
     y_limit <- c(0, max_se)
 
@@ -401,7 +401,7 @@ funnelinf <- function(x, group = NULL, group_permut = FALSE, n = 20, null_model 
     }
   } else {
     if(y_axis == "precision") {
-      plotdata$y <- 1/se
+      plotdata$y <- 1/plotdata$se
 
       # values for  y limit
       max_y <- max(1/se) + ifelse(length(se) > 1, diff(range(1/se))*0.05, 1/se*0.05)

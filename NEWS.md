@@ -42,3 +42,10 @@
     such that when output of function `rma.uni` from package **metafor**
     is used as input, then the `method` argument is now extracted from
     the `rma.uni` object.
+
+## Package **metaviz** (development version)
+
+  - Fixed `funnelinf` erroring with `n > 1` (including
+    `rorschach = TRUE`), where the y-axis values were assigned from the
+    original per-study standard errors instead of the replicated
+    lineup data, causing a size-mismatch error.

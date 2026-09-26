@@ -40,10 +40,12 @@ Suggests:
     Cairo (>= 1.5-9),
     knitr,
     rmarkdown,
-    psymetadata (>= 1.0.1)
+    psymetadata (>= 1.0.1),
+    testthat (>= 3.0.0)
 Depends:
     R (>= 3.2.0)
 RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 URL: https://github.com/Mkossmeier/metaviz
 BugReports: https://github.com/Mkossmeier/metaviz/issues
+Config/testthat/edition: 3
