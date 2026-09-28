@@ -208,18 +208,18 @@ internal_viz_rainforest <- function(plotdata, madata,
   # Create Rainforest plot
   p <-
     ggplot(data = res, aes(y = .id, x = support)) +
-    geom_errorbarh(data = plotdata, col = col[1], aes(xmin = x_min, xmax = x_max, y = ID, height = 0), inherit.aes = FALSE) +
+    geom_errorbarh(data = plotdata, col = col[1], aes(xmin = x_min, xmax = x_max, y = ID, width = 0), inherit.aes = FALSE) +
     geom_polygon(data = res, aes(x = support, y = as.numeric(.id) + log_density,
                                  color = min_log_density, fill = min_log_density,
-                                 group = paste(.id, segment)), size = 0.1) +
-    geom_line(data = tickdata, aes(x = x, y = y, group = ID), col = "grey", size = 1)
-    # geom_errorbarh(data = plotdata, col = "grey", aes(x = x, xmin = x_min, xmax = x_max, y = ID, height = 0))
+                                 group = paste(.id, segment)), linewidth = 0.1) +
+    geom_line(data = tickdata, aes(x = x, y = y, group = ID), col = "grey", linewidth = 1)
+    # geom_errorbarh(data = plotdata, col = "grey", aes(x = x, xmin = x_min, xmax = x_max, y = ID, width = 0))
   if(type %in% c("standard", "sensitivity", "cumulative")) {
-    p <- p + geom_polygon(data = summarydata, aes(x = x.diamond, y = y.diamond, group = diamond_group), color="black", fill = summary_col, size = 0.1)
+    p <- p + geom_polygon(data = summarydata, aes(x = x.diamond, y = y.diamond, group = diamond_group), color="black", fill = summary_col, linewidth = 0.1)
   }
   p <- p +
-    scale_fill_gradient(high = col[9], low = col[3], guide = FALSE) +
-    scale_color_gradient(high = col[9], low = col[3], guide = FALSE) +
+    scale_fill_gradient(high = col[9], low = col[3], guide = "none") +
+    scale_color_gradient(high = col[9], low = col[3], guide = "none") +
     geom_vline(xintercept = 0, linetype = 2) +
     scale_y_continuous(name = "",
                        breaks = y_breaks,
@@ -365,12 +365,12 @@ internal_viz_thickforest <- function(plotdata, madata,
   # Create thick forest plot
   p <-
     ggplot(data = plotdata, aes(y = ID, x = x)) +
-    geom_errorbarh(data = plotdata, col = col, aes(xmin = x_min, xmax = x_max, y = ID, height = 0)) +
+    geom_errorbarh(data = plotdata, col = col, aes(xmin = x_min, xmax = x_max, y = ID, width = 0)) +
     geom_rect(aes(xmin = x_min, xmax = x_max, ymin = y_min, ymax = y_max,
-                  group = ID), fill = col, size = 0.1) +
-    geom_line(data = tickdata, aes(x = x, y = y, group = ID), col = tick_col, size = 1.5)
+                  group = ID), fill = col, linewidth = 0.1) +
+    geom_line(data = tickdata, aes(x = x, y = y, group = ID), col = tick_col, linewidth = 1.5)
   if(type %in% c("standard", "sensitivity", "cumulative")) {
-    p <- p + geom_polygon(data = summarydata, aes(x = x.diamond, y = y.diamond, group = diamond_group), color= "black", fill = summary_col, size = 0.1)
+    p <- p + geom_polygon(data = summarydata, aes(x = x.diamond, y = y.diamond, group = diamond_group), color= "black", fill = summary_col, linewidth = 0.1)
   }
   p <- p +
     geom_vline(xintercept = 0, linetype = 2) +
@@ -512,16 +512,16 @@ internal_viz_classicforest <- function(plotdata, madata,
   p <-
     ggplot(data = plotdata, aes(y = ID, x = x)) +
     geom_vline(xintercept = 0, linetype = 2) +
-    geom_errorbarh(data = plotdata, col = "black", aes(xmin = x_min, xmax = x_max, y = ID, height = 0))
+    geom_errorbarh(data = plotdata, col = "black", aes(xmin = x_min, xmax = x_max, y = ID, width = 0))
 
   if(type %in% c("cumulative", "sensitivity")) {
-    p <- p + geom_line(data = tickdata, aes(x = x, y = y, group = ID), col = col, size = 1)
+    p <- p + geom_line(data = tickdata, aes(x = x, y = y, group = ID), col = col, linewidth = 1)
   } else {
     p <- p + geom_point(aes(size = weight), shape = 22, col = "black", fill = col)
   }
 
   if(type %in% c("standard", "sensitivity", "cumulative")) {
-    p <- p + geom_polygon(data = summarydata, aes(x = x.diamond, y = y.diamond, group = diamond_group), color= "black", fill = summary_col, size = 0.1)
+    p <- p + geom_polygon(data = summarydata, aes(x = x.diamond, y = y.diamond, group = diamond_group), color= "black", fill = summary_col, linewidth = 0.1)
   }
   p <- p +
     scale_y_continuous(name = "",
