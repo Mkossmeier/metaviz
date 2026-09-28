@@ -689,7 +689,8 @@ viz_forest <- function(x, group = NULL, type = "standard", variant = "classic", 
         layout_matrix <- table_layout
       }
       p <- gridExtra::arrangeGrob(table_left_plot, p, table_CI, layout_matrix = layout_matrix)
-      ggpubr::as_ggplot(p)
+      ggpubr::as_ggplot(p) +
+        theme(plot.title = element_text())
     } else {
       if(!is.null(table_CI) && is.null(table_left)) {
         if(is.null(table_layout)) {
@@ -698,7 +699,8 @@ viz_forest <- function(x, group = NULL, type = "standard", variant = "classic", 
           layout_matrix <- table_layout
         }
         p <- gridExtra::arrangeGrob(p, table_CI, layout_matrix = layout_matrix)
-        ggpubr::as_ggplot(p)
+        ggpubr::as_ggplot(p) +
+          theme(plot.title = element_text())
       } else {
         if(is.null(table_CI) && !is.null(table_left)) {
           if(is.null(table_layout)) {
@@ -707,7 +709,8 @@ viz_forest <- function(x, group = NULL, type = "standard", variant = "classic", 
             layout_matrix <- table_layout
           }
           p <- gridExtra::arrangeGrob(table_left_plot, p, layout_matrix = layout_matrix)
-          ggpubr::as_ggplot(p)
+          ggpubr::as_ggplot(p) +
+            theme(plot.title = element_text())
         }
       }
     }
