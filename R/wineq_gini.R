@@ -35,8 +35,16 @@
 #'                 method = "REML")
 #'
 #' # using a rma.uni model as input
+#' \dontrun{
 #' wineq_gini(x = mozart_r, seed = 123)
-
+#' }
+#' 
+#' # Plotting the wineq gini plot based on the mozart data
+#' # using a matrix as input
+#' \dontrun{
+#' wineq_gini(x = mozart[, c("d", "se")], seed = 123)
+#' }
+#' 
 #'@export
 
 wineq_gini <- function(x, type = "FEM_REM", col = FALSE, tables = TRUE, seed = NULL) {

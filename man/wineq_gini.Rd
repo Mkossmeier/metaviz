@@ -43,7 +43,16 @@ mozart_r <- rma(yi = d,
                 method = "REML")
 
 # using a rma.uni model as input
+\dontrun{
 wineq_gini(x = mozart_r, seed = 123)
+}
+
+# Plotting the wineq gini plot based on the mozart data
+# using a matrix as input
+\dontrun{
+wineq_gini(x = mozart[, c("d", "se")], seed = 123)
+}
+
 }
 \references{
 Gini, C. (1912). Variabilità e mutabilità (Variability and Mutability). C. Cuppini, Bologna, 156.
