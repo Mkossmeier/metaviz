@@ -4,12 +4,14 @@
 \alias{viz_tlma_studyinfo}
 \title{A dataframe containing information on the study effects of a three-level meta-analysis}
 \usage{
-viz_tlma_studyinfo(x, confidence_level_ci = 0.95)
+viz_tlma_studyinfo(x, confidence_level_ci = 0.95, ordered = FALSE)
 }
 \arguments{
 \item{x}{metafor rma.mv object}
 
 \item{confidence_level_ci}{numeric confidence level for the confidence intervals of the study effects}
+
+\item{ordered}{orders the data by effect size when TRUE}
 }
 \value{
 A dataframe containing statistical information about the study effects of a three-level meta-analysis is created.

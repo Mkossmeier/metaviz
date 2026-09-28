@@ -4,6 +4,7 @@
 #'
 #'@param x metafor rma.mv object
 #'@param confidence_level_ci numeric confidence level for the confidence intervals of the study effects
+#'@param ordered orders the data by effect size when TRUE
 #'
 #'@details The function viz_tlma_studyinfo creates a dataframe with information pertaining to the study effects of
 #'a three-level meta-analysis. The study effects are the result of random-effects models conducted on the effects
@@ -33,7 +34,7 @@
 
 #' @export
 
-viz_tlma_studyinfo <- function (x, confidence_level_ci = 0.95) {
+viz_tlma_studyinfo <- function (x, confidence_level_ci = 0.95, ordered = FALSE) {
 
 
   if (!is.numeric(confidence_level_ci) ||
@@ -204,9 +205,11 @@ viz_tlma_studyinfo <- function (x, confidence_level_ci = 0.95) {
   }
 
 
-  # arrange studydata for table plotting later
-  studydata <- studydata %>%
-    arrange(yi_ID)
+  # arrange studydata
+  if (ordered == TRUE) {
+    studydata <- studydata %>%
+      arrange(yi_ID)
+  }
 
   studylevel_info <- studydata %>%
     select(

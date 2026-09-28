@@ -13,7 +13,7 @@ viz_tlma_forest(
   study_table = NULL,
   summary_table = NULL,
   table_headers = NULL,
-  ordered = TRUE,
+  ordered = FALSE,
   clouds = TRUE,
   spread = 0.3,
   col = FALSE,
@@ -53,7 +53,7 @@ Takes a dataframe as input which contains one row.}
 
 \item{table_headers}{headers for each column of the left-hand side table. Takes a character vector as input}
 
-\item{ordered}{orders the plot by effect size}
+\item{ordered}{orders the plot by effect size when TRUE}
 
 \item{clouds}{“TRUE”: shows the effects contained in each study as a cloud around the study effect. “FALSE”: only study effects are shown.}
 

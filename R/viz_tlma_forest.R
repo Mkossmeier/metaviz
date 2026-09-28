@@ -15,7 +15,7 @@
 #'The errorbar’s thickness denotes the number of effects contained in the study.
 #'@param median_precision_thick determines whether the thickness of the median precision errorbars represents the number of
 #'effect sizes contained within the respective study
-#'@param ordered orders the plot by effect size
+#'@param ordered orders the plot by effect size when TRUE
 #'@param clouds “TRUE”: shows the effects contained in each study as a cloud around the study effect. “FALSE”: only study effects are shown.
 #'@param spread determines how far the single effects spread around the study effect
 #'@param col colors single effects by study
@@ -78,10 +78,9 @@
 
 #'@export
 
-viz_tlma_forest <- function (x, #study_ID, effect_ID,
-                             variant="classic", median_precision = FALSE, median_precision_thick = TRUE,
+viz_tlma_forest <- function (x, variant="classic", median_precision = FALSE, median_precision_thick = TRUE,
                              annotate_CI=FALSE, study_table=NULL, summary_table=NULL,
-                             table_headers=NULL, ordered=TRUE, clouds=TRUE, spread=0.3,
+                             table_headers=NULL, ordered=FALSE, clouds=TRUE, spread=0.3,
                              col=FALSE,  labels=NULL, xlab="Effect Size",
                              ylab=NULL, title=NULL, confidence_level_ci = 0.95,
                              prediction_level_pi = 0.95, show_nr_ES = TRUE,
@@ -303,8 +302,10 @@ viz_tlma_forest <- function (x, #study_ID, effect_ID,
   data <- merge(data, studydata, by = "ID", all.x = TRUE)
 
   # arrange studydata for table plotting later
-  studydata <- studydata %>%
-    arrange(yi_ID)
+  if (ordered == TRUE) {
+    studydata <- studydata %>%
+      arrange(yi_ID)
+  }
 
   # extract study_table info after arranging
   if (!is.null(study_table)) {
@@ -460,10 +461,33 @@ viz_tlma_forest <- function (x, #study_ID, effect_ID,
 
   # data for beeswarm
   data_multi <- data %>% filter(type == "multiES")
+
+  # coordinate system axes limits
   y_limit <- c(min(ID_study) - 3, max(ID_study) + 1.5)
+
   if(is.null(x_limit)) {
-    x_limit <- c(range(c(data$ci_lb_ID, data$ci_ub_ID))[1] - diff(range(c(data$ci_lb_ID, data$ci_ub_ID)))*0.05,
-                 range(c(data$ci_lb_ID, data$ci_ub_ID))[2] + diff(range(c(data$ci_lb_ID, data$ci_ub_ID)))*0.05)
+    if (median_precision == FALSE) {
+      all_x <- c(
+        studydata$ci_lb_ID,
+        studydata$ci_ub_ID,
+        data$yi
+      )
+    } else {
+      all_x <- c(
+        studydata$ci_lb_ID,
+        studydata$ci_ub_ID,
+        studydata$ci_lb_ES,
+        studydata$ci_ub_ES,
+        data$yi
+      )
+    }
+
+    x_range <- range(all_x, na.rm = TRUE)
+
+    x_limit <- c(
+      x_range[1] - diff(x_range) * 0.05,
+      x_range[2] + diff(x_range) * 0.05
+    )
   }
 
 
