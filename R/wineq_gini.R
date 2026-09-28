@@ -34,11 +34,8 @@
 #'                 data = mozart,
 #'                 method = "REML")
 #'
-#' # Plotting the wineq gini plot based on the mozart data
-#' # using a matrix as input
-#' wineq_gini(x = mozart[, c("d", "se")])
 #' # using a rma.uni model as input
-#' wineq_gini(x = mozart_r)
+#' wineq_gini(x = mozart_r, seed = 123)
 
 #'@export
 

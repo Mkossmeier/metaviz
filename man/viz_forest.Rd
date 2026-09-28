@@ -105,21 +105,29 @@ A forest plot is created using ggplot2.
 Creates a rainforest, thick forest, or classic forest plot.
 }
 \details{
-The forest plot is the most widely used display to visualize meta-analytic results.
-The function \code{viz_forest} creates visually appealing and informative-rich forest plots using ggplot2. Many options
-to flexibly customize the visual appearance and statistical information displayed are provided. In addition,
-rainforest plots as well as the thick forest plots can be created, two variants and enhancements of the
-classical forest plot recently proposed by Schild and Voracek (2015). For further details see the documentation of
-the wrapper functions \code{\link[metaviz]{viz_rainforest}}, and \code{\link[metaviz]{viz_thickforest}}.
+The forest plot is the most widely used display for visualizing meta-analytic results.
+The function \code{viz_forest} creates visually appealing and information-rich forest
+plots using ggplot2. Many options are provided to flexibly customize the visual
+appearance and the statistical information displayed. In addition to classic forest
+plots, rainforest plots and thick forest plots can be created, two variants and
+enhancements of the classic forest plot proposed by Schild and Voracek (2015).
+For further details, see the documentation of the wrapper functions
+\code{\link[metaviz]{viz_rainforest}} and
+\code{\link[metaviz]{viz_thickforest}}.
 
 \bold{Available forest plot types}
 
-Different aspects of meta-analytic data can be shown in forest plots. Five different types are available in \code{viz_forest} via the \code{type} parameter.
-Argument \code{"standard"} (default) shows study results as well as summary results in the forest plot. \code{"study_only"} allows to only show study results without the meta-analytic summary estimate.
-\code{"summary_only"} can be used to only show meta-analytic summary estimate(s), which is primarily useful to visualize several subgroup results (using \code{group}).
-\code{"cumulative"} shows a cumulative meta-analysis, that is, meta-analytic summary effects are computed sequentially by adding each study one-by-one.
-Studies are added in the same order than they were supplied in \code{x}. Finally, \code{"sensitivity"} shows for each study the meta-analytic summary
-effect if that particular study is not considered in the computation of the summary effect (leave-one-out analysis).
+Different aspects of meta-analytic data can be shown in forest plots. Five different
+types are available in \code{viz_forest} via the \code{type} parameter.
+\code{"standard"} (default) shows study results as well as meta-analytic summary
+results. \code{"study_only"} shows study results without the meta-analytic summary
+estimate. \code{"summary_only"} shows only meta-analytic summary estimates and is
+primarily useful for visualizing several subgroup results (using \code{group}).
+\code{"cumulative"} shows a cumulative meta-analysis, in which meta-analytic summary
+effects are computed sequentially by adding studies one by one. Studies are added
+in the same order in which they were supplied in \code{x}. Finally,
+\code{"sensitivity"} shows, for each study, the meta-analytic summary effect with
+that particular study omitted (leave-one-out analysis).
 }
 \examples{
 library(metaviz)

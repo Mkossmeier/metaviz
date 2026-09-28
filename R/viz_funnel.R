@@ -1,53 +1,77 @@
-#'Funnel plot variants for meta-analysis
+#' Funnel plot variants for meta-analysis
 #'
-#'Creates a funnel plot. Many options regarding the appearance and
-#'statistical information displayed are provided (e.g., significance contours, additional evidence contours, and
-#'trim-and-fill analysis).
+#' Creates a funnel plot. Many options regarding the appearance and
+#' statistical information displayed are provided (e.g., significance contours,
+#' additional evidence contours, and trim-and-fill analysis).
 #'
-#'The funnel plot is a widely used diagnostic plot in meta-analysis to assess small study effects
-#'and in particular publication bias. The function \code{viz_funnel} is capable to create a large set of different funnel plot variants.
-#'Options for several graphical augmentations (e.g., confidence, significance, and additional evidence contours; choice of the ordinate; study subgroups), and
-#'different statistical information displayed are provided (Egger's regression line, and imputed studies by, as well as the adjusted summary effect from,
-#'the trim-and-fill method).
+#' The funnel plot is a widely used diagnostic plot in meta-analysis to assess
+#' small-study effects and, in particular, publication bias. The function
+#' \code{viz_funnel} can create a wide range of different funnel plot variants.
+#' Options for several graphical augmentations (e.g., confidence, significance,
+#' and additional evidence contours; choice of the ordinate; study subgroups) and
+#' different types of statistical information are provided, including Egger's
+#' regression line, imputed studies from the trim-and-fill method, and the
+#' corresponding adjusted summary effect.
 #'
-#'\bold{Contours}
+#' \bold{Contours}
 #'
-#'Three different contours are available in \code{viz_funnel}:
-#'\enumerate{
-#'\item \bold{confidence contours} (argument \code{contours}) show the region where one expects 95\% of all studies to fall (assuming the meta-analytic model
-#'  applied is true and all estimates are identical to the parameters of interest).
-#'  Confidence contours can help to assess the plausibility of observations given the meta-analytic model specified (fixed effect or random effects model).
-#'\item \bold{significance contours} (argument \code{sig_contours}) show shaded regions of individual study significance at the 5\% and 1\% level
-#'  (using the standard errors supplied and a Wald test). Significance contours were proposed to help distinguish publication bias from other sources of
-#'  funnel plot asymmetry (Peters, Sutton, Jones, Abrams, & Rushton, 2008).
-#'\item \bold{additional evidence contours: Significance of the summary effect} (argument \code{addev_contours}). These contours define regions
-#'  where a new study has to fall such that the updated meta-analytic summary effect is significantly different from zero or not
-#'  (using a two-sided test and an alpha level of 5\%). Additional evidence contours allow to assess the robustness of the meta-analysis with respect to
-#'  the effect of potentially new published evidence on the significance of the meta-analytic summary effect (Langan, Higgins, Gregory, & Sutton, 2012).
-#'}
+#' Three different types of contours are available in \code{viz_funnel}:
+#' \enumerate{
+#' \item \bold{Confidence contours} (argument \code{contours}) show the region in
+#' which 95% of study estimates are expected to fall, assuming that the specified
+#' meta-analytic model is correct and that the estimated model parameters correspond
+#' to the parameters of interest. Confidence contours can help assess the plausibility
+#' of observations given the specified meta-analytic model (fixed-effect or
+#' random-effects model).
 #'
-#'\bold{Measure on the y-axis}
+#' \item \bold{Significance contours} (argument \code{sig_contours}) show shaded
+#' regions corresponding to individual study significance at the 5% and 1% levels
+#' (using the supplied standard errors and a Wald test). Significance contours were
+#' proposed to help distinguish publication bias from other sources of funnel plot
+#' asymmetry (Peters, Sutton, Jones, Abrams, & Rushton, 2008).
 #'
-#'  Two different options for the y-axis choice are available. First, to plot the standard errors on a reversed axis
-#'  (i.e., studies with small standard errors are at the top). Second, precision (i.e., 1 divided by the standard error) can be used.
-#'  Standard errors on the y-axis should be preferred in most situations but precision might have advantages if one or few large studies
-#'  (with high precision) should be compared to the results of smaller studies condensed at the bottom of the funnel plot (Sterne & Egger, 2001).
+#' \item \bold{Additional evidence contours: Significance of the summary effect}
+#' (argument \code{addev_contours}) define regions in which the result of a new
+#' study would have to fall for the updated meta-analytic summary effect to be
+#' significantly different from zero or not (using a two-sided test and an alpha
+#' level of 5%). Additional evidence contours allow users to assess the robustness
+#' of the meta-analysis with respect to the potential impact of new evidence on the
+#' significance of the meta-analytic summary effect (Langan, Higgins, Gregory, &
+#' Sutton, 2012).
+#' }
 #'
-#'\bold{Egger's regression line}
+#' \bold{Measure on the y-axis}
 #'
-#'  Egger's regression line (Egger, Smith, Schneider & Minder, 1997) can be displayed if the standard error is used on the y axis.
-#'  Classic Egger's regression can be computed as the OLS estimator of regressing the standardized effect size (effect size divided by its standard error)
-#'  on precision (1 divided by the standard error). Showing this line in the funnel plot can further help to visually assess funnel plot asymmetry.
+#' Two different options for the y-axis are available. First, standard errors can
+#' be plotted on a reversed axis (i.e., studies with small standard errors are at
+#' the top). Second, precision (i.e., 1 divided by the standard error) can be used.
+#' Standard errors on the y-axis should be preferred in most situations, but
+#' precision may have advantages when one or a few large studies (with high
+#' precision) are compared with smaller studies condensed at the bottom of the
+#' funnel plot (Sterne & Egger, 2001).
 #'
-#'\bold{Trim and fill analysis}
+#' \bold{Egger's regression line}
 #'
-#'  Imputed studies by the trim-and fill method, as well as the adjusted summary effect (Duval & Tweedie, 2000) can be displayed.
-#'  The trim-and fill algorithm basically estimates the number of (extreme) studies responsible for funnel plot asymmetry.
-#'  It then trims this number of (extreme) studies and computes the adjusted summary effect only considering the remaining studies.
-#'  Finally, it imputes studies - presumably missing due to publication bias - by mirroring the trimmed (extreme) studies (driving the funnel plot asymmetry)
-#'  around the (adjusted) summary effect. The user has to specify on which side of the funnel plot the trim-and fill method should impute missing studies
-#'  (i.e., the direction were studies are presumably missing due to publication bias). To estimate the number of (extreme) studies responsible for funnel plot
-#'  asymmetry the L estimator defined in Duval and Tweedie (2000) is used.
+#' Egger's regression line (Egger, Smith, Schneider, & Minder, 1997) can be
+#' displayed when the standard error is used on the y-axis. Classic Egger's
+#' regression can be computed using OLS regression of the standardized effect size
+#' (effect size divided by its standard error) on precision (1 divided by the
+#' standard error). Displaying this line in the funnel plot can further help to
+#' visually assess funnel plot asymmetry.
+#'
+#' \bold{Trim-and-fill analysis}
+#'
+#' Studies imputed by the trim-and-fill method, as well as the adjusted summary
+#' effect (Duval & Tweedie, 2000), can be displayed. The trim-and-fill algorithm
+#' estimates the number of extreme studies contributing to funnel plot asymmetry.
+#' It then trims these studies and computes an adjusted summary effect based on the
+#' remaining studies. Finally, it imputes studies, presumed to be missing due to
+#' publication bias, by mirroring the trimmed studies around the adjusted summary
+#' effect. The user has to specify the side of the funnel plot on which the
+#' trim-and-fill method should impute missing studies (i.e., the direction in which
+#' studies are presumed to be missing due to publication bias). The L estimator
+#' defined by Duval and Tweedie (2000) is used to estimate the number of studies
+#' contributing to funnel plot asymmetry.
 #'
 #'@param x data.frame or matrix with the effect sizes of all studies (e.g.,
 #'  correlations, log odds ratios, or Cohen \emph{d}) in the first column and their

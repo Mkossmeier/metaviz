@@ -9,6 +9,11 @@ variants, such as rainforest plots, thick forest plots, additional
 evidence contour funnel plots, and sunset funnel plots. In addition,
 functionalities for visual inference with the funnel plot are provided.
 
+Includes the wineq plots for the comparison of fixed-effect and
+random-effects models, specifically the wineq forest plot, wineq Gini
+plot and wineq Baujat plot, as well as a forest plot variant for
+three-level meta-analysis.
+
 ## Contact
 
 Questions, ideas, criticism: <michael.kossmeier@univie.ac.at>.
@@ -17,44 +22,58 @@ Questions, ideas, criticism: <michael.kossmeier@univie.ac.at>.
 
 ### Package **metaviz** version 0.1.0
 
-  - February 6, 2017 first release on CRAN:
-    <https://CRAN.R-project.org/package=metaviz>
+- February 6, 2017 first release on CRAN:
+  <https://CRAN.R-project.org/package=metaviz>
 
 ### Package **metaviz** version 0.1.1 (not yet on CRAN)
 
-  - March 14, 2017: Added a new function for visual inference with
-    funnel plots: `funnelinf`. Also available as shiny app:
-    <https://metaviz.shinyapps.io/funnelinf_app/>
+- March 14, 2017: Added a new function for visual inference with funnel
+  plots: `funnelinf`. Also available as shiny app:
+  <https://metaviz.shinyapps.io/funnelinf_app/>
 
 ### Package **metaviz** version 0.1.1
 
-  - June 29, 2017: Version 0.1.1 submitted to CRAN
+- June 29, 2017: Version 0.1.1 submitted to CRAN
 
 ### Package **metaviz** version 0.2
 
-  - March 16, 2018: Version 0.2 submitted to CRAN
-  - Greatly extended functionalities to create different types of forest
-    plots and to align tables with study-level or summary-level
-    information (`viz_forest`)
-  - Added numerous funnel plot variants including additional evidence
-    contour funnel plots with the function `viz_funnel`.
+- March 16, 2018: Version 0.2 submitted to CRAN
+- Greatly extended functionalities to create different types of forest
+  plots and to align tables with study-level or summary-level
+  information (`viz_forest`)
+- Added numerous funnel plot variants including additional evidence
+  contour funnel plots with the function `viz_funnel`.
 
 ### Package **metaviz** version 0.3
 
-  - January 14, 2019: Version 0.3 submitted to CRAN
-  - Added a dedicated function for sunset (power-enhanced) funnel plots
-    (`viz_sunset`). Also available as shiny app:
-    <https://metaviz.shinyapps.io/sunset/>
+- January 14, 2019: Version 0.3 submitted to CRAN
+- Added a dedicated function for sunset (power-enhanced) funnel plots
+  (`viz_sunset`). Also available as shiny app:
+  <https://metaviz.shinyapps.io/sunset/>
 
 ### Package **metaviz** version 0.3.1
 
-  - April 7th, 2020: Version 0.3.1 submitted to CRAN
-  - Fixed problem of up-side-down funnel plots (`viz_funnel`,
-    `viz_sunset`, `funnelinf`) with y\_axis = “se”, which seemed to
-    occur with newer versions of **ggplot2** installed.
-  - Function `viz_funnel` now allows to customize funnel plot contours
-    for random effects models via the `contours_type` argument.
-  - Changed behavior of `viz_forest`, `viz_funnel` and `viz_sunset`,
-    such that when output of function `rma.uni` from package **metafor**
-    is used as input, then the `method` argument is now extracted from
-    the `rma.uni` object.
+- April 7th, 2020: Version 0.3.1 submitted to CRAN
+- Fixed problem of up-side-down funnel plots (`viz_funnel`,
+  `viz_sunset`, `funnelinf`) with y_axis = “se”, which seemed to occur
+  with newer versions of **ggplot2** installed.
+- Function `viz_funnel` now allows to customize funnel plot contours for
+  random effects models via the `contours_type` argument.
+- Changed behavior of `viz_forest`, `viz_funnel` and `viz_sunset`, such
+  that when output of function `rma.uni` from package **metafor** is
+  used as input, then the `method` argument is now extracted from the
+  `rma.uni` object.
+
+## Package **metaviz** version 0.4.0
+
+- Added new functions for visualization and assessment of within-study
+  effect size inequality (`wineq_forest`, `wineq_gini`, and
+  `wineq_baujat`).
+- Added `viz_tlma_forest` for dedicated forest plots for three-level
+  meta-analysis.
+- Added `viz_tlma_studyinfo` for visualizing the distribution of effect
+  sizes across studies in three-level meta-analysis.
+- Fixed `funnelinf` erroring with `n > 1` (including
+  `rorschach = TRUE`), where the y-axis values were assigned from the
+  original per-study standard errors instead of the replicated lineup
+  data, causing a size-mismatch error.
