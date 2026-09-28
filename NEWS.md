@@ -43,8 +43,14 @@
     is used as input, then the `method` argument is now extracted from
     the `rma.uni` object.
 
-## Package **metaviz** (development version)
+## Package **metaviz** version 0.4.0
 
+  - Added new functions for visualization and assessment of within-study
+    effect size inequality (`wineq_forest`, `wineq_gini`, and `wineq_baujat`).
+  - Added `viz_tlma_forest` for dedicated forest plots for three-level
+    meta-analysis.
+  - Added `viz_tlma_studyinfo` for visualizing the distribution of effect
+    sizes across studies in three-level meta-analysis.
   - Fixed `funnelinf` erroring with `n > 1` (including
     `rorschach = TRUE`), where the y-axis values were assigned from the
     original per-study standard errors instead of the replicated

@@ -77,6 +77,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Michael Kossmeier \email{michael.kossmeier@univie.ac.at}
   \item Ulrich S. Tran \email{ulrich.tran@univie.ac.at}
   \item Martin Voracek \email{martin.voracek@univie.ac.at}
   \item Verena Pilar \email{verena.pilar@outlook.com}
